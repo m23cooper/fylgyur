@@ -1,0 +1,7 @@
+import { internalAxios } from "./axios";
+
+const _service = {
+	fetch{{ pascalCase class }}: async (params) => await internalAxios.get(`/application/get-{{ kebabCase class }}`, params),
+}
+
+export const {{ camelCase class }}Service = _service

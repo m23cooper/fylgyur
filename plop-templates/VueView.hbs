@@ -1,0 +1,109 @@
+<!--  Generated from VueView plop template -->
+
+<template>
+    <div id="{{ pascalCase class }}" class="container h-fill">
+
+    </div>
+</template>
+
+<!------------------------------------------------------------------------------------------------->
+
+<script setup lang="ts">
+  import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
+  import { storeToRefs } from 'pinia'
+  import { useUIStore } from "@/_stores";
+  import { {{ pascalCase parent }}Factory, } from '@/_stores';
+  // import * as _components from './_components';
+  import { Signals } from "@/signals";
+  import * as utils from '@/utils';
+  import _titleCase from "voca/title_case";
+  import ADDButton from "@/buttons/ADDButton.vue";
+  import EDITButton from "@/buttons/EDITButton.vue";
+  import ModalComponent from "@/_components/modal/ModalComponent.vue";
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  PROPS
+  // interface I{{ pascalCase class }}ViewProps
+  // {
+  //   blah: string;
+  // }
+  //
+  // const props: Readonly<I{{ pascalCase class }}ViewProps> = withDefaults(defineProps<I{{ pascalCase class }}ViewProps>(), {
+  //   blah: "",
+  // });
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  EMITS
+  // const emit = defineEmits([ EMIT.SELECTED, ]);
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Private
+  const _name: string = "{{ pascalCase class }}View";
+
+  const _store = use{{ pascalCase parent }}Store();
+
+  // const {
+  // } = storeToRefs(_store);
+
+
+  // ////////////////////////////////////////////////////////////////////////////////////////////
+  //  COMPUTED
+  // const getContact = computed(() => {
+  //   return getApplication.value.contact[0]?.number;
+  // });
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Public
+  defineExpose({
+    name: _name,
+  });
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Provides - props for all children
+  //  eg - provide("key", "value");
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  WATCH
+  // const watch = {
+  //
+  // }
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  SIGNALS
+  // Signals.PUSHER_NOTIFICATION.add(onPusherNotification, () => {})
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Methods
+  //  function onPusherNotification(evt)
+  //  {
+  //      // handle event
+  //  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Hooks
+  onMounted(() => {
+    console.log(`{{ pascalCase class }}View onMounted!`);
+    // _store.init();
+  })
+
+  // onUpdated(() => {
+  //   console.log(`{{ pascalCase class }}View onUpdated!`);
+  // })
+
+  // onUnmounted(() => {
+  //   console.log(`{{ pascalCase class }}View unmounted!`);
+  // })
+
+</script>
+
+<!------------------------------------------------------------------------------------------------->
+
+<style scoped>
+
+</style>

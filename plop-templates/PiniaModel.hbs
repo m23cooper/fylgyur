@@ -1,0 +1,52 @@
+import { I{{ pascalCase class }} } from "@/types";
+import { use{{ pascalCase class }}Store, } from "@/_stores";
+import { defineStore, } from 'pinia';
+import { Ref, ref, } from "vue";
+import { cloneDeep as _cloneDeep, } from 'lodash-es';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  useStore
+
+export interface I{{ pascalCase class }}ModelState
+{
+  {{ camelCase class }}:I{{ pascalCase class }};
+  isMock: boolean;
+}
+
+export let new{{ pascalCase class }}Model = ( { {{ lowerCase prefix }}_uuid, mock, }: { {{ lowerCase prefix }}_uuid: string, mock?: boolean, } ) => defineStore(`{{ camelCase class }}.model.${{ lowerCase prefix }}_uuid}`, {
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  State
+  state: ():I{{ pascalCase class }}ModelState => ({
+    {{ camelCase class }}: (mock) ? _cloneDeep(_mock{{ pascalCase class }}) : use{{ pascalCase class }}Store().get{{ pascalCase class }}ByUUID({ {{ lowerCase prefix }}_uuid, }),
+    isMock: mock !== undefined && mock,
+  }),
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Actions
+  //  -   Don't use fat arrow functions as 'this' will be incorrect
+  //  -   Unhandled catch block errors are caught by a Pinia plugin - see @/stores/PiniaBase.ts
+  //  -   init() actions are checked by a plugin against an INITIALISED decoration - see @/stores/PiniaBase.ts
+  actions: {
+    init({ {{ lowerCase prefix }}_uuid, mock, }) {
+      //  if (!mock) use{{ pascalCase prefix }}Store().get{{ pascalCase prefix }}ById({ {{ lowerCase prefix }}_uuid, })
+    },
+    async create({}) {
+
+    },
+    async update({}) {
+
+    },
+    async delete({}) {
+
+    },
+  },
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Getters
+  getters: {
+    //count: (state) => state.{{ camelCase class }}.length,
+	},
+})
+
+const _mock{{ pascalCase class }} = {}

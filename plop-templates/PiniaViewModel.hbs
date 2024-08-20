@@ -1,0 +1,61 @@
+import ErrorManager from "@/helpers/ErrorManager";
+import {acceptHMRUpdate, defineStore} from 'pinia';
+import { useUIStore } from '@/_stores';
+import { use{{ pascalCase class }}Store } from '@/_stores';
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  useStore
+
+  export interface I{{ pascalCase class }}VMState
+  {
+  //  {{ camelCase class }}: {};
+  }
+
+  export const use{{ pascalCase class }}VM = defineStore(`{{ camelCase class }}.vm`, {
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	//  State
+	state: ():I{{ pascalCase class }}VMState => ({
+		//  {{ camelCase class }}: {},
+	}),
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	//  Getters
+	getters: {
+		// get{{ pascalCase class }}: (state) => state.{{ camelCase class }},
+	},
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Actions
+  //  -   Don't use fat arrow functions as 'this' will be incorrect
+  //  -   Unhandled catch block errors are caught by a Pinia plugin - see @/stores/PiniaBase.ts
+  //  -   init() actions are checked by a plugin against an INITIALISED decoration - see @/stores/PiniaBase.ts
+  actions: {
+      async init()
+      {
+        //  @ts-ignore
+        if(this.INITIALISED) return;
+        return await {{ camelCase class }}Service.fetch{{ pascalCase class }}(params)
+          .then(( { data } ) => {
+              //  mutate state
+          })
+      },
+	},
+})
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  acceptHMRUpdate
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(use{{ pascalCase class }}VM, import.meta.hot))
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  Private
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  Interfaces/Types
+

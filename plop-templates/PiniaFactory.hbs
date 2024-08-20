@@ -1,0 +1,20 @@
+import { new{{ pascalCase class }}Model } from "@/_stores";
+import { GenericStore } from "pinia";
+
+const pool = new WeakMap<any, GenericStore>();
+
+export const {{ pascalCase class }}Factory = {
+  build: ( { {{ lowerCase prefix }}_uuid, mock, } : { {{ lowerCase prefix }}_uuid: string, mock?: boolean, }, ):GenericStore => {
+    const target = pool[{{ lowerCase prefix }}_uuid]
+    if (target)
+    {
+      return pool[{{ lowerCase prefix }}_uuid];
+    }
+
+    const model = new{{ pascalCase class }}Model({ {{ lowerCase prefix }}_uuid, mock, })();
+    pool[{{ lowerCase prefix }}_uuid] = model;
+    model.init({ {{ lowerCase prefix }}_uuid, mock, });
+
+    return model;
+  }
+}

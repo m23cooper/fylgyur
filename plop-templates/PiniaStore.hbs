@@ -1,0 +1,98 @@
+
+import {acceptHMRUpdate, defineStore} from 'pinia';
+import { useCoreStore } from "@/_stores";
+import { {{ camelCase class }}Service, } from "@/_services";
+import { each as _each, filter as _filter, map as _map, find as _find} from 'lodash-es';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  useStore
+
+export interface I{{ pascalCase class }}State
+{
+  {{ camelCase class }}s: I{{ pascalCase class }}[];
+}
+
+export const use{{ pascalCase class }}Store = defineStore(`_{{ camelCase class }}.store`, {
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	//  State
+	state: ():I{{ pascalCase class }}State => ({
+		{{ camelCase class }}s: useCoreStore().{{ camelCase class }},
+	}),
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	//  Getters
+	getters: {
+      count: (state) => state.{{ camelCase class }}s.length,
+      get{{ pascalCase class }}ByUUID: (state) => {
+        return ( { {{ lowerCase prefix }}_uuid } ) => _find(state.{{ camelCase class }}s, { {{ lowerCase prefix }}_uuid })
+      },
+	},
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Actions
+  //  -   Don't use fat arrow functions as 'this' will be incorrect
+  //  -   Unhandled catch block errors are caught by a Pinia plugin - see @/stores/PiniaBase.ts
+  //  -   init() actions are checked by a plugin against an INITIALISED decoration - see @/stores/PiniaBase.ts
+  actions: {
+    async init()
+    {
+      //  @ts-ignore
+      if(this.INITIALISED) return Promise.resolve(this);
+      // return await pensionService.fetchPension(params)
+      //     .then(( { data } ) => {
+      //         //  mutate state
+      //     })
+    },
+    async load{{ pascalCase class }}sByAppUUID( { {{ lowerCase prefix }}_uuid }: { {{ lowerCase prefix }}_uuid: string, } ): Promise<I{{ pascalCase class }}[]> {
+      const {{ camelCase class }}: I{{ pascalCase class }}[] = _filter(this.{{ camelCase class }}s, {{ camelCase class }} => {{ camelCase class }}.{{ lowerCase prefix }}_uuid === {{ lowerCase prefix }}_uuid);
+
+      if({{ camelCase class }}) return Promise.resolve({{ camelCase class }});
+
+      applicationService.fetch{{ pascalCase class }}ById({ {{ lowerCase prefix }}_uuid, })
+        .then(( { data } ) => {
+          this.$patch(( state ) => {
+            const {{ camelCase class }}s = data.data.???;
+            _each({{ camelCase class }}s, ( {{ camelCase class }}: I{{ pascalCase class }} ) => {
+              {{ camelCase class }}.isStub = true;
+              {{ camelCase class }}.{{ lowerCase prefix }}_uuid = {{ camelCase class }}.uuid;
+<!--              if({{ camelCase class }}.auuid) {{ camelCase class }}.{{ lowerCase prefix }}_uuid = {{ camelCase class }}.auuid;-->
+              state.{{ camelCase class }}s.push({{ camelCase class }});
+            });
+        })
+      });
+
+      return Promise.resolve({{ camelCase class }});
+    },
+    async load{{ pascalCase class }}ById( { {{ lowerCase prefix }}_uuid, }: { {{ lowerCase prefix }}_uuid: string, } ): Promise<I{{ pascalCase class }}> {
+      const {{ camelCase class }}: I{{ pascalCase class }} | undefined = _find(this.{{ camelCase class }}s, {{ camelCase class }} => {{ camelCase class }}.{{ lowerCase prefix }}_uuid === {{ lowerCase prefix }}_uuid);
+
+      if(typeof {{ camelCase class }} === "undefined") return Promise.reject(new Error(`Could not find {{ camelCase class }} ${ {{ lowerCase prefix }}_uuid }`));
+
+      /*
+      if ({{ camelCase class }}.isStub === undefined || {{ camelCase class }}.isStub)
+      {
+      {{ camelCase class }}Service.fetchEmploymentById({ {{ lowerCase prefix }}_uuid, })
+      .then(( { data } ) => {
+        this.$patch(( state ) => {
+            Object.assign({{ camelCase class }}, { isStub: false, ...data, });
+          })
+        });
+      }
+
+      return Promise.resolve({{ camelCase class }});
+    },
+	},
+})
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  acceptHMRUpdate
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(use{{ pascalCase class }}Store, import.meta.hot))
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  Private
+
+
