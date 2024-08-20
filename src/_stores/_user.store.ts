@@ -5,6 +5,7 @@ import { userService } from "@/_services";
 import { ILoginParams, } from '@/types';
 import { IUser, IUserPermissions, } from "@/types";
 import {defineStore} from "pinia";
+import {kindeClient} from "@/kinde/kindeClient";
 
 export interface IUserStoreState
 {
@@ -24,7 +25,7 @@ export const useUserStore = defineStore('_user.store', {
 	//  State
 	state: ():IUserStoreState => ({
 		permissions: {},
-		isLoggedIn: true,
+		isLoggedIn: false,
 		token: null,
 		user: <IUser>{},
 		_retries: 2,
@@ -55,10 +56,12 @@ export const useUserStore = defineStore('_user.store', {
 			//  @ts-ignore
 			if (this.INITIALISED) return Promise.resolve();
 			Signals.LOGOUT.add(this.onLogout);
+
 			return await this.checkUserAccess(true);
 		},
 		async checkUserAccess(init: boolean = false) {
-			console.log(`_user.store.checkUserAccess`);
+			const isAuthenticated = await kindeClient.isAuthenticated();
+			console.log(`_user.store.checkUserAccess ${isAuthenticated}`);
 			if(this.token === null) return
 			return await userService.fetchUserAccess()
 				.then( async ({ data }) => {

@@ -16,6 +16,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@kinde-oss/kinde-typescript-sdk": "^2.9.1",
     "@vueform/vueform": "^1.10.3",
     "axios-cache-adapter": "^2.7.3",
     "bowser": "^2.11.0",
