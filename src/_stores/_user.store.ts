@@ -57,84 +57,20 @@ export const useUserStore = defineStore('_user.store', {
 			if (this.INITIALISED) return Promise.resolve();
 			Signals.LOGOUT.add(this.onLogout);
 
-			return await this.checkUserAccess(true);
-		},
-		async checkUserAccess(init: boolean = false) {
 			const isAuthenticated = await kindeClient.isAuthenticated();
-			console.log(`_user.store.checkUserAccess ${isAuthenticated}`);
-			if(this.token === null) return
-			return await userService.fetchUserAccess()
-				.then( async ({ data }) => {
-					//  mutate state
-					this.$patch( state => {
-						if (data.token && String(data.token) !== String(state.token)) {
-							state.token = data.token;
-						}
-					})
-					console.log(`_user.store.checkUserAccess - succeeded`);
-					return Promise.resolve(this.isLoggedIn);
-				})
-				.catch((error) => {
-					console.log(`_user.store.checkUserAccess - retries left:${this._retries}`);
-					if (!this.isLoggedIn) {
-						//  reset, no error - won't dispatch Signals.LOGOUT cos user isn't logged in
-						this.logout();
-					} else {
-						//  lost the session?  glitch in the Matrix?
-						if (this._retries === 0) {
-							alert(`Session fail! ${ error }`);
-							//  reset, error - dispatches Signals.LOGOUT if the user is logged in
-							this.logout(error);
-						} else {
-							this._retries--;
-							setTimeout(async () => await this.checkUserAccess(), 1000);
-						}
-					}
 
-					return Promise.resolve(error)
-				});
+			return Promise.resolve(isAuthenticated);
 		},
-		async login(params:ILoginParams) {
-			// return await loginService.attemptLogin(params)
-			// 	.then( async ({ data }) => {
-			// 		this.token = data.access_token
-			// 		this.canAccess = (this.token !== null && this.token !== "");
-			//
-			// 		await this.loadLoggedInUser()
-			// 		// await this.loadUserPermissions()
-			//
-			// 		return Promise.resolve(data)
-			// 	})
+		async handleLogin() {
+			const url = await kindeClient.login();
+			// Redirect
+			window.location.href = url.toString();
 		},
-		logout(error?: boolean) {
-			this.token = null;
-			this._retries = 2;
-			if (error) ErrorManager.onActionError(error);
-			if (this.isLoggedIn) Signals.LOGOUT.dispatch();
-		},
-		async loadLoggedInUser() {
-			return await userService.fetchLoggedInUser( )
-				.then(({ data }) => {
-					console.log(`user.loadLoggedInUser`);
-					// console.dir(data);
-					//  mutate state
-					this.user = data;
-					Signals.LOGIN.dispatch();
-				});
-		},
-		async loadUserPermissions()
-		{
-			return await userService.fetchUserPermissions( )
-				.then(({ data }) => {
-					//  mutate state
-					this.permissions = data;
 
-					// let permissionsArray = state.global.user.roles.map(r =>
-					// 	r.permissions.map(p => p.name)
-					// );
-					//
-					// return [].concat.apply([], permissionsArray);
-				});
+		async handleRegister() {
+			const url = await kindeClient.register();
+			// Redirect
+			window.location.href = url.toString();
 		},
 		onLogout() {
 			this.isLoggedIn = false;
