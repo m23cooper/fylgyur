@@ -21,7 +21,7 @@
           Title lives here
         </div>
         <div id="LoginLayerForm" class="w-full self-center">
-          <Vueform v-bind="vueform" />
+          <button @click.prevent="handleLogin()">Sign in</button> <button @click.prevent="handleRegister()">Sign up</button>
         </div>
 
       </div>
@@ -34,75 +34,24 @@
 
 <script setup lang="ts">
   import LoginErrorComponent from "@/_layers/login/LoginErrorComponent.vue";
-  import { storeToRefs} from 'pinia'
-  import { useUIStore, } from "@/_stores";
-  import {computed, ref} from 'vue';
+  import { useUserStore, } from "@/_stores";
   import { ROUTE_NAMES } from "@/enum";
   import { onMounted,  } from 'vue';
   //  @ts-ignore
   import fantastorical_logo from '@/assets/fantastorical_logo-md.png';
-  import {useLoginVM} from "@/_layers/login/_login.vm";
+  import {kindeClient} from "@/kinde/kindeClient";
 
-  import ADDButton from "@/buttons/ADDButton.vue";
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
   const _name: string = "LoginLayer";
 
-  const _vm =  useLoginVM();
-  // const _router = index;
-
-  const {
-    login_error_msg,
-    login_email,
-    login_password,
-  } = storeToRefs(_vm);
-
-  const vueform = ref({
-        type: 'group',
-        schema: {
-          email: {
-            type: 'text',
-            inputType: 'email',
-            placeholder: 'Email Address',
-            columns: {
-              container: 6,
-              label: 12,
-              wrapper: 12,
-            },
-            fieldName: 'email',
-            rules: [
-              'required',
-              'max:255',
-                'email',
-            ],
-          },
-          password: {
-            type: 'text',
-            inputType: 'password',
-            placeholder: 'password',
-            columns: {
-              container: 6,
-              label: 12,
-              wrapper: 12,
-            },
-            fieldName: 'password',
-            rules: [
-              'required',
-              'max:255',
-            ],
-          },
-        },
-  });
-
-  let submitted = false;
-  const showError = computed(() => login_error_msg.value !== "");
+  const _userStore = useUserStore();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public
   defineExpose({
     name: _name,
-    submitted,
   })
 
 
@@ -126,24 +75,6 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
 
-  async function onSubmit(params) {
-    submitted = true;
-    // if(!validated) return;
-
-    await _vm?.login()
-      .then ( (response) => {
-        console.log(`LoginLayer - login success`);
-        useUIStore().goRoute(ROUTE_NAMES.WELCOME, {});
-      })
-    .catch( (error) => {
-      submitted = false;
-    });
-  }
-
-  function onFocus(evt)
-  {
-    login_error_msg.value = "";
-  }
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
