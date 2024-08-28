@@ -1,9 +1,9 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-    <div id="HomeLayer" class="container dev7">
-      <TheHeader />
-      <PathFinder />
+    <div id="HomeLayer" class="flex flex-col">
+      <HeroView />
+      <MentorView class="container" />
     </div>
 </template>
 
@@ -14,8 +14,8 @@
     import { storeToRefs } from 'pinia'
     import { useUIStore } from "@/_stores";
     import { Signals } from "@/signals";
-    import TheHeader from '@/_components/TheHeader.vue'
-    import PathFinder from '@/_components/PathFinder.vue'
+    import HeroView from './HeroView.vue'
+    import MentorView from "./MentorView_old.vue";
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

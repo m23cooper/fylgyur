@@ -14,7 +14,7 @@
       <div v-if="_userStore.isLoggedIn" class="pr-4">
         <button @click.prevent="_userStore.logout()">Logout</button>
       </div>
-      <div v-else id="LoginLayerForm" class="mr-5 space-x-4">
+      <div v-else class="mr-5 space-x-4">
         <button @click.prevent="_userStore.login()">Sign in</button>
         <button @click.prevent="_userStore.register()">Sign up</button>
       </div>

@@ -35,6 +35,7 @@ import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons/faSignOutAlt";
 import { faSquare } from "@fortawesome/free-solid-svg-icons/faSquare";
 import { faTable } from "@fortawesome/free-solid-svg-icons/faTable";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons/faUserPen";
+import {library} from "@fortawesome/fontawesome-svg-core";
 
 export const FontIconSize = {
 	XS: "fa-xs",
@@ -132,6 +133,50 @@ export const FontIconType = {
 	WARNING: iconToString(faExclamationTriangle),
 	VIEW: iconToString(faEye),
 }
+
+class FontIconLibrary {
+	constructor() {
+		library.add(faAngleLeft);
+		library.add(faAngleRight);
+		library.add(faAnglesRight);
+		library.add(faArrowAltCircleRight);
+		library.add(faArrowRight);
+		library.add(faArrowsSpin);
+		library.add(faAt);
+		library.add(faBug);
+		library.add(faBugSlash);
+		library.add(faChalkboardUser);
+		library.add(faCheckCircle);
+		library.add(faClipboardCheck);
+		library.add(faClipboardList);
+		library.add(faClose);
+		library.add(faCopy);
+		library.add(faEdit);
+		library.add(faExclamationTriangle);
+		library.add(faEye);
+		library.add(faFileArrowDown);
+		library.add(faFileExport);
+		library.add(faFileImage);
+		library.add(faFilePdf);
+		library.add(faFileUpload);
+		library.add(faFingerprint);
+		library.add(faHome);
+		library.add(faHeart);
+		library.add(faHeartCirclePlus);
+		library.add(faLock);
+		library.add(faMagnifyingGlass);
+		library.add(faPlusCircle);
+		library.add(faRobot);
+		library.add(faScrewdriverWrench);
+		library.add(faSignInAlt);
+		library.add(faSignOutAlt);
+		library.add(faSquare);
+		library.add(faTable);
+		library.add(faUserPen);
+	}
+}
+
+export const fontIconLibrary = new FontIconLibrary();
 
 
 

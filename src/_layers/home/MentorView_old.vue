@@ -1,12 +1,12 @@
 <script>
-import ThePathFinderWhy from './questionaires/worksource/ThePathFinderWhy.vue'
+import PathFinderWhyForm from '@/forms/PathFinderWhyForm.vue'
 
 export default {
   props: {
     email: String
   },
   components: {
-    ThePathFinderWhy
+    PathFinderWhyForm
   },
   data() {
     return {
@@ -52,10 +52,12 @@ export default {
       <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
         <p class="text-base font-semibold leading-7 text-indigo-600">Let's Begin</p>
         <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">A better workflow</h1>
-        <div class="mt-10 grid max-w-xl grid-cols-1 gap-8 text-base leading-7 text-gray-700 lg:max-w-none lg:grid-cols-2">
-          <ThePathFinderWhy />
-          <div class="overflow-y-auto" style="height:690px">
-            <p v-for="data in content" class="mb-8">{{ data.text }}</p>          
+        <div class="mt-10 w-full grid grid-cols-12 gap-8 text-base text-slate-900 lg:max-w-none">
+          <div  class="col-span-8">
+            <PathFinderWhyForm class="bg-white p-10 pb-6 rounded-lg border-2 border-slate-700 shadow-box-circle" />
+          </div>
+          <div class="col-span-4 overflow-y-auto" style="height:690px">
+            <p v-for="data in content" :key="data.index" class="mb-8 text-slate-900 text-lg text-justify">{{ data.text }}</p>
           </div>
         </div>
       </div>

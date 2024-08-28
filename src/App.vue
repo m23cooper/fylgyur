@@ -3,9 +3,9 @@
 <template>
   <div id="app" class="w-screen min-h-screen">
     <div v-if="!isInit">
-      <div class="flex flex-col w-screen min-h-screen dev2">
-        <NavLayer class="h-[4rem] z-[5] fixed dev6"></NavLayer>
-        <router-view key="routerView" v-slot="{ Component }" class="mt-[4rem] p-4 z-[1] dev2">
+      <div class="flex flex-col w-screen min-h-screen">
+        <NavLayer class="h-[4rem] z-[5] fixed"></NavLayer>
+        <router-view key="routerView" v-slot="{ Component }" class="mt-[4rem] p-4 z-[1]">
           <transition
               mode="out-in"
               :css="false"
@@ -13,7 +13,7 @@
               @enter="anims.enterNav"
               @before-leave="anims.beforeNavLeave"
               @leave="anims.leaveNav">
-            <component :is="Component" class=" flex w-full dev5"/>
+            <component :is="Component" class=" flex w-full"/>
           </transition>
         </router-view>
       </div>
@@ -33,11 +33,9 @@
 
   import LoadingLayer from "@/_layers/loading/_loading.layer.vue";
 
-  import MenuLayer from '@/_layers/menu/_menu.layer.vue';
   import NavLayer from '@/_layers/nav/_nav.layer.vue';
   import NotificationLayer from "@/_layers/notification/_notification.layer.vue";
   import * as anims from '@/utils/animation'
-  import {useDeviceStore} from "@/_stores/_device.store";
   import {kindeClient} from "@/kinde/kindeClient";
   import {useRouter} from "vue-router";
 
@@ -59,9 +57,8 @@
     isLoggedIn
   } = storeToRefs(<StoreGeneric>_userStore);
 
-  let isHidden = ref(true);
 
-  Signals.LOGIN.add(onLogin);
+  // Signals.LOGIN.add(onLogin);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public
@@ -81,18 +78,10 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
-  async function onLogin()
-  {
-    // await useDeviceStore().init();
-
-    // await nextTick(async() => {
-    //   await useUtilStore().init();
-    //   await useProviderStore().init()
-    //   await useApplicationStore().init()
-    //   await usePensionStore().init()
-    //   await useEmploymentStore().init()
-    // })
-  }
+  // async function onLogin()
+  // {
+  //
+  // }
 
 
 
@@ -103,22 +92,18 @@
     console.log(`AppLayer onBeforeMount!`);
     //
     // _uiStore.changeTheme({ theme: "business", });
+    //  get all data from local storage
+    await _userStore.init();
 
-
-
-    await nextTick(async() => {
-      _uiStore.onAppLoaded()
-    })
+    // populate the Router and get startup url query
+    _uiStore.init();
   })
 
   onMounted( async () => {
     console.log("App.onMounted");
-    // try {
-    //   await kindeClient.handleRedirectToApp(new URL(window.location.toString()));
-    //   // Redirect to Home page, etc...
-    // } catch (error) {
-    //   console.error("ERROR handleRedirect", error);
-    // }
+    // const isLoggedIn = await kindeClient.isAuthenticated();
+    // console.log("App.onMounted " + isLoggedIn);
+    _uiStore.onAppLoaded()
   })
 
   // onUpdated(() => {
@@ -126,7 +111,7 @@
   // })
 
   // onUnmounted(() => {
-  //   console.log(`AppLayer unmounted!`);
+  //   console.log(`AppLayer onUnmounted!`);
   // })
 
 </script>

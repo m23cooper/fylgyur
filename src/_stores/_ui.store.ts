@@ -4,7 +4,7 @@ import {acceptHMRUpdate, defineStore} from 'pinia';
 
 import { ROUTE_NAMES } from "@/enum";
 import type { LocationQueryRaw, RouteLocationNormalizedLoaded } from "vue-router";
-import { useRouter } from "vue-router";
+
 import { router, routes } from "@/router/router";
 import { find as _find, } from 'lodash-es';
 
@@ -65,7 +65,7 @@ export const useUIStore = defineStore('_ui.store', {
 			Signals.LOGOUT.add(this.onLogout);
 		},
 
-		async goRoute(name: ROUTE_NAMES, query:LocationQueryRaw, )
+		async goRoute(name: ROUTE_NAMES, query?:LocationQueryRaw, )
 		{
 			this.showLoading(name);
 			await router.push({ name, query, });

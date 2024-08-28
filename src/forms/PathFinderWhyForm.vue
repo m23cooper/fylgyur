@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg p-10 max-w-xl shadow-box-circle">
+  <div class="">
     <form :endpoint="false" @submit="handleSubmit">
 
       <!-- Defining Form Steps -->

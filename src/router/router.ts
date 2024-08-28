@@ -14,7 +14,7 @@ export const routes:IRoute[] = [
 		fontIconType: FontIconType.HOME,
 		component: () =>
 			import(
-				/* webpackChunkName: "Dashboard" */
+				/* webpackChunkName: "Routes" */
 				"@/_layers/home/_home.layer.vue"
 			)
 	},
@@ -26,7 +26,7 @@ export const routes:IRoute[] = [
 		fontIconType: FontIconType.HOME,
 		component: () =>
 			import(
-				/* webpackChunkName: "Welcome" */
+				/* webpackChunkName: "Routes" */
 				"@/_layers/welcome/_welcome.layer.vue"
 				)
 	},
@@ -38,7 +38,7 @@ export const routes:IRoute[] = [
 		fontIconType: FontIconType.HOME,
 		component: () =>
 			import(
-				/* webpackChunkName: "Welcome" */
+				/* webpackChunkName: "Routes" */
 				"@/_layers/login/_login.layer.vue"
 				)
 	},
@@ -50,7 +50,7 @@ export const routes:IRoute[] = [
 		fontIconType: FontIconType.HOME,
 		component: () =>
 			import(
-				/* webpackChunkName: "Welcome" */
+				/* webpackChunkName: "Routes" */
 				"@/_layers/logout/_logout.layer.vue"
 				)
 	},
