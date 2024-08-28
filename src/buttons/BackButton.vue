@@ -21,7 +21,7 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { router } from "@/router";
+  import { router } from "@/router/router";
 
   import { computed, onMounted } from "vue";
   import FontIconComponent from '@/icons/FontIconComponent.vue';

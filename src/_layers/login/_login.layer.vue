@@ -18,14 +18,12 @@
       >
         <div class="font-medium self-center text-xl text-gray-800 mb-5">
   <!--        <img :src="fantastorical_logo"  class="h-[4rem]" alt="Powered by Fantastorical." title="Powered by Fantastorical.">-->
-          Title lives here
-        </div>
-        <div id="LoginLayerForm" class="w-full self-center">
-          <button @click.prevent="handleLogin()">Sign in</button> <button @click.prevent="handleRegister()">Sign up</button>
+          LOGIN
         </div>
 
+
       </div>
-      <LoginErrorComponent class="absolute bottom-0" v-show='showError' :errorMsg="login_error_msg" />
+      <LoginErrorComponent class="absolute bottom-0" v-show='showError' :errorMsg />
     </div>
   </div>
 </template>
@@ -36,17 +34,18 @@
   import LoginErrorComponent from "@/_layers/login/LoginErrorComponent.vue";
   import { useUserStore, } from "@/_stores";
   import { ROUTE_NAMES } from "@/enum";
-  import { onMounted,  } from 'vue';
+  import {computed, onMounted, ref,} from 'vue';
   //  @ts-ignore
   import fantastorical_logo from '@/assets/fantastorical_logo-md.png';
-  import {kindeClient} from "@/kinde/kindeClient";
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
   const _name: string = "LoginLayer";
 
-  const _userStore = useUserStore();
+  const { login, register, logout } = useUserStore();
+  const errorMsg = ref<string | null>(null);
+  const showError = computed( () => errorMsg.value != null);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public

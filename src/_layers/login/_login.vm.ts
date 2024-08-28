@@ -47,7 +47,7 @@ export const useLoginVM =  defineStore('login.view.model', {
 
 			this.logout_binding = Signals.LOGOUT.add(this.onLogout);
 
-			return await useUserStore().login(params)
+			return await useUserStore().login()
 				.catch((error) =>
 				{
 					console.log(`login.store ${error}`)

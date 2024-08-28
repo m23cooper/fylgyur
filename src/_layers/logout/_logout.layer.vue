@@ -1,9 +1,8 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-    <div id="HomeLayer" class="container dev7">
-      <TheHeader />
-      <PathFinder />
+    <div id="LogoutLayer" class="container h-fill">
+      LOGOUT_LAYER
     </div>
 </template>
 
@@ -14,13 +13,11 @@
     import { storeToRefs } from 'pinia'
     import { useUIStore } from "@/_stores";
     import { Signals } from "@/signals";
-    import TheHeader from '@/_components/TheHeader.vue'
-    import PathFinder from '@/_components/PathFinder.vue'
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //  Private
-    const _name: string = "HomeLayer";
+    const _name: string = "LogoutLayer";
 
 
     // const {
@@ -68,16 +65,16 @@
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //  Hooks
     onMounted(() => {
-      console.log(`HomeLayer onMounted!`);
+      console.log(`LogoutLayer onMounted!`);
       // _store.init();
     })
 
     // onUpdated(() => {
-    //   console.log(`HomeLayer onUpdated!`);
+    //   console.log(`LogoutLayer onUpdated!`);
     // })
 
     // onUnmounted(() => {
-    //   console.log(`HomeLayer unmounted!`);
+    //   console.log(`LogoutLayer unmounted!`);
     // })
 
 </script>

@@ -3,23 +3,20 @@
 <template>
   <div id="app" class="w-screen min-h-screen">
     <div v-if="!isInit">
-      <div v-if="isLoggedIn" class="flex flex-row">
-        <div class="flex flex-col w-screen min-h-screen">
-          <NavLayer class="h-[4rem] z-[5] fixed dev7"></NavLayer>
-          <router-view key="routerView" v-slot="{ Component }" class="mt-[4rem] p-4 z-[1]">
-            <transition
-                mode="out-in"
-                :css="false"
-                @before-enter="anims.beforeNavEnter"
-                @enter="anims.enterNav"
-                @before-leave="anims.beforeNavLeave"
-                @leave="anims.leaveNav">
-              <component :is="Component" class="w-full"/>
-            </transition>
-          </router-view>
-        </div>
+      <div class="flex flex-col w-screen min-h-screen dev2">
+        <NavLayer class="h-[4rem] z-[5] fixed dev6"></NavLayer>
+        <router-view key="routerView" v-slot="{ Component }" class="mt-[4rem] p-4 z-[1] dev2">
+          <transition
+              mode="out-in"
+              :css="false"
+              @before-enter="anims.beforeNavEnter"
+              @enter="anims.enterNav"
+              @before-leave="anims.beforeNavLeave"
+              @leave="anims.leaveNav">
+            <component :is="Component" class=" flex w-full dev5"/>
+          </transition>
+        </router-view>
       </div>
-      <LoginLayer v-if="!isLoggedIn" />
       <NotificationLayer class="z-[20]" />
     </div>
     <LoadingLayer class="z-25" v-if="isLoading" />
@@ -33,19 +30,22 @@
   import { useUIStore, useUserStore, } from "@/_stores";
   import { StoreGeneric, storeToRefs } from "pinia";
   import { nextTick, onBeforeMount, onMounted, ref } from 'vue';
+
   import LoadingLayer from "@/_layers/loading/_loading.layer.vue";
-  import LoginLayer from "@/_layers/login/_login.layer.vue";
+
   import MenuLayer from '@/_layers/menu/_menu.layer.vue';
   import NavLayer from '@/_layers/nav/_nav.layer.vue';
   import NotificationLayer from "@/_layers/notification/_notification.layer.vue";
   import * as anims from '@/utils/animation'
   import {useDeviceStore} from "@/_stores/_device.store";
+  import {kindeClient} from "@/kinde/kindeClient";
+  import {useRouter} from "vue-router";
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
   const _name: string = "AppLayer";
 
-  // const _router = router;
+  const _router = useRouter();
 
   const _uiStore = useUIStore();
   const _userStore = useUserStore();
@@ -100,19 +100,25 @@
   //  Hooks
 
   onBeforeMount(async () => {
-    // console.log(`AppLayer onMounted!`);
+    console.log(`AppLayer onBeforeMount!`);
     //
     // _uiStore.changeTheme({ theme: "business", });
 
-    // try and rejoin a session
-    // check any stored token is recognised by the backend
-    // Router has already called checkUserAccess so user store is initialised
-    if(_userStore.isLoggedIn) await _userStore.loadLoggedInUser();
+
 
     await nextTick(async() => {
-      _uiStore.isInit = false;
-      _uiStore.isLoading = false;
+      _uiStore.onAppLoaded()
     })
+  })
+
+  onMounted( async () => {
+    console.log("App.onMounted");
+    // try {
+    //   await kindeClient.handleRedirectToApp(new URL(window.location.toString()));
+    //   // Redirect to Home page, etc...
+    // } catch (error) {
+    //   console.error("ERROR handleRedirect", error);
+    // }
   })
 
   // onUpdated(() => {

@@ -892,7 +892,7 @@ So eventually all mixins should become utils
 
 <a href="https://vuejs.org/api/options-composition.html#mixins">https://vuejs.org/api/options-composition.html#mixins
 
-I favour this form of import as it makes it clear later that the function isn't local.  This is also why utils aren't in separate files with an index.ts
+I favour this form of import as it makes it clear later that the function isn't local.  This is also why utils aren't in separate files with an firebase.ts
 
 ```javascript
 import * as utils from '@/utils';
@@ -944,13 +944,13 @@ _localSomething, _model, _vm, _store, props.something & something.value
 ## Plop
 The main file types in Fabricate can, and should, be generated from plop templates.  Plop.js is included as a devDependency, has a root plopfile.js 
 which is a collection of scripts and a folder of handlebars templates 'project root/plop-templates'.  Scripts populate templates, save them in the correct location and
-update an index.ts if appropriate.  They do a lot of the wiring up for you, particularly 'Domain Object - Factory/Model/Store/Interface' which bootstraps a whole Domain Object file structure 
+update an firebase.ts if appropriate.  They do a lot of the wiring up for you, particularly 'Domain Object - Factory/Model/Store/Interface' which bootstraps a whole Domain Object file structure 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- Development Interfaces -->
 ## Interfaces/Types
-All the main entities and object types have an interface.  These are listed in separate files (one per interface), exported from a manifest index.ts file and imported through '@/types'.  It's 
+All the main entities and object types have an interface.  These are listed in separate files (one per interface), exported from a manifest firebase.ts file and imported through '@/types'.  It's 
 easiest to plop new Interfaces as it adds the new file to the index for you.
 
 ###### Plop
