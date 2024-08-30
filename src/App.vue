@@ -4,8 +4,8 @@
   <div id="app" class="w-screen min-h-screen">
     <div v-if="!isInit">
       <div class="flex flex-col w-screen min-h-screen">
-        <NavLayer class="h-[4rem] z-[5] fixed"></NavLayer>
-        <router-view key="routerView" v-slot="{ Component }" class="mt-[4rem] p-4 z-[1]">
+        <NavLayer class="fixed h-[5rem] z-[5]"></NavLayer>
+        <router-view key="routerView" v-slot="{ Component }" class="mt-[5rem] z-[1]">
           <transition
               mode="out-in"
               :css="false"
@@ -90,8 +90,7 @@
 
   onBeforeMount(async () => {
     console.log(`AppLayer onBeforeMount!`);
-    //
-    // _uiStore.changeTheme({ theme: "business", });
+
     //  get all data from local storage
     await _userStore.init();
 

@@ -20,14 +20,14 @@ export const routes:IRoute[] = [
 	},
 	{
 		menu: -9,
-		name: ROUTE_NAMES.WELCOME,
-		path: "/welcome",
+		name: ROUTE_NAMES.CONSULTATION,
+		path: "/consultation",
 		title: "Fantastorical Flow",
 		fontIconType: FontIconType.HOME,
 		component: () =>
 			import(
 				/* webpackChunkName: "Routes" */
-				"@/_layers/welcome/_welcome.layer.vue"
+				"@/_layers/consultation/_consultation.layer.vue"
 				)
 	},
 	{

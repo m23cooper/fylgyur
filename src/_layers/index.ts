@@ -5,4 +5,4 @@ export * from './menu/_menu.layer.vue';
 export * from './nav/_nav.layer.vue';
 export * from './notification/_notification.layer.vue';
 export * from './home/_home.layer.vue';
-export * from './welcome/_welcome.layer.vue';
+export * from '@/_layers/consultation/_consultation.layer.vue';
