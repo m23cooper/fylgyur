@@ -12,8 +12,10 @@ export interface IUserStoreState
 	permissions: IUserPermissions;
 	isLoggedIn: boolean;
 	token: string | null;
-	user: IUser,
-	_retries: number,
+	user: IUser;
+	userType: any;
+	userProfile: any;
+	_retries: number;
 }
 
 
@@ -28,6 +30,8 @@ export const useUserStore = defineStore('_user.store', {
 		isLoggedIn: false,
 		token: null,
 		user: <IUser>{},
+		userType: null,
+		userProfile: null,
 		_retries: 2,
 	}),
 	// persist: {
@@ -57,18 +61,27 @@ export const useUserStore = defineStore('_user.store', {
 			if (this.INITIALISED) return Promise.resolve();
 			Signals.LOGOUT.add(this.onLogout);
 
-			const isAuthenticated = await kindeClient.isAuthenticated();
+			this.isLoggedIn = await kindeClient.isAuthenticated();
+			console.log(`_user.store.init: isLoggedIn=${this.isLoggedIn}`)
+			if(this.isLoggedIn){
+				this.userType = await kindeClient.getUser();
+				this.userProfile = await kindeClient.getUserProfile();
+			}
 
-			return Promise.resolve(isAuthenticated);
+			return Promise.resolve(this.isLoggedIn);
 		},
-		async handleLogin() {
+		async login() {
 			const url = await kindeClient.login();
 			// Redirect
 			window.location.href = url.toString();
 		},
-
-		async handleRegister() {
+		async register() {
 			const url = await kindeClient.register();
+			// Redirect
+			window.location.href = url.toString();
+		},
+		async logout() {
+			const url = await kindeClient.logout();
 			// Redirect
 			window.location.href = url.toString();
 		},

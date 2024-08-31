@@ -1,8 +1,8 @@
 <!--  Generated from VueView plop template -->
 
 <template>
-    <div id="{{ pascalCase class }}View" class="container h-fill">
-
+    <div id="InsightView" class="container h-fill">
+      <h2 class="self-start p-2">InsightView</h2>
     </div>
 </template>
 
@@ -11,8 +11,7 @@
 <script setup lang="ts">
   import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
   import { storeToRefs } from 'pinia'
-  import { useUIStore } from "@/_stores";
-  import { use{{ pascalCase parent }}Store } from "@/_stores";
+  import {useConsultationStore, useUIStore} from "@/_stores";
   // import * as _components from './_components';
   import { Signals } from "@/signals";
   import * as utils from '@/utils/utils';
@@ -23,12 +22,12 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
-  // interface I{{ pascalCase class }}ViewProps
+  // interface IInsightViewProps
   // {
   //   blah: string;
   // }
   //
-  // const props: Readonly<I{{ pascalCase class }}ViewProps> = withDefaults(defineProps<I{{ pascalCase class }}ViewProps>(), {
+  // const props: Readonly<IInsightViewProps> = withDefaults(defineProps<IInsightViewProps>(), {
   //   blah: "",
   // });
 
@@ -39,9 +38,10 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = "{{ pascalCase class }}View";
+  const _name: string = "InsightView";
 
-  const _store = use{{ pascalCase parent }}Store();
+  const _store = useConsultationStore();
+
 
   // const {
   // } = storeToRefs(_store);
@@ -88,16 +88,16 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`{{ pascalCase class }}View onMounted!`);
+    console.log(`InsightView onMounted!`);
     // _store.init();
   })
 
   // onUpdated(() => {
-  //   console.log(`{{ pascalCase class }}View onUpdated!`);
+  //   console.log(`InsightView onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`{{ pascalCase class }}View unmounted!`);
+  //   console.log(`InsightView unmounted!`);
   // })
 
 </script>

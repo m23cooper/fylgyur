@@ -16,7 +16,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_layers/index.ts",
+				path: "src/_layers/firebase.ts",
 				template: "export * from './{{ kebabCase class }}/_{{kebabCase class}}.layer.vue';\n",
 			},
 		],
@@ -119,7 +119,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_stores/index.ts",
+				path: "src/_stores/firebase.ts",
 				template: "export * from './_{{camelCase class}}.store';\n",
 			},
 		]
@@ -141,7 +141,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_services/index.ts",
+				path: "src/_services/firebase.ts",
 				template: "export * from './{{camelCase class}}.service';\n",
 			},
 		]
@@ -192,7 +192,7 @@ export default function (plop) {
 		actions: [
 			{
 				type: "add",
-				path: "src/_stores/{{camelCase class}}/index.ts",
+				path: "src/_stores/{{camelCase class}}/firebase.ts",
 			},
 			{
 				type: 'add',
@@ -201,7 +201,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_stores/{{camelCase class}}/index.ts",
+				path: "src/_stores/{{camelCase class}}/firebase.ts",
 				template: "export * from './{{camelCase class}}.factory';\n",
 			},
 			{
@@ -211,7 +211,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_stores/{{camelCase class}}/index.ts",
+				path: "src/_stores/{{camelCase class}}/firebase.ts",
 				template: "export * from './{{camelCase class}}.model';\n",
 			},
 			{
@@ -221,7 +221,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_stores/{{camelCase class}}/index.ts",
+				path: "src/_stores/{{camelCase class}}/firebase.ts",
 				template: "export * from './{{camelCase class}}.store';\n",
 			},
 			{
@@ -231,7 +231,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/types/index.ts",
+				path: "src/types/firebase.ts",
 				template: "export * from './I{{ pascalCase class}}';\n",
 			},
 		]
@@ -262,7 +262,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_stores/{{camelCase class}}/index.ts",
+				path: "src/_stores/{{camelCase class}}/firebase.ts",
 				template: "export * from './{{camelCase class}}.factory';\n",
 			},
 		],
@@ -291,7 +291,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_stores/{{camelCase class}}/index.ts",
+				path: "src/_stores/{{camelCase class}}/firebase.ts",
 				template: "export * from './{{camelCase class}}.model';\n",
 			},
 		],
@@ -319,7 +319,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/_stores/{{camelCase class}}/index.ts",
+				path: "src/_stores/{{camelCase class}}/firebase.ts",
 				template: "export * from './_{{camelCase class}}.store';\n",
 			},
 		],
@@ -342,7 +342,7 @@ export default function (plop) {
 			},
 			{
 				type: "append",
-				path: "src/types/index.ts",
+				path: "src/types/firebase.ts",
 				template: "export * from './I{{ pascalCase class}}';\n",
 			},
 		],

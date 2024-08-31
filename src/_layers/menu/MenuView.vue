@@ -46,7 +46,7 @@ import { useUIStore, useUserStore } from "@/_stores";
 import { EMIT } from "@/enum";
 import FontIconComponent from '@/icons/FontIconComponent.vue';
 import { FontIconAnimate, FontIconFlip, FontIconRotate, FontIconSize, FontIconType, } from '@/icons/FontIconConstants';
-import { menuOptions, } from "@/router";
+import { menuOptions, } from "@/router/router";
 import { Signals } from "@/signals";
 import { onMounted, } from 'vue';
 

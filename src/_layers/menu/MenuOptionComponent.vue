@@ -49,8 +49,8 @@ const _name: string = "MenuOptionComponent";
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  COMPUTED
 const isSelected = computed(() => {
-  const currentRoute = useUIStore().currentRoute;
-  return props.menuOption.name === currentRoute.name;
+  const currentRoute = useUIStore().selectedRoute;
+  return props.menuOption.name === currentRoute?.name;
 })
 
 

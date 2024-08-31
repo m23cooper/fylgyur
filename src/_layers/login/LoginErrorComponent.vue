@@ -41,7 +41,7 @@ defineExpose({
 
 interface ILoginErrorComponentProps
 {
-  errorMsg: string;
+  errorMsg: string | null;
 }
 
 const props: Readonly<ILoginErrorComponentProps> = withDefaults(defineProps<ILoginErrorComponentProps>(), {

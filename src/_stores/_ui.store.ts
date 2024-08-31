@@ -4,8 +4,8 @@ import {acceptHMRUpdate, defineStore} from 'pinia';
 
 import { ROUTE_NAMES } from "@/enum";
 import type { LocationQueryRaw, RouteLocationNormalizedLoaded } from "vue-router";
-import { useRouter } from "vue-router";
-import { router, routes } from "@/router";
+
+import { router, routes } from "@/router/router";
 import { find as _find, } from 'lodash-es';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ export interface IUIState
 	loadingMsg: string;
 }
 
-export const useUIStore = defineStore('_ui', {
+export const useUIStore = defineStore('_ui.store', {
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//  State
 	state: ():IUIState => ({
@@ -38,9 +38,9 @@ export const useUIStore = defineStore('_ui', {
 	//  Getters
 	getters: {
 		//  @ts-ignore: vue-index weirdness
-		currentRoute: (state): IRoute => {
-			const current = useRouter().currentRoute.value;
-			const route: any = _find(routes, { 'name': current.name });
+		selectedRoute: (state): IRoute => {
+			const current = router.currentRoute.value;
+			const route: any = _find(routes, { 'name': current.name});
 			return {
 				component: route?.component,
 				fontIconType: String(route?.fontIconType),
@@ -49,17 +49,6 @@ export const useUIStore = defineStore('_ui', {
 				fullPath: String(route?.fullPath),
 				path: String(route?.path),
 				title: String(route?.title),
-			}
-		},
-		//  @ts-ignore: vue-index weirdness
-		urlQuery: (state): IUrlQuery => {
-			const query = useRouter().currentRoute.value.query;
-			return {
-				app_uuid: String(query.app_uuid),
-				pen_uuid: String(query.pen_uuid),
-				emp_uuid: String(query.emp_uuid),
-				prv_uuid: String(query.prv_uuid),
-				type: String(query.type),
 			}
 		},
 	},
@@ -74,26 +63,17 @@ export const useUIStore = defineStore('_ui', {
 			//  @ts-ignore
 			if(this.INITIALISED) return;
 			Signals.LOGOUT.add(this.onLogout);
-			// this.$patch( (state) => state.currentRoute = findRouteData() );
-		},
-		// setLoading({ loading, }: { loading: boolean, })
-		// {
-		// 	this.isLoading = loading;
-		// },
-		// setLoggedIn({ loggedIn, }: { loggedIn: boolean, })
-		// {
-		// 	this.isLoggedIn = loggedIn;
-		// },
-		checkCanAccess()
-		{
-
 		},
 
-		async goRoute(name: ROUTE_NAMES, query:LocationQueryRaw, )
+		async goRoute(name: ROUTE_NAMES, query?:LocationQueryRaw, )
 		{
 			this.showLoading(name);
 			await router.push({ name, query, });
 			this.isLoading = false;
+		},
+		onAppLoaded() {
+			this.isLoading = false;
+			this.isInit = false;
 		},
 		showLoading(msg: string = "Loading...") {
 			this.loadingMsg = msg;

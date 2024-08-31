@@ -1,7 +1,7 @@
 <!--  Generated from IconButton plop template -->
 
 <template>
-  <div class="btn btn-primary hover:scale-110 transition dev7" @click.stop="emit(EMIT.CLICK)">
+  <div class="btn btn-primary hover:scale-110 transition" @click.stop="emit(EMIT.CLICK)">
     <FontIconComponent
         :icon-type="FontIconType.ADD"
         :fontIconSize="props.fontIconSize"

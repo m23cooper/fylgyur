@@ -1,8 +1,10 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-    <div id="WelcomeLayer" class="container h-fill">
-      <div class="dev4">WelcomeLayer</div>
+    <div id="ConsultationLayer" class="flex grid grid-cols-12 w-screen min-h-screen">
+       <JourneyView class="col-span-2 dev1" />
+       <FormView class="col-span-5 dev3" />
+       <InsightView class="col-span-5 dev5" />
     </div>
 </template>
 
@@ -13,6 +15,9 @@
     import { storeToRefs } from 'pinia'
     import { useUIStore } from "@/_stores";
     import { Signals } from "@/signals";
+    import JourneyView from "@/_layers/consultation/JourneyView.vue";
+    import FormView from "@/_layers/consultation/FormView.vue";
+    import InsightView from "@/_layers/consultation/InsightView.vue";
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
