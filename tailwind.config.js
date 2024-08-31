@@ -1,4 +1,5 @@
 
+import forms from '@tailwindcss/forms'
 import typography from '@tailwindcss/typography'
 import tailwind from "@vueform/vueform/tailwind";
 import daisyui from "daisyui"

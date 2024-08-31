@@ -2,7 +2,7 @@
 
 <template>
     <div id="InsightView" class="container h-fill">
-      <h2 class="self-start p-2">InsightView</h2>
+      <h2 class="prose self-start p-2">InsightView</h2>
     </div>
 </template>
 
