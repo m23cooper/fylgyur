@@ -6,7 +6,7 @@
     >
       <h2 class="prose self-start p-2">FormView</h2>
       <div
-          v-if="currentFormName !== null"
+          v-if="currentForm !== null"
           class="card rounded bg-white mx-10 p-8 text-slate-800"
       >
         <component :is="formComponent"></component>
@@ -51,7 +51,7 @@ import {onMounted, onUpdated, onUnmounted, Ref, ref, computed, markRaw, shallowR
   const _store = useConsultationStore();
 
   const {
-    currentFormName,
+    currentForm,
   } = storeToRefs(_store);
 
 
@@ -86,8 +86,13 @@ import {onMounted, onUpdated, onUnmounted, Ref, ref, computed, markRaw, shallowR
   //  Methods
   const loadFormVue = async () => {
     try {
-      const component = await import(`../../forms/${currentFormName.value}.vue`);
-      return component.default;
+      if (currentForm?.value) {
+        console.log(`loadFormVue ${currentForm.value.name}`)
+        useUIStore().showLoading(`Loading ${currentForm.value.title}`)
+        const component = await import(`../../forms/${currentForm.value.name}.vue`);
+        useUIStore().hideLoading();
+        return component.default;
+      }
     } catch (error) {
       console.error('Failed to load component:', error);
       return null;
@@ -95,12 +100,13 @@ import {onMounted, onUpdated, onUnmounted, Ref, ref, computed, markRaw, shallowR
   };
 
   const loadFormComponent = async () => {
+    console.log(`loadFormComponent ${currentForm}`)
     formComponent.value = await loadFormVue();
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
-  watch(currentFormName, loadFormComponent)
+  watch(currentForm, loadFormComponent)
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks

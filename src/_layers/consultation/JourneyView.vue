@@ -3,7 +3,7 @@
 <template>
     <div id="JourneyView" class="container">
       <h2 class="prose self-start p-2 border-b-2 border-fuchsia-700">JourneyView</h2>
-      <div class="container p-5 flex flex-col gap-4 items-center">
+      <div class="container p-5 flex flex-col gap-4 items-center" v-if="forms">
         <div class="" v-for="form in forms" :key="form.id">
           <JourneyCardComponent :form @click="onCardClick(form.name)"/>
         </div>
@@ -50,7 +50,7 @@
 
   const {
     forms,
-    currentFormName,
+    currentForm,
   } = storeToRefs(_store);
 
 

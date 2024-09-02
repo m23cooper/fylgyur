@@ -2,17 +2,21 @@
 import {acceptHMRUpdate, defineStore} from 'pinia';
 // import { consultationService, } from "@/_services";
 import { each as _each, filter as _filter, map as _map, find as _find} from 'lodash-es';
-import {useCollection, useFirestore} from "vuefire";
-import {formsCollection} from "@/firebase/firebase";
+import {useCollection, useDocument, useFirestore, } from "vuefire";
+import {collection, CollectionReference, DocumentData} from "firebase/firestore";
+import {db} from "@/firebase/firebase";
+import {Ref, watch} from "vue";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
 
 export interface IConsultationState
 {
-    forms: any | null;
-    currentForm: any | null;
+    forms: any;
+    selectedForm: any | null;
+    formsCollectionRef: Ref<any> | null
 }
+
 
 export const useConsultationStore = defineStore(`_consultation.store`, {
 
@@ -20,22 +24,16 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//  State
 	state: ():IConsultationState => ({
-		forms: [
-            {
-                name: "BronzeForm"
-            },
-            {
-                name: "SilverForm"
-            },
-        ],
-        currentForm: null,
+		forms: [],
+        selectedForm: null,
+        formsCollectionRef: null,
 	}),
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//  Getters
 	getters: {
         formCount: (state) => state.forms.length,
-        currentFormName: (state) => state.currentForm?.name || null,
+        currentForm: (state) => state.selectedForm || state.forms[0] || null,
 	},
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,20 +45,19 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
     async init() {
       //  @ts-ignore
       if (this.INITIALISED) return Promise.resolve(this);
-        // this.forms = useCollection(formsCollection);
-        console.log(this.forms);
-      this.setCurrentForm("BronzeForm")
-      // return await pensionService.fetchPension(params)
-      //     .then(( { data } ) => {
-      //         //  mutate state
-      //     })
+        this.forms = useCollection(collection(db, 'forms'));
+
     },
-      setCurrentForm( formName: string): void {
-        const form = _find(this.forms, (form) => form.name === formName);
+      setCurrentForm( name: string): void {
+        console.log(`setCurrentForm ${name}`)
+          console.dir(this.forms)
+        const form = _find(this.forms, (form) => form.name === name);
         if(!form){
-            throw new Error(`setCurrentForm doesn't recognise formName ${formName}`);
+            throw new Error(`setCurrentForm doesn't recognise form name ${name}`);
+        } else {
+            this.selectedForm = form;
+            console.log(`setCurrentForm set to: ${form.name}`)
         }
-        this.currentForm = form;
       }
   },
 

@@ -67,34 +67,6 @@ export default {
           description: 'Your birthday is not visible others.',
           displayFormat: 'MMMM Do, YYYY',
         },
-        country: {
-          type: 'select',
-          search: true,
-          native: false,
-          inputType: 'search',
-          autocomplete: 'disabled',
-          placeholder: 'Country',
-          items: '/json/countries.json',
-          default: 'AF',
-        },
-        state: {
-          type: 'select',
-          search: true,
-          native: false,
-          inputType: 'search',
-          autocomplete: 'disabled',
-          placeholder: 'State',
-          items: '/json/states.json',
-          conditions: [
-            [
-              'country',
-              'in',
-              [
-                'US',
-              ],
-            ],
-          ],
-        },
         phone: {
           type: 'phone',
           placeholder: 'Phone',
@@ -104,18 +76,6 @@ export default {
           fieldName: 'Phone',
           allowIncomplete: true,
           unmask: true,
-        },
-        email: {
-          type: 'text',
-          inputType: 'email',
-          rules: [
-            'required',
-            'max:255',
-            'email',
-          ],
-          placeholder: 'Email',
-          fieldName: 'Email',
-          description: 'You will receive a confirmation letter to this email.',
         },
       },
     })
