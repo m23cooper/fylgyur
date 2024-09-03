@@ -43,7 +43,8 @@ try {
     await kindeClient.handleRedirectToApp(new URL(window.location.toString()));
     // Redirect to Home page, etc...
 } catch (error) {
-    ErrorManager.onError(error)
+    // ErrorManager.onError(error)
+    // TODO: if(useUserStore().user)
     useUIStore().goRoute(ROUTE_NAMES.HOME, );
 }
 

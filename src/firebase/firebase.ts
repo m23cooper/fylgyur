@@ -32,14 +32,10 @@ const firebaseApp = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(firebaseApp);
 
 // used for the firestore refs
-// export const db = initializeFirestore(firebaseApp, {
-//     experimentalAutoDetectLongPolling: false,
-//     // experimentalForceLongPolling: true,
-//
-//     // useFetchStreams: false,
-// })
-
-const db = getFirestore(firebaseApp)
+const db = initializeFirestore(firebaseApp, {
+    // experimentalAutoDetectLongPolling: false,
+    // experimentalForceLongPolling: true,
+})
 
 export {
     firebaseApp,
