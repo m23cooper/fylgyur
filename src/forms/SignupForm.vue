@@ -1,13 +1,3 @@
-<script>
-export default {
-  data() {
-    return {
-      email: ""
-    }
-  }
-}
-</script>
-
 <template>
   <div class="bg-white h-full py-20">
     <div class="mx-auto max-w-7xl  px-6 lg:px-8">
@@ -17,9 +7,11 @@ export default {
       <div class="w-full tracking-tight text-gray-900 mt-10">
         <FormKit
             type="form"
+            id="formId"
+            ref="formRef"
             :actions="false"
             #default="{ disabled }"
-            @submit="onSubmit(this)"
+            @submit="onSubmit"
             use-local-storage
         >
           <div class="grid grid-cols-12 gap-10 lg:gap-8">
@@ -40,7 +32,8 @@ export default {
               />
             </div>
             <div class="flex flex-row col-span-12 justify-center">
-              <FormKit type="submit" :disabled="disabled" label="Register" />
+              <FormKit type="button" label="Clear" @click.prevent="onClearClick" />
+              <FormKit type="submit" :disabled="disabled as boolean" label="Register" />
             </div>
           </div>
         </FormKit>
@@ -49,17 +42,28 @@ export default {
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { FormKit } from '@formkit/vue'
-import {EMIT} from "@/enum";
+<script setup lang="ts">
+  import { ref, Ref, onMounted } from 'vue'
+  import { FormKit,  } from '@formkit/vue'
+  import { reset as resetForm } from '@formkit/core'
+  import {EMIT} from "@/enum";
 
-const emit = defineEmits([EMIT.SUBMIT,])
+  const formRef: Ref = ref(null);
 
-const onSubmit = (event) => {
-  console.log('Form submitted:')
-  emit(EMIT.SUBMIT)
-}
+  const emit = defineEmits([EMIT.SUBMIT,])
+
+  const onSubmit = (event) => {
+    console.log('Form submitted:')
+    emit(EMIT.SUBMIT)
+  }
+
+  const onClearClick = () => {
+    resetForm('formId')
+  }
+
+  onMounted(() => {
+    // form.value = useFormKitNode('form');
+  });
 </script>
 
 <style scoped>
