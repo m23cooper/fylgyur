@@ -20,9 +20,10 @@ export default {
             :actions="false"
             #default="{ disabled }"
             @submit="onSubmit(this)"
+            use-local-storage
         >
           <div class="grid grid-cols-12 gap-10 lg:gap-8">
-            <div class="flex flex-col col-span-6">
+            <div class="flex flex-col col-span-6 justify-end">
               <FormKit type="group" id="full_name">
                   <FormKit type="text" name="first_name" label="First Name" />
                   <FormKit type="text" name="family_name" label="Family Name" />
@@ -37,7 +38,8 @@ export default {
                   placeholder="Enter your email"
                   validation="required|email"
               />
-
+            </div>
+            <div class="flex flex-row col-span-12 justify-center">
               <FormKit type="submit" :disabled="disabled" label="Register" />
             </div>
           </div>

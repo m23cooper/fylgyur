@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@formkit/addons':
+        specifier: ^1.6.5
+        version: 1.6.5
       '@formkit/core':
         specifier: ^1.6.5
         version: 1.6.5
@@ -659,6 +662,12 @@ packages:
 
   '@firebase/webchannel-wrapper@1.0.1':
     resolution: {integrity: sha512-jmEnr/pk0yVkA7mIlHNnxCi+wWzOFUg0WyIotgkKAb2u1J7fAeDBcVNSTjTihbAYNusCLQdW5s9IJ5qwnEufcQ==}
+
+  '@formkit/addons@1.6.5':
+    resolution: {integrity: sha512-lI42uFX0a1UV/0J4ZzfuBAdoPykpDLOpH/fPNn6vI8hAKtkbOiStNZDex0r3aam0z3O1vPCtgUtsBCdWBVzxkw==}
+
+  '@formkit/auto-animate@0.8.2':
+    resolution: {integrity: sha512-SwPWfeRa5veb1hOIBMdzI+73te5puUBHmqqaF1Bu7FjvxlYSz/kJcZKSa9Cg60zL0uRNeJL2SbRxV6Jp6Q1nFQ==}
 
   '@formkit/core@1.6.5':
     resolution: {integrity: sha512-LLq8+vLd9ddPYA0NkyvnKycN4ESU8Wqcl9TrllPyU/axduJunSIJMZz4LHzlwK8G26b0pQNegXF/hXaj4wbmng==}
@@ -3549,6 +3558,15 @@ snapshots:
       tslib: 2.7.0
 
   '@firebase/webchannel-wrapper@1.0.1': {}
+
+  '@formkit/addons@1.6.5':
+    dependencies:
+      '@formkit/auto-animate': 0.8.2
+      '@formkit/core': 1.6.5
+      '@formkit/inputs': 1.6.5
+      '@formkit/utils': 1.6.5
+
+  '@formkit/auto-animate@0.8.2': {}
 
   '@formkit/core@1.6.5':
     dependencies:
