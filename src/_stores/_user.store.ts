@@ -4,7 +4,7 @@ import { useUIStore } from "@/_stores";
 import { userService } from "@/_services";
 import { ILoginParams, } from '@/types';
 import { IUser, IUserPermissions, } from "@/types";
-import {defineStore} from "pinia";
+import {defineStore, DefineStoreOptions, StateTree} from "pinia";
 import {kindeClient} from "@/kinde/kindeClient";
 
 export interface IUserStoreState
@@ -12,12 +12,18 @@ export interface IUserStoreState
 	permissions: IUserPermissions;
 	isLoggedIn: boolean;
 	token: string | null;
-	user: IUser;
-	userType: any;
+	user: any;
 	userProfile: any;
 	_retries: number;
 }
 
+// interface PersistedStoreOptions<Id, S, G, A> extends DefineStoreOptions<Id, S, G, A> {
+// 	persist?: {
+// 			key: string;
+// 			storage: Storage;
+// 			paths: [];
+// 	};
+// }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
@@ -29,19 +35,17 @@ export const useUserStore = defineStore('_user.store', {
 		permissions: {},
 		isLoggedIn: false,
 		token: null,
-		user: <IUser>{},
-		userType: null,
+		user: null,
 		userProfile: null,
 		_retries: 2,
 	}),
-	// persist: {
-	// 	enabled: true,
-	// 	strategies: [
-	// 		// { key: 'user', storage: sessionStorage, paths: [ 'user', ] },
-	// 		{ key: 'fab-token', storage: localStorage, paths: ['token', ] },
-	// 		{ key: 'fab-user', storage: localStorage, paths: ['user', ] },
-	// 	],
-	// },
+
+	persist: {
+		// 	// { key: 'user', storage: sessionStorage, paths: [ 'user', ] },
+		// 	// { key: 'fab-token', storage: localStorage, paths: ['token', ] },
+		key: 'user', storage: localStorage, paths: ['user', ]
+	},
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//  Getters
@@ -64,7 +68,7 @@ export const useUserStore = defineStore('_user.store', {
 			this.isLoggedIn = await kindeClient.isAuthenticated();
 			console.log(`_user.store.init: isLoggedIn=${this.isLoggedIn}`)
 			if(this.isLoggedIn){
-				this.userType = await kindeClient.getUser();
+				this.user = await kindeClient.getUser();
 				this.userProfile = await kindeClient.getUserProfile();
 			}
 
@@ -82,6 +86,7 @@ export const useUserStore = defineStore('_user.store', {
 		},
 		async logout() {
 			const url = await kindeClient.logout();
+			this.user = null;
 			// Redirect
 			window.location.href = url.toString();
 		},
@@ -89,6 +94,7 @@ export const useUserStore = defineStore('_user.store', {
 			this.isLoggedIn = false;
 		}
 	},
+
 })
 
 
