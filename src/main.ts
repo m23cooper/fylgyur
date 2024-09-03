@@ -8,9 +8,6 @@ import {VueFire, VueFireAuth} from 'vuefire'
 import { firebaseApp } from '@/firebase/firebase'
 
 
-import Vueform from '@vueform/vueform'
-import vueformConfig from "../vueform.config";
-
 
 import { router } from './router/router'
 
@@ -33,7 +30,6 @@ app.use(VueFire, {
         VueFireAuth(),
     ],
 })
-app.use(Vueform, vueformConfig)
 app.use(DecoratedPinia)
 app.use(router)
 
