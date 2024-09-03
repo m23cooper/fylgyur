@@ -2,8 +2,8 @@
 
 <template>
     <div id="HomeLayer" class="flex flex-col">
-      <HeroView />
-      <MentorView class="container" />
+      <HeroView class="container" />
+      <SignupForm class="container" @submit="onSignupFormSubmit" />
     </div>
 </template>
 
@@ -12,10 +12,12 @@
 <script setup lang="ts">
     import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
     import { storeToRefs } from 'pinia'
-    import { useUIStore } from "@/_stores";
+    import {useUIStore, useUserStore} from "@/_stores";
     import { Signals } from "@/signals";
     import HeroView from './HeroView.vue'
-    import MentorView from "./MentorView_old.vue";
+    import {kindeClient} from "@/kinde/kindeClient";
+    import SignupForm from "@/forms/SignupForm.vue";
+    import { EMIT } from '@/enum';
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,6 +66,10 @@
     //  {
     //      // handle event
     //  }
+    function onSignupFormSubmit(){
+      console.log(`HomeLayer onSignupFormSubmit`);
+      useUserStore().register();
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //  Hooks

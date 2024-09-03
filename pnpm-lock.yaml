@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@formkit/core':
+        specifier: ^1.6.5
+        version: 1.6.5
       '@formkit/vue':
         specifier: ^1.6.5
         version: 1.6.5(tailwindcss@3.4.10)(vue@3.4.38(typescript@5.5.4))

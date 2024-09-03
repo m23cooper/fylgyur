@@ -9,21 +9,57 @@ export default {
 </script>
 
 <template>
-  <div class="bg-white py-16 sm:py-24 lg:py-32">
-    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 lg:grid-cols-12 lg:gap-8 lg:px-8">
-      <div class="max-w-xl text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:col-span-7">
-        <h2 class="inline sm:block lg:inline xl:block">Want to try our AI pathfinder tool?</h2>
-        {{ ' ' }}
-        <p class="inline sm:block lg:inline xl:block">Sign up for our newsletter. </p>
+  <div class="bg-white h-full py-20">
+    <div class="mx-auto max-w-7xl  px-6 lg:px-8">
+      <h2 class="text-slate-900 text-xl font-bold inline sm:block lg:inline xl:block">Want to try our AI pathfinder tool?</h2>
+      {{ ' ' }}
+      <p class="inline sm:block lg:inline xl:block">Sign up for our newsletter. </p>
+      <div class="w-full tracking-tight text-gray-900 mt-10">
+        <FormKit
+            type="form"
+            :actions="false"
+            #default="{ disabled }"
+            @submit="onSubmit(this)"
+        >
+          <div class="grid grid-cols-12 gap-10 lg:gap-8">
+            <div class="flex flex-col col-span-6">
+              <FormKit type="group" id="full_name">
+                  <FormKit type="text" name="first_name" label="First Name" />
+                  <FormKit type="text" name="family_name" label="Family Name" />
+              </FormKit>
+              <FormKit type="text" name="occupation" label="Occupation" />
+            </div>
+            <div class="flex flex-col col-span-6">
+              <FormKit type="textarea" name="general" label="What advice are you looking for?" />
+              <FormKit
+                  type="email"
+                  label="Email Address"
+                  placeholder="Enter your email"
+                  validation="required|email"
+              />
+
+              <FormKit type="submit" :disabled="disabled" label="Register" />
+            </div>
+          </div>
+        </FormKit>
       </div>
-      <form @submit.prevent @submit="$emit('setEmail', email)" class="w-full max-w-md lg:col-span-5 lg:pt-2">
-        <div class="flex gap-x-4">
-          <label for="email-address" class="sr-only">Email address</label>
-          <input v-model="email" id="email-address" name="email" type="email" autocomplete="email" required="" class="min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter your email" />
-          <button type="submit" class="flex-none rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Subscribe</button>
-        </div>
-        <p class="mt-4 text-sm leading-6 text-gray-900">We care about your privacy. You can unsubscribe at any time.</p>
-      </form>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+import { FormKit } from '@formkit/vue'
+import {EMIT} from "@/enum";
+
+const emit = defineEmits([EMIT.SUBMIT,])
+
+const onSubmit = (event) => {
+  console.log('Form submitted:')
+  emit(EMIT.SUBMIT)
+}
+</script>
+
+<style scoped>
+/* Add any custom styles here */
+</style>

@@ -27,17 +27,18 @@
 
 <script setup lang="ts">
   import { Signals } from "@/signals";
-  import { useUIStore, useUserStore, } from "@/_stores";
-  import { StoreGeneric, storeToRefs } from "pinia";
   import { nextTick, onBeforeMount, onMounted, ref } from 'vue';
-
-  import LoadingLayer from "@/_layers/loading/_loading.layer.vue";
-
-  import NavLayer from '@/_layers/nav/_nav.layer.vue';
-  import NotificationLayer from "@/_layers/notification/_notification.layer.vue";
-  import * as anims from '@/utils/animation'
   import {kindeClient} from "@/kinde/kindeClient";
   import {useRouter} from "vue-router";
+  import { StoreGeneric, storeToRefs } from "pinia";
+
+  import { useUIStore, useUserStore, } from "@/_stores";
+  import * as anims from '@/utils/animation'
+  import {ROUTE_NAMES} from "@/enum";
+
+  import LoadingLayer from "@/_layers/loading/_loading.layer.vue";
+  import NavLayer from '@/_layers/nav/_nav.layer.vue';
+  import NotificationLayer from "@/_layers/notification/_notification.layer.vue";
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
@@ -100,8 +101,19 @@
 
   onMounted( async () => {
     console.log("App.onMounted");
-    // const isLoggedIn = await kindeClient.isAuthenticated();
-    // console.log("App.onMounted " + isLoggedIn);
+
+    const isLoggedIn = await kindeClient.isAuthenticated();
+    console.log("main.ts " + isLoggedIn);
+    if (isLoggedIn) {
+      try {
+        await kindeClient.handleRedirectToApp(new URL(window.location.toString()));
+        // Redirect to Home page, etc...
+      } catch (error) {
+        // ErrorManager.onError(error)
+        // TODO: if(useUserStore().user)
+        useUIStore().goRoute(ROUTE_NAMES.HOME,);
+      }
+    }
     _uiStore.onAppLoaded()
   })
 
