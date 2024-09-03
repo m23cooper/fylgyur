@@ -1,6 +1,6 @@
 import ErrorManager from "@/utils/ErrorManager";
 import { createPinia, } from "pinia";
-import piniaPersist from 'pinia-plugin-persist';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { ref } from "vue";
 import { debounce as _debounce } from 'lodash-es'
 
@@ -15,10 +15,11 @@ declare module 'pinia' {
 
 const _pinia = createPinia();
 _pinia
+	.use(piniaPluginPersistedstate)
 	.use(addProps)
 	.use(addDebounce)
-	.use(onAction)
-	.use(piniaPersist);
+	.use(onAction);
+
 
 
 

@@ -3,7 +3,7 @@ import './index.css'
 import {createApp, nextTick} from 'vue'
 import { DecoratedPinia, useUIStore, useUserStore, } from "@/_stores";
 
-import { VueFire } from 'vuefire'
+import {VueFire, VueFireAuth} from 'vuefire'
 // the file we created above with `database`, `firestore` and other exports
 import { firebaseApp } from '@/firebase/firebase'
 
@@ -27,9 +27,12 @@ dom.watch();
 
 const app = createApp(App)
 app.config.errorHandler = ( error ) => ErrorManager.onVueError(error);
-// app.use(VueFire, {
-//     firebaseApp
-// })
+app.use(VueFire, {
+    firebaseApp,
+    modules: [
+        VueFireAuth(),
+    ],
+})
 app.use(Vueform, vueformConfig)
 app.use(DecoratedPinia)
 app.use(router)
@@ -40,7 +43,8 @@ try {
     await kindeClient.handleRedirectToApp(new URL(window.location.toString()));
     // Redirect to Home page, etc...
 } catch (error) {
-    ErrorManager.onError(error)
+    // ErrorManager.onError(error)
+    // TODO: if(useUserStore().user)
     useUIStore().goRoute(ROUTE_NAMES.HOME, );
 }
 

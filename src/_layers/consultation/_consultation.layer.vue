@@ -2,9 +2,9 @@
 
 <template>
     <div id="ConsultationLayer" class="flex grid grid-cols-12 w-screen min-h-screen">
-       <JourneyView class="col-span-2 dev1" />
-       <FormView class="col-span-5 dev3" />
-       <InsightView class="col-span-5 dev5" />
+       <JourneyView class="col-span-1 border-r-2 border-fuchsia-700" />
+       <FormView class="col-span-6 border-r-2 border-fuchsia-700" />
+       <InsightView class="col-span-5" />
     </div>
 </template>
 
@@ -13,7 +13,7 @@
 <script setup lang="ts">
     import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
     import { storeToRefs } from 'pinia'
-    import { useUIStore } from "@/_stores";
+    import {useConsultationStore, useUIStore} from "@/_stores";
     import { Signals } from "@/signals";
     import JourneyView from "@/_layers/consultation/JourneyView.vue";
     import FormView from "@/_layers/consultation/FormView.vue";
@@ -24,6 +24,8 @@
     //  Private
     const _name: string = "WelcomeLayer";
 
+    const _store = useConsultationStore();
+    _store.init();
 
     // const {
     // } = storeToRefs(_store);

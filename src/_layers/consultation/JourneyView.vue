@@ -1,10 +1,12 @@
 <!--  Generated from VueView plop template -->
 
 <template>
-    <div id="JourneyView" class="container flex flex-col gap-4 h-fill items-center">
-      <h2 class="self-start p-2">JourneyView</h2>
-      <div class="card bg-base-100 w-96 shadow-xl" v-for="form in forms" :key="form.id">
-        <div class="">{{ form.name }}</div>
+    <div id="JourneyView" class="container">
+      <h2 class="prose self-start p-2 border-b-2 border-fuchsia-700">JourneyView</h2>
+      <div class="container p-5 flex flex-col gap-4 items-center" v-if="forms">
+        <div class="" v-for="form in forms" :key="form.id">
+          <JourneyCardComponent :form @click="onCardClick(form.name)"/>
+        </div>
       </div>
     </div>
 </template>
@@ -22,6 +24,7 @@
   import ADDButton from "@/buttons/ADDButton.vue";
   import EDITButton from "@/buttons/EDITButton.vue";
   import ModalComponent from "@/_components/modal/ModalComponent.vue";
+  import JourneyCardComponent from "@/_layers/consultation/_components/JourneyCardComponent.vue";
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -47,6 +50,7 @@
 
   const {
     forms,
+    currentForm,
   } = storeToRefs(_store);
 
 
@@ -87,6 +91,9 @@
   //  {
   //      // handle event
   //  }
+  function onCardClick(name:string): void {
+    _store.setCurrentForm(name);
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks

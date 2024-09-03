@@ -1,7 +1,7 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-  <div id="app" class="w-screen min-h-screen">
+  <div id="app" class="w-screen min-h-screen bg-slate-600">
     <div v-if="!isInit">
       <div class="flex flex-col w-screen min-h-screen">
         <NavLayer class="fixed h-[5rem] z-[5]"></NavLayer>

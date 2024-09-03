@@ -2,34 +2,38 @@
 import {acceptHMRUpdate, defineStore} from 'pinia';
 // import { consultationService, } from "@/_services";
 import { each as _each, filter as _filter, map as _map, find as _find} from 'lodash-es';
+import {useCollection, useDocument, useFirestore, } from "vuefire";
+import {collection, CollectionReference, DocumentData} from "firebase/firestore";
+import {db} from "@/firebase/firebase";
+import {Ref, watch} from "vue";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
 
 export interface IConsultationState
 {
-    forms: any[];
+    forms: any;
+    selectedForm: any | null;
+    formsCollectionRef: Ref<any> | null
 }
 
+
 export const useConsultationStore = defineStore(`_consultation.store`, {
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//  State
 	state: ():IConsultationState => ({
-		forms: [
-            {
-                name: "Form1"
-            },
-            {
-                name: "Form2"
-            },
-        ],
+		forms: [],
+        selectedForm: null,
+        formsCollectionRef: null,
 	}),
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//  Getters
 	getters: {
-      formCount: (state) => state.forms.length,
+        formCount: (state) => state.forms.length,
+        currentForm: (state) => state.selectedForm || state.forms[0] || null,
 	},
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,12 +45,23 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
     async init() {
       //  @ts-ignore
       if (this.INITIALISED) return Promise.resolve(this);
-      // return await pensionService.fetchPension(params)
-      //     .then(( { data } ) => {
-      //         //  mutate state
-      //     })
+        this.forms = useCollection(collection(db, 'forms'));
+
     },
+      setCurrentForm( name: string): void {
+        console.log(`setCurrentForm ${name}`)
+          console.dir(this.forms)
+        const form = _find(this.forms, (form) => form.name === name);
+        if(!form){
+            throw new Error(`setCurrentForm doesn't recognise form name ${name}`);
+        } else {
+            this.selectedForm = form;
+            console.log(`setCurrentForm set to: ${form.name}`)
+        }
+      }
   },
+
+
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

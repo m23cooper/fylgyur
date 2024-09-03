@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection } from 'firebase/firestore'
+// import { getAnalytics } from "firebase/analytics";
+import { getFirestore, collection, initializeFirestore, setLogLevel, } from 'firebase/firestore'
+
 // ... other firebase imports
 
 const {
@@ -25,12 +26,24 @@ const firebaseConfig = {
     measurementId: VITE_FIREBASE_MEASUREMENT_ID
 };
 
-export const firebaseApp = initializeApp(firebaseConfig);
-export const analytics = getAnalytics(firebaseApp);
+// setLogLevel("debug");
+
+const firebaseApp = initializeApp(firebaseConfig);
+// export const analytics = getAnalytics(firebaseApp);
 
 // used for the firestore refs
-const db = getFirestore(firebaseApp)
+const db = initializeFirestore(firebaseApp, {
+    // experimentalAutoDetectLongPolling: false,
+    // experimentalForceLongPolling: true,
+})
+
+export {
+    firebaseApp,
+    db,
+}
+
+
 
 // here we can export reusable database references
-export const usersCollection = collection(db, 'users')
-export const formsCollection = collection(db, 'forms')
+// export const usersCollectionRef = collection(db, 'users')
+// export const formsCollectionRef = collection(db, 'forms')
