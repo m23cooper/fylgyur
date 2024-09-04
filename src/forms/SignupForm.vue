@@ -11,7 +11,6 @@
             ref="formRef"
             :actions="false"
             #default="{ disabled }"
-            @submit="onSubmit"
             use-local-storage
         >
           <div class="grid grid-cols-12 gap-10 lg:gap-8">
@@ -32,8 +31,8 @@
               />
             </div>
             <div class="flex flex-row col-span-12 justify-center">
-              <FormKit type="button" label="Clear" @click.prevent="onClearClick" />
-              <FormKit type="submit" :disabled="disabled as boolean" label="Register" />
+              <FormKit type="button" label="Clear" @click.prevent="onResetClick" />
+              <FormKit type="button" :disabled="disabled as boolean" label="Register" @click.prevent="onRegisterClick" />
             </div>
           </div>
         </FormKit>
@@ -46,18 +45,19 @@
   import { ref, Ref, onMounted } from 'vue'
   import { FormKit,  } from '@formkit/vue'
   import { reset as resetForm } from '@formkit/core'
-  import {EMIT} from "@/enum";
+  import { EMIT } from "@/enum";
 
   const formRef: Ref = ref(null);
 
-  const emit = defineEmits([EMIT.SUBMIT,])
+  const emit = defineEmits([EMIT.REGISTER, EMIT.RESET])
 
-  const onSubmit = (event) => {
-    console.log('Form submitted:')
-    emit(EMIT.SUBMIT)
+  const onRegisterClick = () => {
+    console.log('onRegisterClick')
+    emit(EMIT.REGISTER)
   }
 
-  const onClearClick = () => {
+  const onResetClick = () => {
+    emit(EMIT.RESET)
     resetForm('formId')
   }
 

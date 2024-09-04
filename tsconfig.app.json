@@ -4,7 +4,7 @@
     "vite-env.d.ts",
     "formkit.theme.ts",
     "formkit.config.ts",
-    "src/**/*", "src/**/*.vue"],
+    "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
