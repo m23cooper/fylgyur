@@ -1,7 +1,7 @@
 <!--  Generated from AsynchForm plop template -->
 
 <template>
-  <div id="{{ pascalCase class }}" class="container h-fill">
+  <div id="SilverForm" class="container h-fill">
     <FormKit
         type="form"
         :id="_name"
@@ -78,7 +78,7 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = "{{ pascalCase class }}";
+  const _name: string = "SilverForm";
 
   const formModel: Ref = ref(null);
 
@@ -130,16 +130,16 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`{{ pascalCase class }}View onMounted!`);
+    console.log(`SilverFormView onMounted!`);
     // _store.init();
   })
 
   // onUpdated(() => {
-  //   console.log(`{{ pascalCase class }}View onUpdated!`);
+  //   console.log(`SilverFormView onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`{{ pascalCase class }}View unmounted!`);
+  //   console.log(`SilverFormView unmounted!`);
   // })
 
 </script>

@@ -24,7 +24,7 @@
         </button>
       </div>
       <div v-else class="mr-5 space-x-4">
-        <span class="font-bold">Already a member?</span>
+        <span class="font-bold text-slate-50">Already a member?</span>
         <button
           class="btn btn-sm btn-primary shadow hover:shadow-lg"
           @click.prevent="onLoginClick"

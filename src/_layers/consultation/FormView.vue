@@ -1,21 +1,33 @@
 <!--  Generated from VueView plop template -->
 
 <template>
-  <div id="FormView" v-if="currentForm !== null">
+  <div
+    id="FormView"
+    v-if="currentForm !== null"
+    class="container flex flex-col dev4 p-6"
+  >
     <component
+      class="container rounded-xl bg-slate-200 p-6"
       :is="formComponent"
       ref="asyncCompRef"
       v-bind="currentForm.props"
     ></component>
-    <pre>{{ formModel }}</pre>
+    <!--    <pre>{{ formModel }}</pre>-->
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { ref, onMounted, shallowRef, watch, nextTick } from 'vue';
-  import type { ShallowRef, Component } from 'vue';
+  import {
+    ref,
+    onMounted,
+    shallowRef,
+    watch,
+    nextTick,
+    toRef,
+    ShallowRef,
+  } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useConsultationStore, useUIStore } from '@/_stores';
   // import * as _components from './_components';
@@ -44,12 +56,13 @@
   //  Private
   const _name: string = 'FormView';
 
-  const formComponent: ShallowRef<Component | null> = shallowRef(null);
+  const formComponent: ShallowRef<any | null> = shallowRef(null);
   const asyncCompRef = ref(null);
+  const formModel = ref();
 
   const _store = useConsultationStore();
 
-  const { currentForm, formModel } = storeToRefs(_store);
+  const { currentForm } = storeToRefs(_store);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -79,12 +92,16 @@
     console.log(`loadFormComponent ${currentForm.value?.id}`);
     //  wait for the component to be populated
     await nextTick(() => {
-      //  @ts-expect-error
-      const { formModel, hello } = asyncCompRef.value;
+      //  @ts-expect-error:  can't be arsed to hunt the type down
+      const { hello } = asyncCompRef.value;
       if (hello !== currentForm.value?.id) {
         throw new Error('Disjoint in form data');
       }
-      _store.registerFormModel({ formModel });
+
+      //  @ts-expect-error:  can't be arsed to hunt the type down
+      formModel.value = asyncCompRef.value.formModel;
+      _store.registerFormModel({ formModel: formModel.value });
+
       let ctx;
       ctx = useFormKitContextById(currentForm.value.id, () => {
         _store.registerFormContext({ ctx });

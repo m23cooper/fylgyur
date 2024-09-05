@@ -55,13 +55,13 @@ export default function (plop) {
         actions: [
             {
                 type: 'add',
-                path: 'src/_forms/{{ pascalCase class}}.ts',
+                path: 'src/_forms/{{ pascalCase class}}.vue',
                 templateFile: 'plop-templates/AsyncForm.hbs'
             },
             {
                 type: "append",
                 path: "src/_forms/index.ts",
-                template: "export * from './{{ pascalCase class}}';\n",
+                template: "export * from './{{ pascalCase class}}.vue';\n",
             },
         ],
     });

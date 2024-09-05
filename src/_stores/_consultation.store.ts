@@ -72,7 +72,7 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
     },
     registerFormModel({ formModel }): void {
       this.$patch({
-        formModel: formModel,
+        formModel: toRef(formModel),
       });
     },
   },
