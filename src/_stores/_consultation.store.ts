@@ -6,23 +6,20 @@ import {
   map as _map,
   find as _find,
 } from 'lodash-es';
-import { useCollection, useDocument, useFirestore } from 'vuefire';
-import {
-  collection,
-  CollectionReference,
-  DocumentData,
-} from 'firebase/firestore';
-import { db } from '@/firebase/firebase';
-import { Ref, watch } from 'vue';
+import { firestoreDefaultConverter, useCollection } from 'vuefire';
+import { collection, query, orderBy } from 'firebase/firestore';
+import { db } from '@/db/firebase';
+import { Ref, toRef, watch } from 'vue';
+import { IAsynchForm } from '@/types';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
 
 export interface IConsultationState {
-  forms: any;
-  selectedForm: any | null;
-  formsCollectionRef: Ref<any> | null;
+  forms: IAsynchForm[];
+  selectedForm: IAsynchForm | null;
   formContext: any;
+  formModel: any;
 }
 
 export const useConsultationStore = defineStore(`_consultation.store`, {
@@ -31,8 +28,8 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
   state: (): IConsultationState => ({
     forms: [],
     selectedForm: null,
-    formsCollectionRef: null,
     formContext: null,
+    formModel: null,
   }),
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,21 +48,32 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
     async init() {
       //  @ts-ignore
       if (this.INITIALISED) return Promise.resolve(this);
-      this.forms = useCollection(collection(db, 'forms'));
+      //  @ts-ignore
+      this.forms = useCollection<IAsynchForm>(
+        query(collection(db, 'forms'), orderBy('order')),
+      );
+      let test = 0;
     },
-    setCurrentForm(name: string): void {
+    setCurrentFormById({ id }): void {
       // console.log(`setCurrentForm ${name}`)
       // console.dir(this.forms)
-      const form = _find(this.forms, (form) => form.name === name);
+      const form = _find(this.forms, (form) => form.id === id);
       if (!form) {
-        throw new Error(`setCurrentForm doesn't recognise form name ${name}`);
+        throw new Error(`setCurrentForm doesn't recognise form name ${id}`);
       } else {
         this.selectedForm = form;
-        console.log(`_consultation.store.setCurrentForm set to: ${form.name}`);
+        console.log(
+          `_consultation.store.setCurrentForm set to: ${form.id} (${form.name})`,
+        );
       }
     },
     registerFormContext({ ctx }): void {
       this.formContext = ctx;
+    },
+    registerFormModel({ formModel }): void {
+      this.$patch({
+        formModel: formModel,
+      });
     },
   },
 });
@@ -74,7 +82,7 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
 //  acceptHMRUpdate
 if (import.meta.hot) {
   import.meta.hot.accept(
-    acceptHMRUpdate(useConsultationStore, import.meta.hot)
+    acceptHMRUpdate(useConsultationStore, import.meta.hot),
   );
 }
 

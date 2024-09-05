@@ -62,11 +62,11 @@
 
 <script setup lang="ts">
   import { ref, Ref, onMounted } from 'vue';
-  import { FormKit } from '@formkit/vue';
+  import { FormKit, FormKitComponent } from '@formkit/vue';
   import { reset as resetForm } from '@formkit/core';
   import { EMIT } from '@/enum';
 
-  const formRef: Ref = ref(null);
+  const formRef: Ref<FormKitComponent | null> = ref(null);
 
   const emit = defineEmits([EMIT.REGISTER, EMIT.RESET]);
 

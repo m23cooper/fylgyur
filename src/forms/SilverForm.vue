@@ -9,11 +9,11 @@
       <div class="w-full tracking-tight text-gray-900 mt-10">
         <FormKit
           type="form"
-          id="{{ name }}"
-          name="{{ name }}"
-          ref="formRef"
+          :id="name"
+          :name="name"
+          v-model="formModel"
           :actions="false"
-          #default="{ disabled }"
+          #default="{ disabled, state }"
           use-local-storage
         >
           <div class="grid grid-cols-12 gap-10 lg:gap-8">
@@ -27,6 +27,33 @@
                 label="What advice are you looking for?"
               />
             </div>
+            <div
+              v-if="hasButtons"
+              class="flex flex-row col-span-12 justify-stretch"
+            >
+              <FormKit
+                v-if="hasRegister"
+                type="button"
+                :disabled="disabled as boolean"
+                :label="registerLabel"
+                @click.prevent="onRegisterClick"
+              />
+              <FormKit
+                v-if="hasReset"
+                type="button"
+                :label="resetLabel"
+                @click.prevent="onResetClick"
+              />
+              <FormKit
+                v-if="hasSubmit"
+                type="button"
+                :label="submitLabel"
+                @click.prevent="onSubmitClick"
+              />
+            </div>
+          </div>
+          <div>
+            <pre>Dirty = {{ state }}</pre>
           </div>
         </FormKit>
       </div>
@@ -35,19 +62,30 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, Ref, onMounted, defineExpose } from 'vue';
+  import { ref, Ref, onMounted, computed, toRef } from 'vue';
   import { FormKit } from '@formkit/vue';
   import { reset as resetForm } from '@formkit/core';
   import { EMIT } from '@/enum';
+  import { IAsynchFormProps } from '@/types';
+
+  const {
+    hasReset = true,
+    hasRegister = false,
+    hasSubmit = true,
+    registerLabel = 'Register',
+    resetLabel = 'Reset',
+    submitLabel = 'Submit',
+  } = defineProps<IAsynchFormProps>();
 
   const name = 'SilverForm';
 
-  const formRef: Ref = ref(null);
+  const formModel: Ref = ref(null);
 
-  const emit = defineEmits([EMIT.REGISTER, EMIT.RESET]);
+  const emit = defineEmits([EMIT.REGISTER, EMIT.RESET, EMIT.SUBMIT]);
+
+  const hasButtons = computed(() => hasReset || hasRegister || hasSubmit);
 
   function onRegisterClick() {
-    console.log('onRegisterClick');
     emit(EMIT.REGISTER);
   }
 
@@ -56,8 +94,12 @@
     resetForm(name);
   }
 
+  function onSubmitClick() {
+    emit(EMIT.SUBMIT);
+  }
+
   defineExpose({
-    formRef,
+    formModel: toRef(formModel),
     hello: name,
   });
 

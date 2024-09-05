@@ -3,10 +3,10 @@
 <template>
   <div
     id="JourneyCardComponent"
-    class="card rounded-lg bg-base-100 w-full shadow-xl min-h-24 cursor-pointer hover:bg-base-300"
+    class="card rounded-lg bg-base-100 min-h-24 hover:bg-base-300"
   >
     <div class="card-body p-2">
-      <div class="card-title">{{ form.title }}</div>
+      <div class="card-title">{{ form?.title }}</div>
       <p>Form stats live here</p>
     </div>
   </div>
@@ -17,19 +17,16 @@
 <script setup lang="ts">
   import { EMIT } from '@/enum';
   import { computed, onMounted, Ref, ref } from 'vue';
+  import { IAsynchForm } from '@/types';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
   interface IJourneyCardComponentProps {
-    form: any;
+    form: IAsynchForm | null;
   }
 
-  const props: Readonly<IJourneyCardComponentProps> = withDefaults(
-    defineProps<IJourneyCardComponentProps>(),
-    {
-      form: null,
-    }
-  );
+  const { form = null }: Readonly<IJourneyCardComponentProps> =
+    defineProps<IJourneyCardComponentProps>();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  EMITS

@@ -1,5 +1,5 @@
 <script>
-  import PathFinderWhyForm from '@/forms/PathFinderWhyForm.vue';
+  import PathFinderWhyForm from '@/forms/PathFinderWhyForm.vu';
 
   export default {
     props: {
@@ -25,7 +25,7 @@
         function () {
           this.loadData();
         }.bind(this),
-        500000
+        500000,
       );
     },
     beforeUnmount() {
@@ -42,7 +42,7 @@
       loadData() {
         console.log('Load Data from Google Sheets API');
         fetch(
-          'https://sheets.googleapis.com/v4/spreadsheets/1bGLpqF_3oiAH7H39vjrfhi0DbPc7rkh_QC_sl9FNvQQ/values/Sheet1?alt=json&key=AIzaSyBBG7Qm_J2XjMJg5W09cZL3gj1yQSoE4Yg'
+          'https://sheets.googleapis.com/v4/spreadsheets/1bGLpqF_3oiAH7H39vjrfhi0DbPc7rkh_QC_sl9FNvQQ/values/Sheet1?alt=json&key=AIzaSyBBG7Qm_J2XjMJg5W09cZL3gj1yQSoE4Yg',
         )
           .then((res) => res.json())
           .then((data) => this.parseData(data.values));

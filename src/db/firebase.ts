@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-// import { getAnalytics } from "firebase/analytics";
+// import { getAnalytics } from "db/analytics";
 import {
   getFirestore,
   collection,
@@ -7,7 +7,7 @@ import {
   setLogLevel,
 } from 'firebase/firestore';
 
-// ... other firebase imports
+// ... other db imports
 
 const {
   VITE_FIREBASE_API_KEY,

@@ -9,7 +9,7 @@ import { plugin, defaultConfig } from '@formkit/vue';
 import config from '../formkit.config';
 import { VueFire, VueFireAuth } from 'vuefire';
 // the file we created above with `database`, `firestore` and other exports
-import { firebaseApp } from '@/firebase/firebase';
+import { firebaseApp } from '@/db/firebase';
 //  setup icons
 import { dom } from '@fortawesome/fontawesome-svg-core';
 import { fontIconLibrary } from '@/icons/FontIconConstants';

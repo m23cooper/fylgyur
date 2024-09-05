@@ -9,11 +9,11 @@
       <div class="w-full tracking-tight text-gray-900 mt-10">
         <FormKit
           type="form"
-          id="BronzeForm"
-          name="BronzeForm"
-          ref="formRef"
+          :id="name"
+          :name="name"
+          v-model="formModel"
           :actions="false"
-          #default="{ disabled }"
+          #default="{ disabled, empty }"
           use-local-storage
         >
           <div class="grid grid-cols-12 gap-10 lg:gap-8">
@@ -41,6 +41,7 @@
               <FormKit
                 type="button"
                 label="Clear"
+                :disabled="empty as boolean"
                 @click.prevent="onResetClick"
               />
               <FormKit
@@ -58,12 +59,12 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, Ref, onMounted } from 'vue';
-  import { FormKit, useFormKitContextById } from '@formkit/vue';
+  import { ref, Ref, onMounted, toRef } from 'vue';
+  import { FormKit } from '@formkit/vue';
   import { reset as resetForm } from '@formkit/core';
   import { EMIT } from '@/enum';
 
-  const formRef: Ref = ref(null);
+  const formModel: Ref = ref(null);
   const name = 'BronzeForm';
 
   const emit = defineEmits([EMIT.REGISTER, EMIT.RESET]);
@@ -79,8 +80,8 @@
   }
 
   defineExpose({
-    formRef,
-    hello: 'Bronze',
+    formModel: toRef(formModel),
+    hello: name,
   });
 
   onMounted(() => {

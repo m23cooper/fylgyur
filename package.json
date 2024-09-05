@@ -55,6 +55,7 @@
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.1",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.28.0",
     "globals": "^15.9.0",
     "kill-port": "^2.0.1",

@@ -6,3 +6,7 @@ export * from './IUrlQuery';
 export * from './IUser';
 export * from './IUserPermissions';
 export * from './IUserRoles';
+
+export * from './IAsynchFormProps';
+
+export * from './IAsynchForm';

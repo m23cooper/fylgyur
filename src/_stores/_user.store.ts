@@ -10,7 +10,7 @@ import { kindeClient } from '@/kinde/kindeClient';
 export interface IUserStoreState {
   permissions: IUserPermissions;
   isLoggedIn: boolean;
-  token: string | null;
+  token: string | undefined;
   user: any;
   userProfile: any;
   _retries: number;
@@ -32,7 +32,7 @@ export const useUserStore = defineStore('_user.store', {
   state: (): IUserStoreState => ({
     permissions: {},
     isLoggedIn: false,
-    token: null,
+    token: undefined,
     user: null,
     userProfile: null,
     _retries: 2,

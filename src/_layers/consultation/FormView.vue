@@ -2,14 +2,19 @@
 
 <template>
   <div id="FormView" v-if="currentForm !== null">
-    <component :is="formComponent" ref="asyncComp"></component>
+    <component
+      :is="formComponent"
+      ref="asyncCompRef"
+      v-bind="currentForm.props"
+    ></component>
+    <pre>{{ formModel }}</pre>
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { ref, onMounted, shallowRef, watch } from 'vue';
+  import { ref, onMounted, shallowRef, watch, nextTick } from 'vue';
   import type { ShallowRef, Component } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useConsultationStore, useUIStore } from '@/_stores';
@@ -18,7 +23,7 @@
   import * as utils from '@/utils/utils';
   import _titleCase from 'voca/title_case';
   import ModalComponent from '@/_components/modal/ModalComponent.vue';
-  import { useFormKitContextById } from '@formkit/vue';
+  import { useFormKitContextById, useInput } from '@formkit/vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -40,11 +45,11 @@
   const _name: string = 'FormView';
 
   const formComponent: ShallowRef<Component | null> = shallowRef(null);
-  const asyncComp = ref(null);
+  const asyncCompRef = ref(null);
 
   const _store = useConsultationStore();
 
-  const { currentForm } = storeToRefs(_store);
+  const { currentForm, formModel } = storeToRefs(_store);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -68,31 +73,39 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
-  const loadFormVue = async () => {
-    try {
-      if (currentForm?.value) {
-        console.log(`loadFormVue ${currentForm.value.name}`);
-        useUIStore().showLoading(`Loading ${currentForm.value.title}`);
-        const component = await import(
-          `../../forms/${currentForm.value.name}.vue`
-        );
-
-        useUIStore().hideLoading();
-        return component.default;
-      }
-    } catch (error) {
-      console.error('Failed to load component:', error);
-      return null;
-    }
-  };
 
   const loadFormComponent = async () => {
     formComponent.value = await loadFormVue();
     console.log(`loadFormComponent ${currentForm.value?.id}`);
-    const { formRef, hello } = asyncComp.value;
-    const ctx = useFormKitContextById(currentForm.value.id, () => {
-      _store.registerFormContext({ ctx });
+    //  wait for the component to be populated
+    await nextTick(() => {
+      //  @ts-expect-error
+      const { formModel, hello } = asyncCompRef.value;
+      if (hello !== currentForm.value?.id) {
+        throw new Error('Disjoint in form data');
+      }
+      _store.registerFormModel({ formModel });
+      let ctx;
+      ctx = useFormKitContextById(currentForm.value.id, () => {
+        _store.registerFormContext({ ctx });
+      });
     });
+  };
+
+  const loadFormVue = async () => {
+    try {
+      console.log(`loadFormVue ${currentForm.value.name}`);
+      useUIStore().showLoading(`Loading ${currentForm.value.title}`);
+      const component = await import(
+        `../../_forms/${currentForm.value.name}.vue`
+      );
+      useUIStore().hideLoading();
+      return component.default;
+    } catch (error) {
+      useUIStore().hideLoading();
+      console.error('Failed to load component:', error);
+      return null;
+    }
   };
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

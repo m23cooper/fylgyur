@@ -2,12 +2,19 @@
 
 <template>
   <div id="JourneyView" class="container">
-    <h2 class="prose self-start p-2 border-b-2 border-fuchsia-700">
-      JourneyView
-    </h2>
     <div class="container p-5 flex flex-col gap-4 items-center" v-if="forms">
-      <div class="" v-for="form in forms" :key="form.id">
-        <JourneyCardComponent :form @click="onCardClick(form.name)" />
+      <div class="w-full" v-for="form in forms" :key="form.id">
+        <JourneyCardComponent
+          v-if="form.id !== currentForm.id"
+          class="shadow-lg cursor-pointer"
+          :form
+          @click="onCardClick(form.id)"
+        />
+        <JourneyCardComponent
+          v-else
+          :form
+          class="w-full border-fuchsia-700 border-4 cursor-default"
+        />
       </div>
     </div>
   </div>
@@ -83,8 +90,8 @@
   //  {
   //      // handle event
   //  }
-  function onCardClick(name: string): void {
-    _store.setCurrentForm(name);
+  function onCardClick(id: string): void {
+    _store.setCurrentFormById({ id });
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
