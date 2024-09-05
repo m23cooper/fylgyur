@@ -1,23 +1,31 @@
 <template>
   <div class="bg-white h-full py-20">
-    <div class="mx-auto max-w-7xl  px-6 lg:px-8">
-      <h2 class="text-slate-900 text-xl font-bold inline sm:block lg:inline xl:block">Silver Form</h2>
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <h2
+        class="text-slate-900 text-xl font-bold inline sm:block lg:inline xl:block"
+      >
+        Silver Form
+      </h2>
       <div class="w-full tracking-tight text-gray-900 mt-10">
         <FormKit
-            type="form"
-            id="{{ name }}"
-            name="{{ name }}"
-            ref="formRef"
-            :actions="false"
-            #default="{ disabled }"
-            use-local-storage
+          type="form"
+          id="{{ name }}"
+          name="{{ name }}"
+          ref="formRef"
+          :actions="false"
+          #default="{ disabled }"
+          use-local-storage
         >
           <div class="grid grid-cols-12 gap-10 lg:gap-8">
             <div class="flex flex-col col-span-6 justify-end">
-                <FormKit type="text" name="first_name" label="Your passions" />
+              <FormKit type="text" name="first_name" label="Your passions" />
             </div>
             <div class="flex flex-col col-span-6">
-              <FormKit type="checkbox" name="general" label="What advice are you looking for?" />
+              <FormKit
+                type="checkbox"
+                name="general"
+                label="What advice are you looking for?"
+              />
             </div>
           </div>
         </FormKit>
@@ -27,37 +35,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, onMounted, defineExpose, } from 'vue'
-import { FormKit,  } from '@formkit/vue'
-import { reset as resetForm } from '@formkit/core'
-import { EMIT } from "@/enum";
+  import { ref, Ref, onMounted, defineExpose } from 'vue';
+  import { FormKit } from '@formkit/vue';
+  import { reset as resetForm } from '@formkit/core';
+  import { EMIT } from '@/enum';
 
-const name = "SilverForm"
+  const name = 'SilverForm';
 
-const formRef: Ref = ref(null);
+  const formRef: Ref = ref(null);
 
-const emit = defineEmits([EMIT.REGISTER, EMIT.RESET])
+  const emit = defineEmits([EMIT.REGISTER, EMIT.RESET]);
 
-function onRegisterClick() {
-  console.log('onRegisterClick')
-  emit(EMIT.REGISTER)
-}
+  function onRegisterClick() {
+    console.log('onRegisterClick');
+    emit(EMIT.REGISTER);
+  }
 
-function onResetClick() {
-  emit(EMIT.RESET)
-  resetForm(name)
-}
+  function onResetClick() {
+    emit(EMIT.RESET);
+    resetForm(name);
+  }
 
-defineExpose({
-  formRef,
-  hello: name,
-})
+  defineExpose({
+    formRef,
+    hello: name,
+  });
 
-onMounted(() => {
-  // form.value = useFormKitNode('form');
-});
+  onMounted(() => {
+    // form.value = useFormKitNode('form');
+  });
 </script>
 
 <style scoped>
-/* Add any custom styles here */
+  /* Add any custom styles here */
 </style>

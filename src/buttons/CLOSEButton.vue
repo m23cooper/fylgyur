@@ -3,9 +3,9 @@
 <template>
   <div class="btn hover:scale-110 transition" @click.stop="emit(EMIT.CLICK)">
     <FontIconComponent
-        :icon-type="FontIconType.CLOSE"
-        :fontIconSize="props.fontIconSize"
-        :clickable="false"
+      :icon-type="FontIconType.CLOSE"
+      :fontIconSize="props.fontIconSize"
+      :clickable="false"
     ></FontIconComponent>
   </div>
 </template>
@@ -13,28 +13,34 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { EMIT } from "@/enum";
-  import { FontIconType, FontIconSize, FontIconRotate, FontIconFlip, FontIconAnimate } from "@/icons/FontIconConstants";
+  import { EMIT } from '@/enum';
+  import {
+    FontIconType,
+    FontIconSize,
+    FontIconRotate,
+    FontIconFlip,
+    FontIconAnimate,
+  } from '@/icons/FontIconConstants';
   import FontIconComponent from '@/icons/FontIconComponent.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
-  interface ICLOSEDButtonComponentProps
-  {
+  interface ICLOSEDButtonComponentProps {
     fontIconSize?: string;
   }
 
-  const props: Readonly<ICLOSEDButtonComponentProps> = withDefaults(defineProps<ICLOSEDButtonComponentProps>(), {
-    fontIconSize: FontIconSize.LG
-  });
+  const props: Readonly<ICLOSEDButtonComponentProps> = withDefaults(
+    defineProps<ICLOSEDButtonComponentProps>(),
+    {
+      fontIconSize: FontIconSize.LG,
+    }
+  );
 
-  const _name: string = "CLOSEButton";
+  const _name: string = 'CLOSEButton';
 
-  const emit = defineEmits([ EMIT.CLICK, ]);
+  const emit = defineEmits([EMIT.CLICK]);
 </script>
 
 <!------------------------------------------------------------------------------------------------->
 
-<style scoped>
-
-</style>
+<style scoped></style>
