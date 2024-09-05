@@ -1,89 +1,63 @@
 <template>
-  <Vueform v-bind="vueform" />
+  <div class="bg-white h-full py-20">
+    <div class="mx-auto max-w-7xl  px-6 lg:px-8">
+      <h2 class="text-slate-900 text-xl font-bold inline sm:block lg:inline xl:block">Silver Form</h2>
+      <div class="w-full tracking-tight text-gray-900 mt-10">
+        <FormKit
+            type="form"
+            id="{{ name }}"
+            name="{{ name }}"
+            ref="formRef"
+            :actions="false"
+            #default="{ disabled }"
+            use-local-storage
+        >
+          <div class="grid grid-cols-12 gap-10 lg:gap-8">
+            <div class="flex flex-col col-span-6 justify-end">
+                <FormKit type="text" name="first_name" label="Your passions" />
+            </div>
+            <div class="flex flex-col col-span-6">
+              <FormKit type="checkbox" name="general" label="What advice are you looking for?" />
+            </div>
+          </div>
+        </FormKit>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    vueform: {
-      schema: {
-        form_title: {
-          type: 'static',
-          content: 'SilverForm',
-          tag: 'h2',
-        },
-        divider: {
-          type: 'static',
-          tag: 'hr',
-        },
-        first_name: {
-          type: 'text',
-          label: 'First name',
-          rules: [
-            'required',
-            'max:255',
-          ],
-          columns: {
-            container: 6,
-            label: 12,
-            wrapper: 12,
-          },
-          default: 'John',
-        },
-        last_name: {
-          type: 'text',
-          label: 'Last name',
-          rules: [
-            'required',
-            'max:255',
-          ],
-          columns: {
-            container: 6,
-            label: 12,
-            wrapper: 12,
-          },
-          default: 'Doe',
-        },
-        display_name: {
-          type: 'text',
-          label: 'Display name',
-          rules: [
-            'required',
-            'max:255',
-            'alpha_num',
-          ],
-          default: 'johndoe',
-          addons: {
-            before: 'mydomain.com/',
-          },
-        },
-        birthday: {
-          type: 'date',
-          label: 'Date of birth',
-          rules: [
-            'required',
-          ],
-          default: '1989-07-07',
-          displayFormat: 'MMMM Do, YYYY',
-          columns: {
-            container: 6,
-          },
-        },
-        gender: {
-          type: 'radiogroup',
-          items: [
-            'Male',
-            'Female',
-            'Other',
-            'I prefer not to say',
-          ],
-          label: 'Gender',
-          rules: [
-            'required',
-          ],
-        },
-      },
-    }
-  })
+<script setup lang="ts">
+import { ref, Ref, onMounted, defineExpose, } from 'vue'
+import { FormKit,  } from '@formkit/vue'
+import { reset as resetForm } from '@formkit/core'
+import { EMIT } from "@/enum";
+
+const name = "SilverForm"
+
+const formRef: Ref = ref(null);
+
+const emit = defineEmits([EMIT.REGISTER, EMIT.RESET])
+
+function onRegisterClick() {
+  console.log('onRegisterClick')
+  emit(EMIT.REGISTER)
 }
+
+function onResetClick() {
+  emit(EMIT.RESET)
+  resetForm(name)
+}
+
+defineExpose({
+  formRef,
+  hello: name,
+})
+
+onMounted(() => {
+  // form.value = useFormKitNode('form');
+});
 </script>
+
+<style scoped>
+/* Add any custom styles here */
+</style>

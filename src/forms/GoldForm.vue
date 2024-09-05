@@ -1,119 +1,70 @@
-<!-- GoldForm.vue -->
+<template>
+  <div class="bg-white h-full py-20">
+    <div class="mx-auto max-w-7xl  px-6 lg:px-8">
+      <h2 class="text-slate-900 text-xl font-bold inline sm:block lg:inline xl:block">Gold Form</h2>
+      <div class="w-full tracking-tight text-gray-900 mt-10">
+        <FormKit
+            type="form"
+            id="GoldForm"
+            name="GoldForm"
+            ref="formRef"
+            :actions="false"
+            #default="{ disabled }"
+            use-local-storage
+        >
+          <div class="grid grid-cols-12 gap-10 lg:gap-8">
+            <div class="flex flex-col col-span-6 justify-end">
+              <FormKit type="group" id="full_name">
+                <FormKit type="text" name="first_name" label="First Name" />
+                <FormKit type="text" name="family_name" label="Family Name" />
+              </FormKit>
+              <FormKit type="text" name="occupation" label="Occupation" />
+            </div>
+            <div class="flex flex-col col-span-6">
+              <FormKit type="textarea" name="general" label="What advice are you looking for?" />
+              <FormKit
+                  type="email"
+                  label="Email Address"
+                  placeholder="Enter your email"
+                  validation="required|email"
+              />
+            </div>
+            <div class="flex flex-row col-span-12 justify-center">
+              <FormKit type="button" label="Clear" @click.prevent="onResetClick" />
+              <FormKit type="button" :disabled="disabled as boolean" label="Register" @click.prevent="onRegisterClick" />
+            </div>
+          </div>
+        </FormKit>
+      </div>
+    </div>
+  </div>
+</template>
 
-<script>
-import { ref } from 'vue'
-import { useVueform, Vueform } from '@vueform/vueform'
+<script setup lang="ts">
+import { ref, Ref, onMounted, defineExpose, } from 'vue'
+import { FormKit,  } from '@formkit/vue'
+import { reset as resetForm } from '@formkit/core'
+import { EMIT } from "@/enum";
 
-export default {
-  mixins: [Vueform],
-  setup(props, context)
-  {
-    const form = useVueform(props, context)
+const formRef: Ref = ref(null);
 
-    const vueform = ref({
-      size: 'md',
-      displayErrors: false,
-      schema: {
-        h2_2: {
-          type: 'static',
-          tag: 'h2',
-          content: 'Rooms',
-          top: '1',
-        },
-        divider_4: {
-          type: 'static',
-          tag: 'hr',
-        },
-        guests_count: {
-          type: 'text',
-          inputType: 'number',
-          rules: [
-            'required',
-            'integer',
-          ],
-          autocomplete: 'off',
-          label: 'How many guests can stay?',
-          columns: {
-            wrapper: 2,
-          },
-          default: '4',
-        },
-        bathroom_count: {
-          type: 'text',
-          inputType: 'number',
-          rules: [
-            'required',
-            'numeric',
-          ],
-          autocomplete: 'off',
-          label: 'How many bathrooms?',
-          columns: {
-            wrapper: 2,
-          },
-          default: '2',
-        },
-        size: {
-          type: 'text',
-          inputType: 'number',
-          rules: [
-            'nullable',
-            'numeric',
-          ],
-          autocomplete: 'off',
-          label: 'How big is this apartment? (optional)',
-          columns: {
-            wrapper: 2,
-          },
-          addons: {
-            after: 'm2',
-          },
-          default: '75',
-        },
-        divider_16: {
-          type: 'static',
-          tag: 'hr',
-          bottom: '1',
-          top: '1',
-        },
-        h2_14: {
-          type: 'static',
-          tag: 'h2',
-          content: 'Complete',
-          top: '1',
-        },
-        divider_27: {
-          type: 'static',
-          tag: 'hr',
-        },
-        terms_1: {
-          type: 'checkbox',
-          text: 'I certify that this is a legitimate accommodation business with all necessary licenses and permits, which can be shown upon first request. Mydomain.com B.V. reserves the right to verify and investigate any details provided in this registration.',
-          fieldName: 'Registration rights',
-          rules: [
-            'accepted',
-          ],
-        },
-        terms_2: {
-          type: 'checkbox',
-          text: 'I have read, accepted, and agreed to the Terms and Conditions and Privacy Policy.',
-          fieldName: 'Terms',
-          rules: [
-            'accepted',
-          ],
-        },
-        divider_28: {
-          type: 'static',
-          tag: 'hr',
-          bottom: '1',
-          top: '1',
-        },
-      },
-    })
+const emit = defineEmits([EMIT.REGISTER, EMIT.RESET])
 
-    return {
-      ...form,
-      vueform,
-    }
-  }
+function onRegisterClick() {
+  console.log('onRegisterClick')
+  emit(EMIT.REGISTER)
 }
+
+function onResetClick() {
+  emit(EMIT.RESET)
+  resetForm('formId')
+}
+
+onMounted(() => {
+  // form.value = useFormKitNode('form');
+});
 </script>
+
+<style scoped>
+/* Add any custom styles here */
+</style>

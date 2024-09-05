@@ -3,7 +3,6 @@
 import ErrorManager from "@/utils/ErrorManager";
 import axios from "axios";
 import localforage from 'localforage'
-// @ts-ignore
 import memoryDriver from 'localforage-memoryStorageDriver'
 import { setup} from 'axios-cache-adapter'
 import { useUserStore } from "@/_stores";

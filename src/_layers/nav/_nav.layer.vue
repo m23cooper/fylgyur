@@ -30,7 +30,6 @@
   import { Signals } from "@/signals";
   import {computed, onMounted, ref} from 'vue';
   import HOMEButton from "@/buttons/HOMEButton.vue";
-  //  @ts-ignore
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private

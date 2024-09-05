@@ -32,7 +32,7 @@
   import {useRouter} from "vue-router";
   import { StoreGeneric, storeToRefs } from "pinia";
 
-  import { useUIStore, useUserStore, } from "@/_stores";
+  import {useConsultationStore, useUIStore, useUserStore,} from "@/_stores";
   import * as anims from '@/utils/animation'
   import {ROUTE_NAMES} from "@/enum";
 
@@ -97,6 +97,7 @@
 
     // populate the Router and get startup url query
     _uiStore.init();
+    // await useConsultationStore().init();
   })
 
   onMounted( async () => {

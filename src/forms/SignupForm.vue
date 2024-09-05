@@ -51,12 +51,12 @@
 
   const emit = defineEmits([EMIT.REGISTER, EMIT.RESET])
 
-  const onRegisterClick = () => {
+  function onRegisterClick() {
     console.log('onRegisterClick')
     emit(EMIT.REGISTER)
   }
 
-  const onResetClick = () => {
+  function onResetClick() {
     emit(EMIT.RESET)
     resetForm('formId')
   }

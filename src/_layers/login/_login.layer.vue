@@ -35,7 +35,6 @@
   import { useUserStore, } from "@/_stores";
   import { ROUTE_NAMES } from "@/enum";
   import {computed, onMounted, ref,} from 'vue';
-  //  @ts-ignore
   import fantastorical_logo from '@/assets/fantastorical_logo-md.png';
 
 

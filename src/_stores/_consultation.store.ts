@@ -14,7 +14,8 @@ export interface IConsultationState
 {
     forms: any;
     selectedForm: any | null;
-    formsCollectionRef: Ref<any> | null
+    formsCollectionRef: Ref<any> | null,
+    formContext: any,
 }
 
 
@@ -27,6 +28,7 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
 		forms: [],
         selectedForm: null,
         formsCollectionRef: null,
+        formContext: null,
 	}),
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,17 +50,20 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
         this.forms = useCollection(collection(db, 'forms'));
 
     },
-      setCurrentForm( name: string): void {
-        console.log(`setCurrentForm ${name}`)
-          console.dir(this.forms)
+    setCurrentForm( name: string): void {
+        // console.log(`setCurrentForm ${name}`)
+        // console.dir(this.forms)
         const form = _find(this.forms, (form) => form.name === name);
         if(!form){
             throw new Error(`setCurrentForm doesn't recognise form name ${name}`);
         } else {
             this.selectedForm = form;
-            console.log(`setCurrentForm set to: ${form.name}`)
+            console.log(`_consultation.store.setCurrentForm set to: ${form.name}`)
         }
-      }
+    },
+    registerFormContext({ctx}): void {
+        this.formContext = ctx;
+    },
   },
 
 

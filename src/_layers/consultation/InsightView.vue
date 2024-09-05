@@ -2,7 +2,8 @@
 
 <template>
     <div id="InsightView" class="container h-fill">
-      <h2 class="prose self-start p-2">InsightView</h2>
+      <h2 class="prose self-start p-2">Insight View</h2>
+      <pre class="card">:{{ formContext?.value?.value?.hello }}</pre>
     </div>
 </template>
 
@@ -11,14 +12,10 @@
 <script setup lang="ts">
   import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
   import { storeToRefs } from 'pinia'
-  import {useConsultationStore, useUIStore} from "@/_stores";
+  import { useConsultationStore, } from "@/_stores";
   // import * as _components from './_components';
   import { Signals } from "@/signals";
   import * as utils from '@/utils/utils';
-  import _titleCase from "voca/title_case";
-  import ADDButton from "@/buttons/ADDButton.vue";
-  import EDITButton from "@/buttons/EDITButton.vue";
-  import ModalComponent from "@/_components/modal/ModalComponent.vue";
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -42,9 +39,9 @@
 
   const _store = useConsultationStore();
 
-
-  // const {
-  // } = storeToRefs(_store);
+  const {
+    formContext,
+  } = storeToRefs(_store)
 
 
   // ////////////////////////////////////////////////////////////////////////////////////////////

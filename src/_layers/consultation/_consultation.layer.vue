@@ -2,9 +2,9 @@
 
 <template>
     <div id="ConsultationLayer" class="flex grid grid-cols-12 w-screen min-h-screen">
-       <JourneyView class="col-span-1 border-r-2 border-fuchsia-700" />
-       <FormView class="col-span-6 border-r-2 border-fuchsia-700" />
-       <InsightView class="col-span-5" />
+      <JourneyView class="col-span-2 border-r-2 border-fuchsia-700" />
+      <FormView class="col-span-7 border-r-2 border-fuchsia-700" />
+      <InsightView class="col-span-3" />
     </div>
 </template>
 
@@ -22,10 +22,11 @@
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //  Private
-    const _name: string = "WelcomeLayer";
+    const _name: string = "ConsultationLayer";
 
     const _store = useConsultationStore();
     _store.init();
+
 
     // const {
     // } = storeToRefs(_store);
@@ -72,7 +73,7 @@
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //  Hooks
     onMounted(() => {
-      console.log(`WelcomeLayer onMounted!`);
+      console.log(`ConsultationLayer onMounted!`);
       // _store.init();
     })
 

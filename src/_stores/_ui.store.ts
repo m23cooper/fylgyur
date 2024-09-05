@@ -37,7 +37,6 @@ export const useUIStore = defineStore('_ui.store', {
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//  Getters
 	getters: {
-		//  @ts-ignore: vue-index weirdness
 		selectedRoute: (state): IRoute => {
 			const current = router.currentRoute.value;
 			const route: any = _find(routes, { 'name': current.name});
