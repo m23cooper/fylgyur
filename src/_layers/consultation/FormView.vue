@@ -10,12 +10,19 @@
       class="container rounded-xl bg-slate-200 p-5"
       :is="formComponent"
       ref="asyncCompRef"
-      :buttons="currentForm.props"
-      @[EMIT.ASK]="onAsk"
-      @[EMIT.RESET]="onReset"
-      @[EMIT.SUBMIT]="onSubmit"
-    ></component>
-    <pre>{{ formModel }}</pre>
+      v-bind="currentForm.props"
+    >
+      <!-- slot content -->
+      <template #formButtons>
+        <FormButtonsComponent
+          v-bind="currentForm.props"
+          @[EMIT.ASK]="onAsk"
+          @[EMIT.RESET]="onReset"
+          @[EMIT.SUBMIT]="onSubmit"
+        />
+      </template>
+    </component>
+    <!--    <pre>{{ formModel }}</pre>-->
   </div>
 </template>
 
@@ -34,10 +41,9 @@
   import { storeToRefs } from 'pinia';
   import { useConsultationStore, useUIStore } from '@/_stores';
   import { EMIT } from '@/enum';
-  import { Signals } from '@/signals';
-  import ModalComponent from '@/_components/modal/ModalComponent.vue';
   import { useFormKitContextById } from '@formkit/vue';
   import { reset as resetForm } from '@formkit/core';
+  import FormButtonsComponent from '@/_forms/components/FormButtonsComponent.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
