@@ -1,17 +1,14 @@
 
 import forms from '@tailwindcss/forms'
 import typography from '@tailwindcss/typography'
-import tailwind from "@vueform/vueform/tailwind";
 import daisyui from "daisyui"
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
+    "./src/index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
-    './vueform.config.js', // or where `vueform.config.js` is located. Change `.js` to `.ts` if required.
-    './node_modules/@vueform/vueform/themes/tailwind/**/*.vue',
-    './node_modules/@vueform/vueform/themes/tailwind/**/*.js',
+    "./formkit.theme.ts",
   ],
   darkMode: 'class',
   theme: {
@@ -28,8 +25,8 @@ export default {
   },
   plugins: [
     typography,
-    tailwind,
-      daisyui,
+    forms,
+    daisyui,
   ],
 }
 

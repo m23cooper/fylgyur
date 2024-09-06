@@ -5,15 +5,20 @@
     <div v-if="!isInit">
       <div class="flex flex-col w-screen min-h-screen">
         <NavLayer class="fixed h-[5rem] z-[5]"></NavLayer>
-        <router-view key="routerView" v-slot="{ Component }" class="mt-[5rem] z-[1]">
+        <router-view
+          key="routerView"
+          v-slot="{ Component }"
+          class="mt-[5rem] z-[1]"
+        >
           <transition
-              mode="out-in"
-              :css="false"
-              @before-enter="anims.beforeNavEnter"
-              @enter="anims.enterNav"
-              @before-leave="anims.beforeNavLeave"
-              @leave="anims.leaveNav">
-            <component :is="Component" class=" flex w-full"/>
+            mode="out-in"
+            :css="false"
+            @before-enter="anims.beforeNavEnter"
+            @enter="anims.enterNav"
+            @before-leave="anims.beforeNavLeave"
+            @leave="anims.leaveNav"
+          >
+            <component :is="Component" class="flex w-full" />
           </transition>
         </router-view>
       </div>
@@ -26,37 +31,32 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { Signals } from "@/signals";
-  import { useUIStore, useUserStore, } from "@/_stores";
-  import { StoreGeneric, storeToRefs } from "pinia";
+  import { Signals } from '@/signals';
   import { nextTick, onBeforeMount, onMounted, ref } from 'vue';
+  import { kindeClient } from '@/kinde/kindeClient';
+  import { useRouter } from 'vue-router';
+  import { StoreGeneric, storeToRefs } from 'pinia';
 
-  import LoadingLayer from "@/_layers/loading/_loading.layer.vue";
+  import { useConsultationStore, useUIStore, useUserStore } from '@/_stores';
+  import * as anims from '@/utils/animation';
+  import { ROUTE_NAMES } from '@/enum';
 
+  import LoadingLayer from '@/_layers/loading/_loading.layer.vue';
   import NavLayer from '@/_layers/nav/_nav.layer.vue';
-  import NotificationLayer from "@/_layers/notification/_notification.layer.vue";
-  import * as anims from '@/utils/animation'
-  import {kindeClient} from "@/kinde/kindeClient";
-  import {useRouter} from "vue-router";
+  import NotificationLayer from '@/_layers/notification/_notification.layer.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = "AppLayer";
+  const _name: string = 'AppLayer';
 
   const _router = useRouter();
 
   const _uiStore = useUIStore();
   const _userStore = useUserStore();
 
-  const {
-    isInit,
-    isLoading,
-  } = storeToRefs(<StoreGeneric>_uiStore);
+  const { isInit, isLoading } = storeToRefs(<StoreGeneric>_uiStore);
 
-  const {
-    isLoggedIn
-  } = storeToRefs(<StoreGeneric>_userStore);
-
+  const { isLoggedIn } = storeToRefs(<StoreGeneric>_userStore);
 
   // Signals.LOGIN.add(onLogin);
 
@@ -70,11 +70,9 @@
   //  Provides - props for all children
   //  eg - provide("key", "value");
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Emits
   // const emit = defineEmits(['change', 'delete']);
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
@@ -82,8 +80,6 @@
   // {
   //
   // }
-
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
@@ -96,14 +92,28 @@
 
     // populate the Router and get startup url query
     _uiStore.init();
-  })
+    // await useConsultationStore().init();
+  });
 
-  onMounted( async () => {
-    console.log("App.onMounted");
-    // const isLoggedIn = await kindeClient.isAuthenticated();
-    // console.log("App.onMounted " + isLoggedIn);
-    _uiStore.onAppLoaded()
-  })
+  onMounted(async () => {
+    console.log('App.onMounted');
+
+    const isLoggedIn = await kindeClient.isAuthenticated();
+    console.log('main.ts ' + isLoggedIn);
+    if (isLoggedIn) {
+      try {
+        await kindeClient.handleRedirectToApp(
+          new URL(window.location.toString())
+        );
+        // Redirect to Home page, etc...
+      } catch (error) {
+        // ErrorManager.onError(error)
+        // TODO: if(useUserStore().user)
+        useUIStore().goRoute(ROUTE_NAMES.HOME);
+      }
+    }
+    _uiStore.onAppLoaded();
+  });
 
   // onUpdated(() => {
   //   console.log(`AppLayer onUpdated!`);
@@ -112,8 +122,6 @@
   // onUnmounted(() => {
   //   console.log(`AppLayer onUnmounted!`);
   // })
-
 </script>
 
 <!------------------------------------------------------------------------------------------------->
-

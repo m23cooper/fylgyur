@@ -10,24 +10,27 @@
     >
       <div class="">
         <FontIconComponent
-            :icon-type="(note?.type === 'success') ? FontIconType.CHECK_CIRCLE : FontIconType.CLOSE"
-            :size="FontIconSize.SM"
-            :rotate="FontIconRotate.NONE"
-            :flip="FontIconFlip.NONE"
-            :anim="FontIconAnimate.NONE"
-            :clickable="false"
-            classes="text-white"
+          :icon-type="
+            note?.type === 'success'
+              ? FontIconType.CHECK_CIRCLE
+              : FontIconType.CLOSE
+          "
+          :size="FontIconSize.SM"
+          :rotate="FontIconRotate.NONE"
+          :flip="FontIconFlip.NONE"
+          :anim="FontIconAnimate.NONE"
+          :clickable="false"
+          classes="text-white"
         ></FontIconComponent>
-
       </div>
       <div class="flex flex-col mb-10">
         <p class="text-left m-0">
           <strong>{{ note?.message }}</strong>
         </p>
         <p
-            v-if="note?.content"
-            v-html="note?.content"
-            class="text-left m-0"
+          v-if="note?.content"
+          v-html="note?.content"
+          class="text-left m-0"
         ></p>
       </div>
     </div>
@@ -37,10 +40,16 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { Signals } from "@/signals";
-  import { INotification } from "@/types/INotification";
-  import { computed, onMounted, ref, Ref } from "vue";
-  import { FontIconType, FontIconSize, FontIconRotate, FontIconFlip, FontIconAnimate } from "@/icons/FontIconConstants";
+  import { Signals } from '@/signals';
+  import { INotification } from '@/types/INotification';
+  import { computed, onMounted, ref, Ref } from 'vue';
+  import {
+    FontIconType,
+    FontIconSize,
+    FontIconRotate,
+    FontIconFlip,
+    FontIconAnimate,
+  } from '@/icons/FontIconConstants';
   import FontIconComponent from '@/icons/FontIconComponent.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,18 +67,16 @@
   //  EMITS
   // const emit = defineEmits(['change', ]);
 
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PRIVATE
-  const _name: string = "NotificationLayer";
+  const _name: string = 'NotificationLayer';
 
   Signals.NOTIFICATION.add(onNotification);
 
   const note: Ref<INotification | null> = ref(null);
   let timeout;
   const defaultDuration = 3000;
-  const deltaY = 200
+  const deltaY = 200;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  GETTERS
@@ -84,20 +91,14 @@
   //  COMPUTED
   const notificationStyle = computed(() => {
     return {
-      "alert-error": note.value?.type === "error",
-      "alert-success": note.value?.type === "success"
+      'alert-error': note.value?.type === 'error',
+      'alert-success': note.value?.type === 'success',
     };
   });
 
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
-  const watch = {
-
-  }
-
-
+  const watch = {};
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  METHODS
@@ -106,7 +107,7 @@
     close();
   }
 
-  function onNotification(signal:any) {
+  function onNotification(signal: any) {
     clearTimeout(timeout);
     note.value = signal;
     timeout = setTimeout(close, signal.duration || defaultDuration);
@@ -116,30 +117,27 @@
     note.value = null;
   }
 
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  HOOKS
-  onMounted( () => {
+  onMounted(() => {
     //useStore().dispatch("startTrace", getApplicationUuid);
-  })
-
+  });
 </script>
 
 <!------------------------------------------------------------------------------------------------->
 
 <style scoped>
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
+  .slide-fade-enter-active {
+    transition: all 0.3s ease-out;
+  }
 
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
+  .slide-fade-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateY(100px);
-  opacity: 0;
-}
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: translateY(100px);
+    opacity: 0;
+  }
 </style>

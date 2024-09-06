@@ -975,7 +975,7 @@ UUID specifies all the different uuid's e.g. UUID.APP === "app_uuid".
 
 Components should always specify their emits with EMIT.ts
 ```javascript
-const emit = defineEmits([ EMIT.ASSIGN, EMIT.SELECT, EMIT.DUPLICATION]);
+const emit = defineEmits([ EMIT.ASSIGN, EMIT.SELECT, ]);
 
 // ...
 

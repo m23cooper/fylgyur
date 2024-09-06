@@ -1,10 +1,8 @@
 <template>
   <div class="">
     <form :endpoint="false" @submit="handleSubmit">
-
       <!-- Defining Form Steps -->
       <FormSteps>
-
         <!-- 1st step - 'Customer information' -->
         <FormStep
           name="customer_information"
@@ -32,7 +30,7 @@
           :elements="['your_passion', 'feedback']"
           :labels="{
             next: 'Your Reasons',
-            previous: 'Back'
+            previous: 'Back',
           }"
         />
 
@@ -43,10 +41,10 @@
           :elements="['your_reasons', 'feedback']"
           :labels="{
             finish: 'Your Values',
-            previous: 'Back'
+            previous: 'Back',
           }"
         />
-        
+
         <!-- 5th step - 'Your Values' -->
         <FormStep
           name="your_values"
@@ -54,10 +52,10 @@
           :elements="['your_values', 'feedback']"
           :labels="{
             finish: 'Your Values',
-            previous: 'Back'
+            previous: 'Back',
           }"
         />
-        
+
         <!-- 6th step - 'Your Story' -->
         <FormStep
           name="your_story"
@@ -65,18 +63,19 @@
           :elements="['your_story', 'feedback']"
           :labels="{
             finish: 'Finish',
-            previous: 'Back'
+            previous: 'Back',
           }"
         />
       </FormSteps>
 
       <!-- Defining form elements -->
       <FormElements>
-
         <!-- 'Contact information' (email) -->
         <GroupElement name="contact_information">
           <template #label>
-            <div class="text-lg leading-tight mb-4 mt-4">Hello, what's your name?</div>
+            <div class="text-lg leading-tight mb-4 mt-4">
+              Hello, what's your name?
+            </div>
           </template>
           <template #before>
             <div class="text-gray-700 mb-4">
@@ -106,12 +105,12 @@
             </div>
           </template>
 
-          <TextareaElement 
+          <TextareaElement
             name="getting_started_answer"
             default="..."
             placeholder="What gets you started?"
             :columns="12"
-            :rows="5" 
+            :rows="5"
           />
         </GroupElement>
 
@@ -119,22 +118,26 @@
         <GroupElement name="your_passion">
           <template #label>
             <div class="text-lg leading-tight mb-4 mt-4">
-              <p>What are your preferences and interests that you naturally veer to?</p>
+              <p>
+                What are your preferences and interests that you naturally veer
+                to?
+              </p>
               <p>What are your personal and professional passions?</p>
             </div>
           </template>
           <template #before>
             <div class="text-gray-700 mb-4">
-              Think about where your interests and preferences lie, both in terms of subject, but also lifestyle and passions.
+              Think about where your interests and preferences lie, both in
+              terms of subject, but also lifestyle and passions.
             </div>
           </template>
 
-          <TextareaElement 
+          <TextareaElement
             name="your_passion_answer"
             default="..."
             placeholder="Your Passion?"
             :columns="12"
-            :rows="5" 
+            :rows="5"
           />
         </GroupElement>
 
@@ -147,11 +150,12 @@
           </template>
           <template #before>
             <div class="text-gray-700 mb-4">
-              This can be anything from gaining more personal time, spending time with your family, travelling, reducing stress etc.
+              This can be anything from gaining more personal time, spending
+              time with your family, travelling, reducing stress etc.
             </div>
           </template>
 
-          <TextareaElement 
+          <TextareaElement
             name="your_reasons_answer"
             default="..."
             placeholder="Your Reasons?"
@@ -164,16 +168,20 @@
         <GroupElement name="your_values">
           <template #label>
             <div class="text-lg leading-tight mb-4 mt-4">
-              <p>Articulate the values that you hold dear. What actions do these translate to?</p>
+              <p>
+                Articulate the values that you hold dear. What actions do these
+                translate to?
+              </p>
             </div>
           </template>
           <template #before>
             <div class="text-gray-700 mb-4">
-              This is personal. How do you want to lead your life and what do you have to do to achieve this?
+              This is personal. How do you want to lead your life and what do
+              you have to do to achieve this?
             </div>
           </template>
 
-          <TextareaElement 
+          <TextareaElement
             name="your_values_answer"
             default="..."
             placeholder="Your Values?"
@@ -191,11 +199,12 @@
           </template>
           <template #before>
             <div class="text-gray-700 mb-4">
-              What is motivating you to this point and what has formed you and your thinking?
+              What is motivating you to this point and what has formed you and
+              your thinking?
             </div>
           </template>
 
-          <TextareaElement 
+          <TextareaElement
             name="your_story_answer"
             default="..."
             placeholder="Your Story"
@@ -206,15 +215,14 @@
 
         <!-- 'Feedback' -->
         <GroupElement name="feedback">
-          <ButtonElement 
+          <ButtonElement
             name="feedback"
-            button-label="Feedback ..." 
-            align="right" 
+            button-label="Feedback ..."
+            align="right"
             button-class="bg-blue-700"
             @click="onClickFeedback"
           />
         </GroupElement>
-
       </FormElements>
 
       <FormStepsControls />
@@ -223,50 +231,48 @@
 </template>
 
 <script>
-import { Vueform, useVueform } from '@vueform/vueform'
+  import { Vueform, useVueform } from '@vueform/vueform';
 
-export default {
-  mixins: [ Vueform ],
-  setup: useVueform,
-  data: () => ({
-    vueform: {
-      size: 'lg',
-      validateOn: 'change|step',
-      overrideClasses: {
-        RadioElement: {
-          wrapper: 'flex border border-gray-300 py-4 px-4 items-center cursor-pointer',
-          text: 'w-full items-center',
+  export default {
+    mixins: [Vueform],
+    setup: useVueform,
+    data: () => ({
+      vueform: {
+        size: 'lg',
+        validateOn: 'change|step',
+        overrideClasses: {
+          RadioElement: {
+            wrapper:
+              'flex border border-gray-300 py-4 px-4 items-center cursor-pointer',
+            text: 'w-full items-center',
+          },
+          CheckboxElement: {
+            wrapper:
+              'flex border border-gray-300 py-4 px-4 items-center cursor-pointer',
+            text: 'w-full items-center',
+          },
         },
-        CheckboxElement: {
-          wrapper: 'flex border border-gray-300 py-4 px-4 items-center cursor-pointer',
-          text: 'w-full items-center',
+        addClasses: {
+          RadioElement: {
+            input: 'mb-1',
+          },
+          CheckboxElement: {
+            input: 'mb-1',
+          },
         },
       },
-      addClasses: {
-        RadioElement: {
-          input: 'mb-1',
-        },
-        CheckboxElement: {
-          input: 'mb-1',
-        },
-      }
-    }
-  }),
-  computed: {
-    
-  },
-  mounted() {
-    
-  }, 
-  methods: {
-    handleSubmit() {
-      console.log('Form submitted')
+    }),
+    computed: {},
+    mounted() {},
+    methods: {
+      handleSubmit() {
+        console.log('Form submitted');
+      },
+      onClickFeedback() {
+        console.log('Feedback button clicked');
+      },
     },
-    onClickFeedback() {
-      console.log('Feedback button clicked')
-    }
-  }
-}
+  };
 </script>
 
 <style>

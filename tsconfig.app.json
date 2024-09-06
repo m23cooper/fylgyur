@@ -1,7 +1,10 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
-    "vite-env.d.ts", "src/**/*", "src/**/*.vue"],
+    "vite-env.d.ts",
+    "formkit.theme.ts",
+    "formkit.config.ts",
+    "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,

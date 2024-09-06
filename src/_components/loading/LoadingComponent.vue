@@ -3,55 +3,45 @@
 <template>
   <div class="loading-section">
     <div v-if="props.loadingState !== ''">
-      <div v-if="props.loadingState == null">
-        no data
-      </div>
+      <div v-if="props.loadingState == null">no data</div>
       <slot v-else></slot>
     </div>
-    <div class="blink loading-text" v-else>
-      loading...
-    </div>
+    <div class="blink loading-text" v-else>loading...</div>
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { computed, onMounted, Ref, ref } from "vue";
+  import { computed, onMounted, Ref, ref } from 'vue';
 
-  import { Signals } from "@/signals";
+  import { Signals } from '@/signals';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
-  interface ILoadingSectionComponentProps
-  {
+  interface ILoadingSectionComponentProps {
     loadingState: any | undefined;
   }
 
-  const props: Readonly<ILoadingSectionComponentProps> = withDefaults(defineProps<ILoadingSectionComponentProps>(), {
-    loadingState: "",
-  });
+  const props: Readonly<ILoadingSectionComponentProps> = withDefaults(
+    defineProps<ILoadingSectionComponentProps>(),
+    {
+      loadingState: '',
+    }
+  );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  EMITS
   // const emit = defineEmits(['change', ]);
 
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PRIVATE
-  const _name: string = "LoadingSectionComponent";
-
-
-
+  const _name: string = 'LoadingSectionComponent';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  GETTERS
 
-
   // const getApplicationUuid = computed(() => _getters.getApplicationUuid);
-
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -59,19 +49,15 @@
   //   return getApplication.value.contact[0]?.number;
   // });
 
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
   // const watch = {
   //
   // }
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  SIGNALS
   // Signals.PUSHER_NOTIFICATION.add(onPusherNotification, () => {})
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
@@ -82,14 +68,11 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  HOOKS
-  onMounted( () => {
+  onMounted(() => {
     //useStore().dispatch("load", getApplicationUuid);
-  })
-
+  });
 </script>
 
 <!------------------------------------------------------------------------------------------------->
 
-<style scoped>
-
-</style>
+<style scoped></style>

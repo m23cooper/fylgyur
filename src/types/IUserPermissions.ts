@@ -1,4 +1,1 @@
-export interface IUserPermissions
-{
-
-}
+export interface IUserPermissions {}
