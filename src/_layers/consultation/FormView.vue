@@ -4,15 +4,15 @@
   <div
     id="FormView"
     v-if="currentForm !== null"
-    class="container flex flex-col dev4 p-6"
+    class="container flex flex-col p-6"
   >
     <component
-      class="container rounded-xl bg-slate-200 p-6"
+      class="container rounded-xl bg-slate-200 p-6 pb-0"
       :is="formComponent"
       ref="asyncCompRef"
       v-bind="currentForm.props"
     ></component>
-    <!--    <pre>{{ formModel }}</pre>-->
+    <pre>{{ formModel }}</pre>
   </div>
 </template>
 
@@ -27,6 +27,7 @@
     nextTick,
     toRef,
     ShallowRef,
+    computed,
   } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useConsultationStore, useUIStore } from '@/_stores';
@@ -58,7 +59,6 @@
 
   const formComponent: ShallowRef<any | null> = shallowRef(null);
   const asyncCompRef = ref(null);
-  const formModel = ref();
 
   const _store = useConsultationStore();
 
@@ -66,9 +66,10 @@
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
-  // const getContact = computed(() => {
-  //   return getApplication.value.contact[0]?.number;
-  // });
+  const formModel = computed(() => {
+    //  @ts-expect-error:  can't be arsed to hunt the type down
+    return asyncCompRef?.value?.formModel;
+  });
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public
@@ -98,9 +99,7 @@
         throw new Error('Disjoint in form data');
       }
 
-      //  @ts-expect-error:  can't be arsed to hunt the type down
-      formModel.value = asyncCompRef.value.formModel;
-      _store.registerFormModel({ formModel: formModel.value });
+      _store.registerFormModel({ fM: formModel });
 
       let ctx;
       ctx = useFormKitContextById(currentForm.value.id, () => {

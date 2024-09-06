@@ -24,29 +24,33 @@
         </div>
         <div
             v-if="hasButtons"
-            class="flex flex-row col-span-12 justify-stretch"
+            class="flex col-span-12 gap-5 justify-end items-end"
         >
-          <FormKit
-              v-if="hasRegister"
-              type="button"
-              :disabled="disabled as boolean"
-              :label="registerLabel"
-              @click.prevent="onRegisterClick"
-          />
-          <FormKit
-              v-if="hasReset"
-              type="button"
-              :label="resetLabel"
-              @click.prevent="onResetClick"
-          />
-          <FormKit
-              v-if="hasSubmit"
-              type="button"
-              :label="submitLabel"
-              @click.prevent="onSubmitClick"
-          />
+          <div class="" v-if="hasRegister">
+            <FormKit
+                type="button"
+                :disabled="disabled as boolean"
+                :label="registerLabel"
+                @click.prevent="onRegisterClick"
+            />
+          </div>
+          <div class="" v-if="hasReset">
+            <FormKit
+                type="button"
+                :label="resetLabel"
+                @click.prevent="onResetClick"
+            />
+          </div>
+          <div class="" v-if="hasSubmit">
+            <FormKit
+                type="button"
+                :label="submitLabel"
+                @click.prevent="onSubmitClick"
+            />
+          </div>
         </div>
       </div>
+      <!--<pre>{{ formModel }}</pre>-->
     </FormKit>
   </div>
 </template>
@@ -54,7 +58,7 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import {computed, ref, Ref, onMounted, toRef} from 'vue';
+  import {computed, ModelRef, onMounted, toRef} from 'vue';
   import {FormKit} from '@formkit/vue';
   import {reset as resetForm} from '@formkit/core';
   import {EMIT} from '@/enum';
@@ -80,7 +84,7 @@
   //  Private
   const _name: string = "{{ pascalCase class }}";
 
-  const formModel: Ref = ref(null);
+  const formModel = defineModel();
 
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,16 +134,16 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`{{ pascalCase class }}View onMounted!`);
+    console.log(`{{ pascalCase class }} onMounted!`);
     // _store.init();
   })
 
   // onUpdated(() => {
-  //   console.log(`{{ pascalCase class }}View onUpdated!`);
+  //   console.log(`{{ pascalCase class }} onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`{{ pascalCase class }}View unmounted!`);
+  //   console.log(`{{ pascalCase class }} unmounted!`);
   // })
 
 </script>

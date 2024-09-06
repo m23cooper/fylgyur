@@ -1,7 +1,7 @@
 <!--  Generated from AsynchForm plop template -->
 
 <template>
-  <div id="BronzeForm" class="container h-fill">
+  <div id="BronzeForm" class="">
     <FormKit
       type="form"
       :id="_name"
@@ -12,7 +12,7 @@
       use-local-storage
     >
       <div class="grid grid-cols-12 gap-10 lg:gap-8">
-        <div class="flex flex-col col-span-6 justify-end">
+        <div class="flex flex-col col-span-6">
           <FormKit type="text" name="blah" label="blah" />
         </div>
         <div class="flex flex-col col-span-6">
@@ -20,30 +20,33 @@
         </div>
         <div
           v-if="hasButtons"
-          class="flex flex-row col-span-12 justify-stretch"
+          class="flex col-span-12 gap-5 justify-end items-end"
         >
-          <FormKit
-            v-if="hasRegister"
-            type="button"
-            :disabled="disabled as boolean"
-            :label="registerLabel"
-            @click.prevent="onRegisterClick"
-          />
-          <FormKit
-            v-if="hasReset"
-            type="button"
-            :label="resetLabel"
-            @click.prevent="onResetClick"
-          />
-          <FormKit
-            v-if="hasSubmit"
-            type="button"
-            :label="submitLabel"
-            @click.prevent="onSubmitClick"
-          />
+          <div class="" v-if="hasRegister">
+            <FormKit
+              type="button"
+              :disabled="disabled as boolean"
+              :label="registerLabel"
+              @click.prevent="onRegisterClick"
+            />
+          </div>
+          <div class="" v-if="hasReset">
+            <FormKit
+              type="button"
+              :label="resetLabel"
+              @click.prevent="onResetClick"
+            />
+          </div>
+          <div class="" v-if="hasSubmit">
+            <FormKit
+              type="button"
+              :label="submitLabel"
+              @click.prevent="onSubmitClick"
+            />
+          </div>
         </div>
       </div>
-      <pre>{{ formModel }}</pre>
+      <!--<pre>{{ formModel }}</pre>-->
     </FormKit>
   </div>
 </template>
@@ -51,7 +54,7 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { computed, ref, Ref, onMounted, toRef } from 'vue';
+  import { computed, ModelRef, onMounted, toRef } from 'vue';
   import { FormKit } from '@formkit/vue';
   import { reset as resetForm } from '@formkit/core';
   import { EMIT } from '@/enum';
@@ -76,7 +79,7 @@
   //  Private
   const _name: string = 'BronzeForm';
 
-  const formModel: Ref = ref(null);
+  const formModel: ModelRef<any> | undefined = defineModel();
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED

@@ -70,9 +70,9 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
     registerFormContext({ ctx }): void {
       this.formContext = ctx;
     },
-    registerFormModel({ formModel }): void {
+    registerFormModel({ fM }): void {
       this.$patch({
-        formModel: toRef(formModel),
+        formModel: fM,
       });
     },
   },
