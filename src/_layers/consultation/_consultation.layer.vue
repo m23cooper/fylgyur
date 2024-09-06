@@ -6,8 +6,8 @@
     class="flex grid grid-cols-12 w-screen min-h-screen"
   >
     <JourneyView class="col-span-2 border-r-2 border-fuchsia-700" />
-    <FormView class="col-span-7 border-r-2 border-fuchsia-700" />
-    <InsightView class="col-span-3" />
+    <FormView class="col-span-6 border-r-2 border-fuchsia-700" />
+    <InsightView class="col-span-4" />
   </div>
 </template>
 

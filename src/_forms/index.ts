@@ -1,5 +1,17 @@
 export * from './CallToActionForm.vue';
 
+export * from './CallToActionForm.vue';
+
+export * from './CallToActionForm.vue';
+
+export * from './CallToActionForm.vue';
+
+export * from './CallToActionForm.vue';
+
+export * from './CallToActionForm.vue';
+
+export * from './CallToActionForm.vue';
+
 export * from './BronzeForm.vue';
 
 export * from './SilverForm.vue';

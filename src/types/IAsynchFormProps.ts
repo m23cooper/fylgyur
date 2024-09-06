@@ -1,8 +1,8 @@
 export interface IAsynchFormProps {
-  hasRegister?: boolean;
+  hasAsk?: boolean;
   hasReset?: boolean;
   hasSubmit?: boolean;
-  registerLabel?: string;
+  askLabel?: string;
   resetLabel?: string;
   submitLabel?: string;
 }

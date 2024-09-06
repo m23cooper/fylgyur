@@ -32,7 +32,7 @@ export default function (plop) {
             {
                 type: 'input',
                 name: 'parent',
-                message: 'Containing layer?  Leave blank to add to @/_components'
+                message: 'Containing layer?  '
             },
         ],
         actions: [
@@ -76,7 +76,7 @@ export default function (plop) {
             {
                 type: 'input',
                 name: 'parent',
-                message: 'Containing layer?  Leave blank to add to @/_components'
+                message: 'Containing folder?  Leave blank to add to @/_components'
             },
         ],
         actions: function (data) {
@@ -85,7 +85,7 @@ export default function (plop) {
             if (data.parent && data.parent.length > 0) {
                 actions.push({
                     type: 'add',
-                    path: 'src/_layers/{{camelCase parent}}/_components/{{pascalCase class}}Component.vue',
+                    path: 'src/_{{camelCase parent}}/components/{{pascalCase class}}Component.vue',
                     templateFile: 'plop-templates/VueComponent.hbs'
                 })
             } else {
