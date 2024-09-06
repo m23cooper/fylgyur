@@ -1,6 +1,7 @@
 export enum EMIT {
   ACTION = 'action',
   ADD = 'add',
+  ASK = 'ask',
   ASSIGN = 'assign',
   BACK = 'back',
   CHANGE = 'change',
@@ -13,7 +14,6 @@ export enum EMIT {
   EDIT = 'edit',
   ERROR = 'error',
   EXPORT = 'export',
-  FINDER = 'finder',
   NEXT = 'next',
   MOVE = 'move',
   OK = 'ok',

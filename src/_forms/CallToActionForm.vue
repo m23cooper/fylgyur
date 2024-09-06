@@ -3,50 +3,50 @@
 <template>
   <div id="CallToActionForm" class="container h-fill">
     <FormKit
-        type="form"
-        :id="_name"
-        :name="_name"
-        v-model="formModel"
-        :actions="false"
-        #default="{ disabled, state }"
-        use-local-storage
+      type="form"
+      :id="_name"
+      :name="_name"
+      v-model="formModel"
+      :actions="false"
+      #default="{ disabled, state }"
+      use-local-storage
     >
+      <h1 class="prose">Call To Action Form</h1>
       <div class="grid grid-cols-12 gap-10 lg:gap-8">
         <div class="flex flex-col col-span-6 justify-end">
-          <FormKit type="text" name="blah" label="blah"/>
+          <FormKit type="text" id="blah" name="blah" label="blah" />
         </div>
         <div class="flex flex-col col-span-6">
-          <FormKit
-              type="checkbox"
-              name="blahbox"
-              label="Blah?"
-          />
+          <FormKit type="checkbox" id="blahbox" name="blahbox" label="Blah?" />
         </div>
         <div
-            v-if="hasButtons"
-            class="flex flex-row col-span-12 justify-stretch"
+          v-if="hasButtons"
+          class="flex col-span-12 gap-5 justify-end items-end"
         >
-          <FormKit
-              v-if="hasRegister"
-              type="button"
-              :disabled="disabled as boolean"
-              :label="registerLabel"
-              @click.prevent="onRegisterClick"
-          />
-          <FormKit
-              v-if="hasReset"
-              type="button"
-              :label="resetLabel"
-              @click.prevent="onResetClick"
-          />
-          <FormKit
-              v-if="hasSubmit"
-              type="button"
-              :label="submitLabel"
-              @click.prevent="onSubmitClick"
-          />
+          <div
+            v-if="hasReset"
+            class="btn bg-primary text-slate-50"
+            @click.prevent="emit(EMIT.RESET)"
+          >
+            {{ resetLabel }}
+          </div>
+          <div
+            v-if="hasAsk"
+            class="btn bg-primary text-slate-50"
+            @click.prevent="emit(EMIT.ASK)"
+          >
+            {{ askLabel }}
+          </div>
+          <div
+            v-if="hasSubmit"
+            class="btn bg-primary text-slate-50"
+            @click.prevent="emit(EMIT.SUBMIT)"
+          >
+            {{ submitLabel }}
+          </div>
         </div>
       </div>
+      <!--<pre>{{ formModel }}</pre>-->
     </FormKit>
   </div>
 </template>
@@ -54,38 +54,36 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import {computed, ref, Ref, onMounted, toRef} from 'vue';
-  import {FormKit} from '@formkit/vue';
-  import {reset as resetForm} from '@formkit/core';
-  import {EMIT} from '@/enum';
-  import {IAsynchFormProps} from '@/types';
+  import { computed, onMounted, toRef, ModelRef } from 'vue';
+  import { FormKit } from '@formkit/vue';
+  import { reset as resetForm } from '@formkit/core';
+  import { EMIT } from '@/enum';
+  import { IAsynchFormProps } from '@/types';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
   const {
+    hasAsk = true,
     hasReset = true,
-    hasRegister = false,
     hasSubmit = true,
-    registerLabel = 'Register',
+    askLabel = 'Ask The AI Expert!',
     resetLabel = 'Reset',
     submitLabel = 'Submit',
   } = defineProps<IAsynchFormProps>();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  EMITS
-  const emit = defineEmits([EMIT.REGISTER, EMIT.RESET, EMIT.SUBMIT,]);
-
+  const emit = defineEmits([EMIT.REGISTER, EMIT.RESET, EMIT.SUBMIT]);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = "CallToActionForm";
+  const _name: string = 'CallToActionForm';
 
-  const formModel: Ref = ref(null);
-
+  const formModel: ModelRef<any> | undefined = defineModel();
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
-  const hasButtons = computed(() => hasReset || hasRegister || hasSubmit);
+  const hasButtons = computed(() => hasAsk || hasReset || hasSubmit);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public
@@ -98,26 +96,15 @@
   //  Provides - props for all children
   //  eg - provide("key", "value");
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  SIGNALS
   // Signals.PUSHER_NOTIFICATION.add(onPusherNotification, () => {})
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
-  function onRegisterClick() {
-    emit(EMIT.REGISTER);
-  }
-
-  function onResetClick() {
-    emit(EMIT.RESET);
-    resetForm(_name);
-  }
-
-  function onSubmitClick() {
-    emit(EMIT.SUBMIT);
-  }
+  // function onRegisterClick() {
+  //   emit(EMIT.REGISTER);
+  // }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
@@ -130,22 +117,19 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`CallToActionFormView onMounted!`);
+    console.log(`CallToActionForm onMounted!`);
     // _store.init();
-  })
+  });
 
   // onUpdated(() => {
-  //   console.log(`CallToActionFormView onUpdated!`);
+  //   console.log(`CallToActionForm onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`CallToActionFormView unmounted!`);
+  //   console.log(`CallToActionForm unmounted!`);
   // })
-
 </script>
 
 <!------------------------------------------------------------------------------------------------->
 
-<style scoped>
-
-</style>
+<style scoped></style>

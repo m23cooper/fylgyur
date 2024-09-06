@@ -7,10 +7,13 @@
     class="container flex flex-col p-6"
   >
     <component
-      class="container rounded-xl bg-slate-200 p-6 pb-0"
+      class="container rounded-xl bg-slate-200 p-5"
       :is="formComponent"
       ref="asyncCompRef"
-      v-bind="currentForm.props"
+      :buttons="currentForm.props"
+      @[EMIT.ASK]="onAsk"
+      @[EMIT.RESET]="onReset"
+      @[EMIT.SUBMIT]="onSubmit"
     ></component>
     <pre>{{ formModel }}</pre>
   </div>
@@ -25,18 +28,16 @@
     shallowRef,
     watch,
     nextTick,
-    toRef,
     ShallowRef,
     computed,
   } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useConsultationStore, useUIStore } from '@/_stores';
-  // import * as _components from './_components';
+  import { EMIT } from '@/enum';
   import { Signals } from '@/signals';
-  import * as utils from '@/utils/utils';
-  import _titleCase from 'voca/title_case';
   import ModalComponent from '@/_components/modal/ModalComponent.vue';
-  import { useFormKitContextById, useInput } from '@formkit/vue';
+  import { useFormKitContextById } from '@formkit/vue';
+  import { reset as resetForm } from '@formkit/core';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -123,6 +124,14 @@
       return null;
     }
   };
+
+  function onAsk() {}
+
+  function onReset() {
+    resetForm(currentForm.value.name);
+  }
+
+  function onSubmit() {}
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH

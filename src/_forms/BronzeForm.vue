@@ -1,7 +1,7 @@
 <!--  Generated from AsynchForm plop template -->
 
 <template>
-  <div id="BronzeForm" class="">
+  <div id="BronzeForm" class="container h-fill">
     <FormKit
       type="form"
       :id="_name"
@@ -11,38 +11,38 @@
       #default="{ disabled, state }"
       use-local-storage
     >
+      <h1 class="prose">Bronze Form</h1>
       <div class="grid grid-cols-12 gap-10 lg:gap-8">
-        <div class="flex flex-col col-span-6">
-          <FormKit type="text" name="blah" label="blah" />
+        <div class="flex flex-col col-span-6 justify-end">
+          <FormKit type="text" id="blah" name="blah" label="blah" />
         </div>
         <div class="flex flex-col col-span-6">
-          <FormKit type="checkbox" name="blahbox" label="Blah?" />
+          <FormKit type="checkbox" id="blahbox" name="blahbox" label="Blah?" />
         </div>
         <div
           v-if="hasButtons"
           class="flex col-span-12 gap-5 justify-end items-end"
         >
-          <div class="" v-if="hasRegister">
-            <FormKit
-              type="button"
-              :disabled="disabled as boolean"
-              :label="registerLabel"
-              @click.prevent="onRegisterClick"
-            />
+          <div
+            v-if="hasReset"
+            class="btn bg-primary text-slate-50"
+            @click.prevent="emit(EMIT.RESET)"
+          >
+            {{ resetLabel }}
           </div>
-          <div class="" v-if="hasReset">
-            <FormKit
-              type="button"
-              :label="resetLabel"
-              @click.prevent="onResetClick"
-            />
+          <div
+            v-if="hasAsk"
+            class="btn bg-primary text-slate-50"
+            @click.prevent="emit(EMIT.ASK)"
+          >
+            {{ askLabel }}
           </div>
-          <div class="" v-if="hasSubmit">
-            <FormKit
-              type="button"
-              :label="submitLabel"
-              @click.prevent="onSubmitClick"
-            />
+          <div
+            v-if="hasSubmit"
+            class="btn bg-primary text-slate-50"
+            @click.prevent="emit(EMIT.SUBMIT)"
+          >
+            {{ submitLabel }}
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { computed, ModelRef, onMounted, toRef } from 'vue';
+  import { computed, onMounted, toRef, ModelRef } from 'vue';
   import { FormKit } from '@formkit/vue';
   import { reset as resetForm } from '@formkit/core';
   import { EMIT } from '@/enum';
@@ -63,10 +63,10 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
   const {
+    hasAsk = true,
     hasReset = true,
-    hasRegister = false,
-    hasSubmit = true,
-    registerLabel = 'Register',
+    hasSubmit = false,
+    askLabel = 'Ask The AI Expert!',
     resetLabel = 'Reset',
     submitLabel = 'Submit',
   } = defineProps<IAsynchFormProps>();
@@ -83,7 +83,7 @@
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
-  const hasButtons = computed(() => hasReset || hasRegister || hasSubmit);
+  const hasButtons = computed(() => hasAsk || hasReset || hasSubmit);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public
@@ -102,18 +102,9 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
-  function onRegisterClick() {
-    emit(EMIT.REGISTER);
-  }
-
-  function onResetClick() {
-    emit(EMIT.RESET);
-    resetForm(_name);
-  }
-
-  function onSubmitClick() {
-    emit(EMIT.SUBMIT);
-  }
+  // function onRegisterClick() {
+  //   emit(EMIT.REGISTER);
+  // }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
@@ -126,16 +117,16 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`BronzeFormView onMounted!`);
+    console.log(`BronzeForm onMounted!`);
     // _store.init();
   });
 
   // onUpdated(() => {
-  //   console.log(`BronzeFormView onUpdated!`);
+  //   console.log(`BronzeForm onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`BronzeFormView unmounted!`);
+  //   console.log(`BronzeForm unmounted!`);
   // })
 </script>
 
