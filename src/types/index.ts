@@ -10,3 +10,9 @@ export * from './TUserRoles';
 export * from './TAsynchFormProps';
 
 export * from './TAsynchForm';
+
+export * from './TMyType';
+
+export * from './TMyType';
+
+export * from './TMyType';

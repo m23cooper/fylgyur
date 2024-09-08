@@ -1,8 +1,8 @@
 import type { TAsynchFormProps } from '@/types/TAsynchFormProps';
 
-export interface TAsynchForm {
+export type TAsynchForm = {
   id: string;
   name: string;
   title: string;
   props: TAsynchFormProps;
-}
+};

@@ -1,6 +1,6 @@
 import { ROUTE_NAMES } from '@/enum';
 
-export interface TRoute {
+export type TRoute = {
   component: () => void;
   fontIconType: string;
   menu: number;
@@ -8,4 +8,4 @@ export interface TRoute {
   fullPath?: string;
   path: string;
   title: string;
-}
+};

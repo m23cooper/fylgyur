@@ -1,1 +1,1 @@
-export interface TUserPermissions {}
+export type TUserPermissions = {};
