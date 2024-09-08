@@ -3,9 +3,9 @@ import { FontIconType } from '@/icons/FontIconConstants';
 import { createRouter, createWebHistory } from 'vue-router';
 import { useUIStore, useUserStore } from '@/_stores';
 import { filter as _filter, find as _find } from 'lodash-es';
-import { IRoute } from '@/types';
+import type { TRoute } from '@/types';
 
-export const routes: IRoute[] = [
+export const routes: TRoute[] = [
   {
     menu: -10,
     name: ROUTE_NAMES.HOME,
@@ -76,6 +76,6 @@ _router.beforeEach(async (to, from) => {
 
 export const router = _router;
 
-export const menuOptions: IRoute[] = _filter(routes, (rt) => rt.menu > -1).sort(
-  (route1, route2) => route1.menu - route2.menu
+export const menuOptions: TRoute[] = _filter(routes, (rt) => rt.menu > -1).sort(
+  (route1, route2) => route1.menu - route2.menu,
 );

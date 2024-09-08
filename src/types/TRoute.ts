@@ -1,6 +1,6 @@
 import { ROUTE_NAMES } from '@/enum';
 
-export interface IRoute {
+export interface TRoute {
   component: () => void;
   fontIconType: string;
   menu: number;

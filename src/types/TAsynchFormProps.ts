@@ -1,4 +1,4 @@
-export interface IAsynchFormProps {
+export interface TAsynchFormProps {
   hasAsk?: boolean;
   hasReset?: boolean;
   hasSubmit?: boolean;

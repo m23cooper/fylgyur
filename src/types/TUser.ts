@@ -1,11 +1,11 @@
-import type { IUserRoles } from '@/types/IUserRoles';
+import type { TUserRoles } from '@/types/TUserRoles';
 
-export interface IUser {
+export interface TUser {
   first_name: string;
   gdpr: boolean;
   hubspot_owner_id: string | null;
   id: number;
   last_name: string;
-  roles: IUserRoles[];
+  roles: TUserRoles[];
   uuid: string | null;
 }

@@ -17,12 +17,12 @@
 <script setup lang="ts">
   import { EMIT } from '@/enum';
   import { computed, onMounted, Ref, ref } from 'vue';
-  import { IAsynchForm } from '@/types';
+  import type { TAsynchForm } from '@/types';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
   interface IJourneyCardComponentProps {
-    form: IAsynchForm | null;
+    form: TAsynchForm | null;
   }
 
   const { form = null }: Readonly<IJourneyCardComponentProps> =

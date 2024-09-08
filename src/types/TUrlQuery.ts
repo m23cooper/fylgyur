@@ -1,4 +1,4 @@
-export interface IUrlQuery {
+export interface TUrlQuery {
   app_uuid?: string;
   pen_uuid?: string;
   emp_uuid?: string;

@@ -1,4 +1,4 @@
-export interface INotification {
+export interface TNotification {
   content: any;
   duration: number;
   message: string;

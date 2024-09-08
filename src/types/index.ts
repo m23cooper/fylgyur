@@ -1,12 +1,12 @@
-export * from './ILoginParams';
-export * from './IMenuOption';
-export * from './INotification';
-export * from './IRoute';
-export * from './IUrlQuery';
-export * from './IUser';
-export * from './IUserPermissions';
-export * from './IUserRoles';
+export * from './TLoginParams';
+export * from './TMenuOption';
+export * from './TNotification';
+export * from './TRoute';
+export * from './TUrlQuery';
+export * from './TUser';
+export * from './TUserPermissions';
+export * from './TUserRoles';
 
-export * from './IAsynchFormProps';
+export * from './TAsynchFormProps';
 
-export * from './IAsynchForm';
+export * from './TAsynchForm';

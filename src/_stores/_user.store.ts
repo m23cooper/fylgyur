@@ -2,13 +2,13 @@ import ErrorManager from '@/utils/ErrorManager';
 import { Signals } from '@/signals';
 import { useUIStore } from '@/_stores';
 import { userService } from '@/_services';
-import { ILoginParams } from '@/types';
-import { IUser, IUserPermissions } from '@/types';
+import type { TLoginParams } from '@/types';
+import type { TUser, TUserPermissions } from '@/types';
 import { defineStore, DefineStoreOptions, StateTree } from 'pinia';
 import { kindeClient } from '@/kinde/kindeClient';
 
 export interface IUserStoreState {
-  permissions: IUserPermissions;
+  permissions: TUserPermissions;
   isLoggedIn: boolean;
   token: string | undefined;
   user: any;

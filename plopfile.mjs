@@ -344,24 +344,47 @@ export default function (plop) {
         ],
     });
 
+    plop.setGenerator('Type', {
+        description: 'Generate an Type',
+        prompts: [
+            {
+                type: 'input',
+                name: 'class',
+                message: 'class name please (T is prepended):'
+            },
+        ],
+        actions: [
+            {
+                type: 'add',
+                path: 'src/types/T{{ pascalCase class}}.ts',
+                templateFile: 'plop-templates/Type.hbs'
+            },
+            {
+                type: "append",
+                path: "src/types/index.ts",
+                template: "export * from './T{{ pascalCase class}}';\n",
+            },
+        ],
+    });
+
     plop.setGenerator('Interface', {
         description: 'Generate an Interface',
         prompts: [
             {
                 type: 'input',
                 name: 'class',
-                message: 'class name please:'
+                message: 'class name please (I is prepended):'
             },
         ],
         actions: [
             {
                 type: 'add',
-                path: 'src/types/I{{ pascalCase class}}.ts',
+                path: 'src/interfaces/I{{ pascalCase class}}.ts',
                 templateFile: 'plop-templates/Interface.hbs'
             },
             {
                 type: "append",
-                path: "src/types/index.ts",
+                path: "src/interfaces/index.ts",
                 template: "export * from './I{{ pascalCase class}}';\n",
             },
         ],

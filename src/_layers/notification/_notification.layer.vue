@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
   import { Signals } from '@/signals';
-  import { INotification } from '@/types/INotification';
+  import type { TNotification } from '@/types/TNotification';
   import { computed, onMounted, ref, Ref } from 'vue';
   import {
     FontIconType,
@@ -73,7 +73,7 @@
 
   Signals.NOTIFICATION.add(onNotification);
 
-  const note: Ref<INotification | null> = ref(null);
+  const note: Ref<TNotification | null> = ref(null);
   let timeout;
   const defaultDuration = 3000;
   const deltaY = 200;

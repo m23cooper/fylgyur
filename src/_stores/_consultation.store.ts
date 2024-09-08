@@ -6,18 +6,24 @@ import {
   map as _map,
   find as _find,
 } from 'lodash-es';
-import { firestoreDefaultConverter, useCollection } from 'vuefire';
-import { collection, query, orderBy } from 'firebase/firestore';
+import { useCollection } from 'vuefire';
+import {
+  collection,
+  query,
+  orderBy,
+  where,
+  onSnapshot,
+} from 'firebase/firestore';
 import { db } from '@/db/firebase';
 import { Ref, toRef, watch } from 'vue';
-import { IAsynchForm } from '@/types';
+import type { TAsynchForm } from '@/types';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
 
 export interface IConsultationState {
-  forms: IAsynchForm[];
-  selectedForm: IAsynchForm | null;
+  forms: TAsynchForm[];
+  selectedForm: TAsynchForm | null;
   formContext: any;
   formModel: any;
 }
@@ -48,9 +54,17 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
     async init() {
       //  @ts-ignore
       if (this.INITIALISED) return Promise.resolve(this);
+      // const hosts = useCollection(query(collection(db, 'hosts')));
+      //
+      // const host = hosts.value[0];
+
       //  @ts-ignore
-      this.forms = useCollection<IAsynchForm>(
-        query(collection(db, 'forms'), orderBy('order')),
+      this.forms = useCollection<TAsynchForm>(
+        query(
+          collection(db, 'forms'),
+          // where('__name__', 'in', host.forms),
+          orderBy('order'),
+        ),
       );
       let test = 0;
     },

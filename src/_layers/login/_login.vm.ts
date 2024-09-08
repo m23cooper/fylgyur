@@ -1,7 +1,7 @@
 import { Signals } from '@/signals';
 import { useUserStore } from '@/_stores';
 import { defineStore } from 'pinia';
-import { ILoginParams } from '@/types';
+import type { TLoginParams } from '@/types';
 
 export interface ILoginLayerState {
   login_error_msg: string;
@@ -36,7 +36,7 @@ export const useLoginVM = defineStore('login.view.model', {
   //  -   init() actions are checked by a plugin against an INITIALISED decoration - see @/_stores/DecoratedPinia.ts
   actions: {
     async login() {
-      const params: ILoginParams = {
+      const params: TLoginParams = {
         client_id: this.login_email,
         client_secret: this.login_password,
       };
