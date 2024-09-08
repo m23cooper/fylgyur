@@ -37,7 +37,7 @@
   import { useRouter } from 'vue-router';
   import { StoreGeneric, storeToRefs } from 'pinia';
 
-  import { useConsultationStore, useUIStore, useUserStore } from '@/_stores';
+  import { useFormsStore, useUIStore, useUserStore } from '@/_stores';
   import * as anims from '@/utils/animation';
   import { ROUTE_NAMES } from '@/enum';
 
@@ -92,7 +92,7 @@
 
     // populate the Router and get startup url query
     _uiStore.init();
-    // await useConsultationStore().init();
+    // await useFormsStore().init();
   });
 
   onMounted(async () => {
@@ -103,7 +103,7 @@
     if (isLoggedIn) {
       try {
         await kindeClient.handleRedirectToApp(
-          new URL(window.location.toString())
+          new URL(window.location.toString()),
         );
         // Redirect to Home page, etc...
       } catch (error) {

@@ -21,13 +21,13 @@ export const routes: TRoute[] = [
   {
     menu: -9,
     name: ROUTE_NAMES.CONSULTATION,
-    path: '/consultation',
+    path: '/forms',
     title: 'Fantastorical Flow',
     fontIconType: FontIconType.HOME,
     component: () =>
       import(
         /* webpackChunkName: "Routes" */
-        '@/_layers/consultation/_consultation.layer.vue'
+        '@/_layers/_forms/_forms.layer.vue'
       ),
   },
   {

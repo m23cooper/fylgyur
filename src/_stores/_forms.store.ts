@@ -1,5 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-// import { consultationService, } from "@/_services";
+// import { formsService, } from "@/_services";
 import {
   each as _each,
   filter as _filter,
@@ -21,17 +21,17 @@ import type { TAsynchForm } from '@/types';
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
 
-export interface IConsultationState {
+export interface IFormsState {
   forms: TAsynchForm[];
   selectedForm: TAsynchForm | null;
   formContext: any;
   formModel: any;
 }
 
-export const useConsultationStore = defineStore(`_consultation.store`, {
+export const useFormsStore = defineStore(`_forms.store`, {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  State
-  state: (): IConsultationState => ({
+  state: (): IFormsState => ({
     forms: [],
     selectedForm: null,
     formContext: null,
@@ -77,7 +77,7 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
       } else {
         this.selectedForm = form;
         console.log(
-          `_consultation.store.setCurrentForm set to: ${form.id} (${form.name})`,
+          `_forms.store.setCurrentForm set to: ${form.id} (${form.name})`,
         );
       }
     },
@@ -95,9 +95,7 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  acceptHMRUpdate
 if (import.meta.hot) {
-  import.meta.hot.accept(
-    acceptHMRUpdate(useConsultationStore, import.meta.hot),
-  );
+  import.meta.hot.accept(acceptHMRUpdate(useFormsStore, import.meta.hot));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

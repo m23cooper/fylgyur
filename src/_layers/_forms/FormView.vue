@@ -39,7 +39,7 @@
     computed,
   } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useConsultationStore, useUIStore } from '@/_stores';
+  import { useFormsStore, useUIStore } from '@/_stores';
   import { EMIT } from '@/enum';
   import { useFormKitContextById } from '@formkit/vue';
   import { reset as resetForm } from '@formkit/core';
@@ -67,7 +67,7 @@
   const formComponent: ShallowRef<any | null> = shallowRef(null);
   const asyncCompRef = ref(null);
 
-  const _store = useConsultationStore();
+  const _store = useFormsStore();
 
   const { currentForm } = storeToRefs(_store);
 

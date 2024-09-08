@@ -207,7 +207,7 @@
           <TextareaElement
             name="your_story_answer"
             default="..."
-            placeholder="Your Story"
+            placeholder="Your c"
             :columns="12"
             :rows="5"
           />

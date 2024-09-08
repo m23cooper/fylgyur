@@ -22,19 +22,20 @@
           <div class="grid grid-cols-12 gap-10 lg:gap-8">
             <div class="flex flex-col col-span-6 justify-end">
               <FormKit type="group" id="full_name">
-                <FormKit type="text" name="first_name" label="First Name" />
-                <FormKit type="text" name="family_name" label="Family Name" />
+                <FormKit type="text" id="first_name" label="First Name" />
+                <FormKit type="text" id="family_name" label="Family Name" />
               </FormKit>
-              <FormKit type="text" name="occupation" label="Occupation" />
+              <FormKit type="text" id="occupation" label="Occupation" />
             </div>
             <div class="flex flex-col col-span-6">
               <FormKit
                 type="textarea"
-                name="general"
+                id="general"
                 label="What advice are you looking for?"
               />
               <FormKit
                 type="email"
+                id="email"
                 label="Email Address"
                 placeholder="Enter your email"
                 validation="required|email"

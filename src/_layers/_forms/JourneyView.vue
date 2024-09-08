@@ -1,9 +1,22 @@
 <!--  Generated from VueView plop template -->
 
 <template>
-  <div id="InsightView" class="container h-fill">
-    <h2 class="prose self-start p-2">Insight View</h2>
-    <pre class="container bg-white p-5 mx-5">:{{ formModel }}</pre>
+  <div id="JourneyView" class="container">
+    <div class="container p-5 flex flex-col gap-4 items-center" v-if="forms">
+      <div class="w-full" v-for="form in forms" :key="form.id">
+        <JourneyCardComponent
+          v-if="form.id !== currentForm.id"
+          class="shadow-lg cursor-pointer"
+          :form
+          @click="onCardClick(form.id)"
+        />
+        <JourneyCardComponent
+          v-else
+          :form
+          class="w-full border-fuchsia-700 border-4 cursor-default"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,19 +25,24 @@
 <script setup lang="ts">
   import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useConsultationStore } from '@/_stores';
+  import { useFormsStore, useUIStore } from '@/_stores';
   // import * as _components from './_components';
   import { Signals } from '@/signals';
   import * as utils from '@/utils/utils';
+  import _titleCase from 'voca/title_case';
+  import ADDButton from '@/buttons/ADDButton.vue';
+  import EDITButton from '@/buttons/EDITButton.vue';
+  import ModalComponent from '@/_components/modal/ModalComponent.vue';
+  import JourneyCardComponent from '@/_layers/_forms/_components/JourneyCardComponent.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
-  // interface IInsightViewProps
+  // interface IJourneyViewProps
   // {
   //   blah: string;
   // }
   //
-  // const props: Readonly<IInsightViewProps> = withDefaults(defineProps<IInsightViewProps>(), {
+  // const props: Readonly<IJourneyViewProps> = withDefaults(defineProps<IJourneyViewProps>(), {
   //   blah: "",
   // });
 
@@ -34,11 +52,11 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = 'InsightView';
+  const _name: string = 'JourneyView';
 
-  const _store = useConsultationStore();
+  const _store = useFormsStore();
 
-  const { formModel } = storeToRefs(_store);
+  const { forms, currentForm } = storeToRefs(_store);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -72,20 +90,23 @@
   //  {
   //      // handle event
   //  }
+  function onCardClick(id: string): void {
+    _store.setCurrentFormById({ id });
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`InsightView onMounted!`);
+    console.log(`JourneyView onMounted!`);
     // _store.init();
   });
 
   // onUpdated(() => {
-  //   console.log(`InsightView onUpdated!`);
+  //   console.log(`JourneyView onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`InsightView unmounted!`);
+  //   console.log(`JourneyView unmounted!`);
   // })
 </script>
 

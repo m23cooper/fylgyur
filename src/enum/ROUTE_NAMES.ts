@@ -1,6 +1,6 @@
 export enum ROUTE_NAMES {
   HOME = 'Home',
-  CONSULTATION = 'Consultation',
+  CONSULTATION = 'Forms',
   LOGIN = 'Login',
   LOGOUT = 'Logout',
 }
