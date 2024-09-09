@@ -30,18 +30,18 @@
 
 <script setup lang="ts">
   import { EMIT } from '@/enum';
-  import { IAsynchFormProps } from '@/types';
+  import type { TAsynchFormProps } from '@/types';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
   const {
     hasAsk = true,
     hasReset = true,
-    hasSubmit = true,
+    hasSubmit = false,
     askLabel = 'Ask The AI Expert!',
     resetLabel = 'Reset',
     submitLabel = 'Submit',
-  } = defineProps<IAsynchFormProps>();
+  } = defineProps<TAsynchFormProps>();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  EMITS

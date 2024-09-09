@@ -1,13 +1,13 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-  <div
-    id="ConsultationLayer"
-    class="flex grid grid-cols-12 w-screen min-h-screen"
-  >
-    <JourneyView class="col-span-2 border-r-2 border-fuchsia-700" />
-    <FormView class="col-span-6 border-r-2 border-fuchsia-700" />
-    <InsightView class="col-span-4" />
+  <div id="FormsLayer" class="flex flex-row columns-12 w-screen min-h-screen">
+    <JourneyView
+      v-show="formCount > 1"
+      class="basis-3/12 border-r-2 border-fuchsia-700"
+    />
+    <FormView class="grow border-r-2 border-fuchsia-700 overflow-x-visible" />
+    <InsightView v-show="selectedForm" class="basis-5/12" />
   </div>
 </template>
 
@@ -16,21 +16,19 @@
 <script setup lang="ts">
   import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useConsultationStore, useUIStore } from '@/_stores';
+  import { useFormsStore, useUIStore } from '@/_stores';
   import { Signals } from '@/signals';
-  import JourneyView from '@/_layers/consultation/JourneyView.vue';
-  import FormView from '@/_layers/consultation/FormView.vue';
-  import InsightView from '@/_layers/consultation/InsightView.vue';
+  import JourneyView from '@/_layers/forms/JourneyView.vue';
+  import FormView from '@/_layers/forms/FormView.vue';
+  import InsightView from '@/_layers/forms/InsightView.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = 'ConsultationLayer';
+  const _name: string = 'FormsLayer';
 
-  const _store = useConsultationStore();
-  _store.init();
+  const _store = useFormsStore();
 
-  // const {
-  // } = storeToRefs(_store);
+  const { formCount, selectedForm } = storeToRefs(_store);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -68,7 +66,7 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`ConsultationLayer onMounted!`);
+    console.log(`FormsLayer onMounted!`);
     // _store.init();
   });
 

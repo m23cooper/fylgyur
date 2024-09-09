@@ -1,31 +1,33 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-// import { consultationService, } from "@/_services";
 import {
   each as _each,
-  filter as _filter,
+  merge as _merge,
+  orderBy as _orderBy,
+  assign as _assign,
   map as _map,
   find as _find,
+  map,
 } from 'lodash-es';
-import { firestoreDefaultConverter, useCollection } from 'vuefire';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { db } from '@/db/firebase';
 import { Ref, toRef, watch } from 'vue';
-import { IAsynchForm } from '@/types';
+import type { TAsynchForm, THost } from '@/types';
+import { formsService } from '@/_services';
+
+const _service = formsService;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
 
-export interface IConsultationState {
-  forms: IAsynchForm[];
-  selectedForm: IAsynchForm | null;
+export interface IFormsState {
+  forms: TAsynchForm[];
+  selectedForm: TAsynchForm | null;
   formContext: any;
-  formModel: any;
+  formModel: object | null;
 }
 
-export const useConsultationStore = defineStore(`_consultation.store`, {
+export const useFormsStore = defineStore(`_forms.store`, {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  State
-  state: (): IConsultationState => ({
+  state: (): IFormsState => ({
     forms: [],
     selectedForm: null,
     formContext: null,
@@ -47,12 +49,24 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
   actions: {
     async init() {
       //  @ts-ignore
-      if (this.INITIALISED) return Promise.resolve(this);
-      //  @ts-ignore
-      this.forms = useCollection<IAsynchForm>(
-        query(collection(db, 'forms'), orderBy('order')),
-      );
-      let test = 0;
+      if (this.INITIALISED) return this;
+
+      return await this.loadFormsByHost();
+    },
+    async loadFormsByHost(): Promise<void> {
+      const hostname = window.location.hostname.split('.')[0];
+      const host: THost = await _service.getHost({ hostname });
+      const formIds = host.forms.map((form) => form.id);
+
+      const formData = await _service.getForms({ formIds });
+      _map(formData, (form) => {
+        const hostForm = _find(
+          host.forms,
+          (hostform) => hostform.id === form.id,
+        );
+        form.order = hostForm?.order || 0;
+      });
+      this.forms = _orderBy(formData, ['order']);
     },
     setCurrentFormById({ id }): void {
       // console.log(`setCurrentForm ${name}`)
@@ -63,7 +77,7 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
       } else {
         this.selectedForm = form;
         console.log(
-          `_consultation.store.setCurrentForm set to: ${form.id} (${form.name})`,
+          `_forms.store.setCurrentForm set to: ${form.id} (${form.title})`,
         );
       }
     },
@@ -81,9 +95,7 @@ export const useConsultationStore = defineStore(`_consultation.store`, {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  acceptHMRUpdate
 if (import.meta.hot) {
-  import.meta.hot.accept(
-    acceptHMRUpdate(useConsultationStore, import.meta.hot),
-  );
+  import.meta.hot.accept(acceptHMRUpdate(useFormsStore, import.meta.hot));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

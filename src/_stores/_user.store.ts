@@ -2,13 +2,13 @@ import ErrorManager from '@/utils/ErrorManager';
 import { Signals } from '@/signals';
 import { useUIStore } from '@/_stores';
 import { userService } from '@/_services';
-import { ILoginParams } from '@/types';
-import { IUser, IUserPermissions } from '@/types';
+import type { TLoginParams } from '@/types';
+import type { TUser, TUserPermissions } from '@/types';
 import { defineStore, DefineStoreOptions, StateTree } from 'pinia';
 import { kindeClient } from '@/kinde/kindeClient';
 
 export interface IUserStoreState {
-  permissions: IUserPermissions;
+  permissions: TUserPermissions;
   isLoggedIn: boolean;
   token: string | undefined;
   user: any;
@@ -50,7 +50,7 @@ export const useUserStore = defineStore('_user.store', {
   //  Getters
   getters: {
     //canUserAccess: (state) => state.canAccess,
-    isDevUser: (state) => state.user.uuid === '',
+    isDevUser: (state) => state.user?.uuid === '',
   },
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ export const useUserStore = defineStore('_user.store', {
   actions: {
     async init() {
       //  @ts-ignore
-      if (this.INITIALISED) return Promise.resolve();
+      if (this.INITIALISED) return this;
       Signals.LOGOUT.add(this.onLogout);
 
       this.isLoggedIn = await kindeClient.isAuthenticated();
@@ -71,7 +71,7 @@ export const useUserStore = defineStore('_user.store', {
         this.userProfile = await kindeClient.getUserProfile();
       }
 
-      return Promise.resolve(this.isLoggedIn);
+      return this.isLoggedIn;
     },
     async login() {
       const url = await kindeClient.login();

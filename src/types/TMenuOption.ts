@@ -1,8 +1,8 @@
 import { ROUTE_NAMES } from '@/enum';
 
-export interface IMenuOption {
+export type TMenuOption = {
   name: ROUTE_NAMES;
   icon: string;
   title: string;
   menu: number;
-}
+};

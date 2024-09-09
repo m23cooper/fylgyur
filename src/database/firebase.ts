@@ -1,11 +1,6 @@
 import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 // import { getAnalytics } from "db/analytics";
-import {
-  getFirestore,
-  collection,
-  initializeFirestore,
-  setLogLevel,
-} from 'firebase/firestore';
 
 // ... other db imports
 
@@ -37,10 +32,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(firebaseApp);
 
 // used for the firestore refs
-const db = initializeFirestore(firebaseApp, {
-  // experimentalAutoDetectLongPolling: false,
-  // experimentalForceLongPolling: true,
-});
+const db = getFirestore(firebaseApp);
 
 export { firebaseApp, db };
 

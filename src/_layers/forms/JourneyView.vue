@@ -25,7 +25,7 @@
 <script setup lang="ts">
   import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useConsultationStore, useUIStore } from '@/_stores';
+  import { useFormsStore, useUIStore } from '@/_stores';
   // import * as _components from './_components';
   import { Signals } from '@/signals';
   import * as utils from '@/utils/utils';
@@ -33,7 +33,7 @@
   import ADDButton from '@/buttons/ADDButton.vue';
   import EDITButton from '@/buttons/EDITButton.vue';
   import ModalComponent from '@/_components/modal/ModalComponent.vue';
-  import JourneyCardComponent from '@/_layers/consultation/_components/JourneyCardComponent.vue';
+  import JourneyCardComponent from '@/_layers/forms/_components/JourneyCardComponent.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -54,7 +54,7 @@
   //  Private
   const _name: string = 'JourneyView';
 
-  const _store = useConsultationStore();
+  const _store = useFormsStore();
 
   const { forms, currentForm } = storeToRefs(_store);
 

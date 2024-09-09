@@ -12,7 +12,7 @@
 <script setup lang="ts">
   import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useConsultationStore } from '@/_stores';
+  import { useFormsStore } from '@/_stores';
   // import * as _components from './_components';
   import { Signals } from '@/signals';
   import * as utils from '@/utils/utils';
@@ -36,7 +36,7 @@
   //  Private
   const _name: string = 'InsightView';
 
-  const _store = useConsultationStore();
+  const _store = useFormsStore();
 
   const { formModel } = storeToRefs(_store);
 

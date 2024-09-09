@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
   import { EMIT } from '@/enum';
-  import { IRoute } from '@/types';
+  import type { TRoute } from '@/types';
   import {
     FontIconType,
     FontIconSize,
@@ -42,7 +42,7 @@
   }
 
   const props: Readonly<IProps> = withDefaults(defineProps<IProps>(), {
-    menuOption: <IRoute>{},
+    menuOption: <TRoute>{},
   });
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -37,7 +37,7 @@ function addDebounce({ pinia, app, store, options }) {
     return Object.keys(options.debounce).reduce((debouncedActions, action) => {
       debouncedActions[action] = _debounce(
         store[action],
-        options.debounce[action]
+        options.debounce[action],
       );
       return debouncedActions;
     }, {});
@@ -56,7 +56,7 @@ function onAction({ store }) {
       if (name === 'init') {
         // console.log(`plugin init name:${ store.$id } INITIALISED: ${store.INITIALISED}`)
 
-        if (store.INITIALISED) return Promise.resolve(store);
+        if (store.INITIALISED) return store;
 
         after((result) => (store.INITIALISED = true));
       }
@@ -65,8 +65,9 @@ function onAction({ store }) {
         //  just make sure...
         store.INITIALISED = false;
         ErrorManager.onActionError(error);
+        throw new Error(error);
       });
-    }
+    },
   );
 }
 

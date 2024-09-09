@@ -3,27 +3,22 @@
 <template>
   <div id="GoldForm" class="container h-fill">
     <FormKit
-        type="form"
-        :id="_name"
-        :name="_name"
-        v-model="formModel"
-        :actions="false"
-        #default="{ disabled, state, empty, dirty }"
-        use-local-storage
+      type="form"
+      :id="_name"
+      :name="_name"
+      v-model="formModel"
+      :actions="false"
+      #default="{ disabled, state, empty, dirty }"
+      use-local-storage
     >
       <h2 class="prose font-bold text-xl mb-2">{{ _name }}</h2>
       <div class="grid grid-cols-12 gap-6 lg:gap-10">
         <!-- Replace this blah code -->
         <div class="flex flex-col col-span-6">
-          <FormKit type="text" id="blah" name="blah" label="blah"/>
+          <FormKit type="text" id="blah" name="blah" label="blah" />
         </div>
         <div class="flex flex-col col-span-6">
-          <FormKit
-              type="checkbox"
-              id="blahbox"
-              name="blahbox"
-              label="Blah?"
-          />
+          <FormKit type="checkbox" id="blahbox" name="blahbox" label="Blah?" />
         </div>
         <!-- END Replace -->
         <!-- Do NOT remove!!! -->
@@ -40,9 +35,9 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import {computed, onMounted, toRef, ModelRef} from 'vue';
-  import {FormKit} from '@formkit/vue';
-  import {IAsynchFormProps} from '@/types';
+  import { computed, onMounted, toRef, ModelRef } from 'vue';
+  import { FormKit } from '@formkit/vue';
+  import type { TAsynchFormProps } from '@/types';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -53,19 +48,17 @@
     askLabel = 'Ask The AI Expert!',
     resetLabel = 'Reset',
     submitLabel = 'Submit',
-  } = defineProps<IAsynchFormProps>();
+  } = defineProps<TAsynchFormProps>();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  EMITS
   // const emit = defineEmits([EMIT.REGISTER, EMIT.RESET, EMIT.SUBMIT,]);
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = "GoldForm";
+  const _name: string = 'GoldForm';
 
-  const formModel: ModelRef<any> | undefined = defineModel();
-
+  const formModel: any = defineModel();
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -82,18 +75,15 @@
   //  Provides - props for all children
   //  eg - provide("key", "value");
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  SIGNALS
   // Signals.PUSHER_NOTIFICATION.add(onPusherNotification, () => {})
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
   // function onRegisterClick() {
   //   emit(EMIT.REGISTER);
   // }
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
@@ -108,7 +98,7 @@
   onMounted(() => {
     console.log(`GoldForm onMounted!`);
     // _store.init();
-  })
+  });
 
   // onUpdated(() => {
   //   console.log(`GoldForm onUpdated!`);
@@ -117,11 +107,8 @@
   // onUnmounted(() => {
   //   console.log(`GoldForm unmounted!`);
   // })
-
 </script>
 
 <!------------------------------------------------------------------------------------------------->
 
-<style scoped>
-
-</style>
+<style scoped></style>

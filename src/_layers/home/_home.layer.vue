@@ -16,8 +16,9 @@
   import { Signals } from '@/signals';
   import HeroView from './HeroView.vue';
   import { kindeClient } from '@/kinde/kindeClient';
-  import SignupForm from '@/forms/SignupForm.vue';
+  import SignupForm from '@/_layers/forms/SignupForm.vue';
   import { EMIT } from '@/enum';
+  import PathfinderWhyForm from '@/_forms/PathfinderWhyForm.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private

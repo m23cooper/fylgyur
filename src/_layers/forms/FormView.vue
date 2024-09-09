@@ -39,7 +39,7 @@
     computed,
   } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useConsultationStore, useUIStore } from '@/_stores';
+  import { useFormsStore, useUIStore } from '@/_stores';
   import { EMIT } from '@/enum';
   import { useFormKitContextById } from '@formkit/vue';
   import { reset as resetForm } from '@formkit/core';
@@ -67,7 +67,7 @@
   const formComponent: ShallowRef<any | null> = shallowRef(null);
   const asyncCompRef = ref(null);
 
-  const _store = useConsultationStore();
+  const _store = useFormsStore();
 
   const { currentForm } = storeToRefs(_store);
 
@@ -117,10 +117,10 @@
 
   const loadFormVue = async () => {
     try {
-      console.log(`loadFormVue ${currentForm.value.name}`);
+      console.log(`loadFormVue ${currentForm.value.id}`);
       useUIStore().showLoading(`Loading ${currentForm.value.title}`);
       const component = await import(
-        `../../_forms/${currentForm.value.name}.vue`
+        `../../_forms/${currentForm.value.id}.vue`
       );
       useUIStore().hideLoading();
       return component.default;
@@ -134,7 +134,7 @@
   function onAsk() {}
 
   function onReset() {
-    resetForm(currentForm.value.name);
+    resetForm(currentForm.value.id);
   }
 
   function onSubmit() {}

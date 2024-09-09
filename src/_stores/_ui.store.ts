@@ -1,5 +1,5 @@
 import { Signals } from '@/signals';
-import type { IRoute, IUrlQuery } from '@/types';
+import type { TRoute, TUrlQuery } from '@/types';
 import { acceptHMRUpdate, defineStore } from 'pinia';
 
 import { ROUTE_NAMES } from '@/enum';
@@ -39,7 +39,7 @@ export const useUIStore = defineStore('_ui.store', {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Getters
   getters: {
-    selectedRoute: (state): IRoute => {
+    selectedRoute: (state): TRoute => {
       const current = router.currentRoute.value;
       const route: any = _find(routes, { name: current.name });
       return {
