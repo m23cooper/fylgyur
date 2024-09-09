@@ -1,10 +1,13 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-  <div id="FormsLayer" class="flex grid grid-cols-12 w-screen min-h-screen">
-    <JourneyView class="col-span-2 border-r-2 border-fuchsia-700" />
-    <FormView class="col-span-6 border-r-2 border-fuchsia-700" />
-    <InsightView class="col-span-4" />
+  <div id="FormsLayer" class="flex flex-row columns-12 w-screen min-h-screen">
+    <JourneyView
+      v-show="formCount > 1"
+      class="basis-3/12 border-r-2 border-fuchsia-700"
+    />
+    <FormView class="grow border-r-2 border-fuchsia-700 overflow-x-visible" />
+    <InsightView v-show="selectedForm" class="basis-5/12" />
   </div>
 </template>
 
@@ -25,8 +28,7 @@
 
   const _store = useFormsStore();
 
-  // const {
-  // } = storeToRefs(_store);
+  const { formCount, selectedForm } = storeToRefs(_store);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED

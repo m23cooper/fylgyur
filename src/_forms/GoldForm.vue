@@ -58,7 +58,7 @@
   //  Private
   const _name: string = 'GoldForm';
 
-  const formModel: ModelRef<any> | undefined = defineModel();
+  const formModel: any = defineModel();
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED

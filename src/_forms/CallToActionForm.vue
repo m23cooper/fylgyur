@@ -64,7 +64,7 @@
   //  Private
   const _name: string = 'CallToActionForm';
 
-  const formModel: ModelRef<any> | undefined = defineModel();
+  const formModel: any = defineModel();
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED

@@ -37,7 +37,7 @@
   const {
     hasAsk = true,
     hasReset = true,
-    hasSubmit = true,
+    hasSubmit = false,
     askLabel = 'Ask The AI Expert!',
     resetLabel = 'Reset',
     submitLabel = 'Submit',
