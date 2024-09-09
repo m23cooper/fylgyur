@@ -3,8 +3,7 @@
 <template>
   <div id="HomeLayer" class="flex flex-col">
     <HeroView class="container" />
-    <!--    <SignupForm class="container" @submit="onSignupFormSubmit" />-->
-    <PathfinderWhyForm class="container w-full" />
+    <SignupForm class="container" @submit="onSignupFormSubmit" />
   </div>
 </template>
 
@@ -17,7 +16,7 @@
   import { Signals } from '@/signals';
   import HeroView from './HeroView.vue';
   import { kindeClient } from '@/kinde/kindeClient';
-  import SignupForm from '@/_layers/_forms/SignupForm.vue';
+  import SignupForm from '@/_layers/forms/SignupForm.vue';
   import { EMIT } from '@/enum';
   import PathfinderWhyForm from '@/_forms/PathfinderWhyForm.vue';
 

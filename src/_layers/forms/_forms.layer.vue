@@ -15,16 +15,15 @@
   import { storeToRefs } from 'pinia';
   import { useFormsStore, useUIStore } from '@/_stores';
   import { Signals } from '@/signals';
-  import JourneyView from '@/_layers/_forms/JourneyView.vue';
-  import FormView from '@/_layers/_forms/FormView.vue';
-  import InsightView from '@/_layers/_forms/InsightView.vue';
+  import JourneyView from '@/_layers/forms/JourneyView.vue';
+  import FormView from '@/_layers/forms/FormView.vue';
+  import InsightView from '@/_layers/forms/InsightView.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
   const _name: string = 'FormsLayer';
 
   const _store = useFormsStore();
-  _store.init();
 
   // const {
   // } = storeToRefs(_store);

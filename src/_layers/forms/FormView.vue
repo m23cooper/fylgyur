@@ -117,10 +117,10 @@
 
   const loadFormVue = async () => {
     try {
-      console.log(`loadFormVue ${currentForm.value.name}`);
+      console.log(`loadFormVue ${currentForm.value.id}`);
       useUIStore().showLoading(`Loading ${currentForm.value.title}`);
       const component = await import(
-        `../../_forms/${currentForm.value.name}.vue`
+        `../../_forms/${currentForm.value.id}.vue`
       );
       useUIStore().hideLoading();
       return component.default;
@@ -134,7 +134,7 @@
   function onAsk() {}
 
   function onReset() {
-    resetForm(currentForm.value.name);
+    resetForm(currentForm.value.id);
   }
 
   function onSubmit() {}

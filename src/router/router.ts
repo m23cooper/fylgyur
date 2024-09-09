@@ -20,14 +20,14 @@ export const routes: TRoute[] = [
   },
   {
     menu: -9,
-    name: ROUTE_NAMES.CONSULTATION,
+    name: ROUTE_NAMES.FORMS,
     path: '/forms',
     title: 'Fantastorical Flow',
     fontIconType: FontIconType.HOME,
     component: () =>
       import(
         /* webpackChunkName: "Routes" */
-        '@/_layers/_forms/_forms.layer.vue'
+        '@/_layers/forms/_forms.layer.vue'
       ),
   },
   {

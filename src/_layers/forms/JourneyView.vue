@@ -33,7 +33,7 @@
   import ADDButton from '@/buttons/ADDButton.vue';
   import EDITButton from '@/buttons/EDITButton.vue';
   import ModalComponent from '@/_components/modal/ModalComponent.vue';
-  import JourneyCardComponent from '@/_layers/_forms/_components/JourneyCardComponent.vue';
+  import JourneyCardComponent from '@/_layers/forms/_components/JourneyCardComponent.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS

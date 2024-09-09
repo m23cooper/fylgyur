@@ -1,22 +1,18 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-// import { formsService, } from "@/_services";
 import {
   each as _each,
-  filter as _filter,
+  merge as _merge,
+  orderBy as _orderBy,
+  assign as _assign,
   map as _map,
   find as _find,
+  map,
 } from 'lodash-es';
-import { useCollection } from 'vuefire';
-import {
-  collection,
-  query,
-  orderBy,
-  where,
-  onSnapshot,
-} from 'firebase/firestore';
-import { db } from '@/db/firebase';
 import { Ref, toRef, watch } from 'vue';
-import type { TAsynchForm } from '@/types';
+import type { TAsynchForm, THost } from '@/types';
+import { formsService } from '@/_services';
+
+const _service = formsService;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
@@ -25,7 +21,7 @@ export interface IFormsState {
   forms: TAsynchForm[];
   selectedForm: TAsynchForm | null;
   formContext: any;
-  formModel: any;
+  formModel: object | null;
 }
 
 export const useFormsStore = defineStore(`_forms.store`, {
@@ -53,20 +49,24 @@ export const useFormsStore = defineStore(`_forms.store`, {
   actions: {
     async init() {
       //  @ts-ignore
-      if (this.INITIALISED) return Promise.resolve(this);
-      // const hosts = useCollection(query(collection(db, 'hosts')));
-      //
-      // const host = hosts.value[0];
+      if (this.INITIALISED) return this;
 
-      //  @ts-ignore
-      this.forms = useCollection<TAsynchForm>(
-        query(
-          collection(db, 'forms'),
-          // where('__name__', 'in', host.forms),
-          orderBy('order'),
-        ),
-      );
-      let test = 0;
+      return await this.loadFormsByHost();
+    },
+    async loadFormsByHost(): Promise<void> {
+      const hostname = window.location.hostname.split('.')[0];
+      const host: THost = await _service.getHost({ hostname });
+      const formIds = host.forms.map((form) => form.id);
+
+      const formData = await _service.getForms({ formIds });
+      _map(formData, (form) => {
+        const hostForm = _find(
+          host.forms,
+          (hostform) => hostform.id === form.id,
+        );
+        form.order = hostForm?.order || 0;
+      });
+      this.forms = _orderBy(formData, ['order']);
     },
     setCurrentFormById({ id }): void {
       // console.log(`setCurrentForm ${name}`)
@@ -77,7 +77,7 @@ export const useFormsStore = defineStore(`_forms.store`, {
       } else {
         this.selectedForm = form;
         console.log(
-          `_forms.store.setCurrentForm set to: ${form.id} (${form.name})`,
+          `_forms.store.setCurrentForm set to: ${form.id} (${form.title})`,
         );
       }
     },

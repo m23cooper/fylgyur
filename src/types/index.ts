@@ -16,3 +16,7 @@ export * from './TMyType';
 export * from './TMyType';
 
 export * from './TMyType';
+
+export * from './THost';
+
+export * from './THostForm';

@@ -50,7 +50,7 @@ export const useUserStore = defineStore('_user.store', {
   //  Getters
   getters: {
     //canUserAccess: (state) => state.canAccess,
-    isDevUser: (state) => state.user.uuid === '',
+    isDevUser: (state) => state.user?.uuid === '',
   },
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ export const useUserStore = defineStore('_user.store', {
   actions: {
     async init() {
       //  @ts-ignore
-      if (this.INITIALISED) return Promise.resolve();
+      if (this.INITIALISED) return this;
       Signals.LOGOUT.add(this.onLogout);
 
       this.isLoggedIn = await kindeClient.isAuthenticated();
@@ -71,7 +71,7 @@ export const useUserStore = defineStore('_user.store', {
         this.userProfile = await kindeClient.getUserProfile();
       }
 
-      return Promise.resolve(this.isLoggedIn);
+      return this.isLoggedIn;
     },
     async login() {
       const url = await kindeClient.login();

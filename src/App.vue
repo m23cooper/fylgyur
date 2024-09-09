@@ -92,7 +92,7 @@
 
     // populate the Router and get startup url query
     _uiStore.init();
-    // await useFormsStore().init();
+    await useFormsStore().init();
   });
 
   onMounted(async () => {
