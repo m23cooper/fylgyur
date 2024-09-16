@@ -72,7 +72,7 @@
   const emit = defineEmits([EMIT.REGISTER, EMIT.RESET]);
 
   function onRegisterClick() {
-    console.log('onRegisterClick');
+    console.log('SIgnupForm.onRegisterClick');
     emit(EMIT.REGISTER);
   }
 

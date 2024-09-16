@@ -2,14 +2,13 @@
 
 <template>
   <div>
-    <div class="absolute inset-0 flex items-center justify-center">
+    <div class="container">
       <div
-        class="pane bg-white p-10 shadow-xl rounded-xl w-1/3 xl:w-1/5 min-w-fit"
+        class="pane bg-white p-10 shadow-xl rounded-xl w-1/3 xl:w-1/5 min-w-fit mx-auto mt-10"
       >
-        <div class="font-medium self-center text-xl text-gray-800 mb-5">
-          <!--        <img :src="fantastorical_logo"  class="h-[4rem]" alt="Powered by Fantastorical." title="Powered by Fantastorical.">-->
-          LOGIN
-        </div>
+        <LoginView />
+        <div class="divider">OR</div>
+        <SocialLoginView />
       </div>
       <LoginErrorComponent
         class="absolute bottom-0"
@@ -28,6 +27,8 @@
   import { ROUTE_NAMES } from '@/enum';
   import { computed, onMounted, ref } from 'vue';
   import fantastorical_logo from '@/assets/fantastorical_logo-md.png';
+  import LoginView from '@/_layers/login/LoginView.vue';
+  import SocialLoginView from '@/_layers/login/SocialLoginView.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private

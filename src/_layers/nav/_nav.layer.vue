@@ -90,12 +90,14 @@
   }
 
   function onLoginClick() {
-    _userStore.login();
+    // _userStore.login();
+    useUIStore().goRoute(ROUTE_NAMES.LOGIN, {});
   }
 
-  // function onRegisterClick() {
-  //   _userStore.register()
-  // }
+  function onRegisterClick() {
+    // _userStore.register()
+    useUIStore().goRoute(ROUTE_NAMES.REGISTER, {});
+  }
 
   function onLogoutClick() {
     _userStore.logout();

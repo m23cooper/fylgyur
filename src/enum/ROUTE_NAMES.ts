@@ -3,4 +3,5 @@ export enum ROUTE_NAMES {
   FORMS = 'Forms',
   LOGIN = 'Login',
   LOGOUT = 'Logout',
+  REGISTER = 'Register',
 }

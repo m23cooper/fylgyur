@@ -1,9 +1,8 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-  <div id="HomeLayer" class="flex flex-col">
-    <HeroView class="container" />
-    <SignupForm class="container" @[EMIT.REGISTER]="onRegister" />
+  <div id="RegisterLayer" class="container h-fill">
+    <RegisterView />
   </div>
 </template>
 
@@ -11,15 +10,14 @@
 
 <script setup lang="ts">
   import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
-  import { useUIStore, useUserStore } from '@/_stores';
+  import { storeToRefs } from 'pinia';
+  import { useUIStore } from '@/_stores';
   import { Signals } from '@/signals';
-  import HeroView from './HeroView.vue';
-  import SignupForm from '@/_layers/forms/SignupForm.vue';
-  import { EMIT, ROUTE_NAMES } from '@/enum';
+  import RegisterView from '@/_layers/register/RegisterView.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = 'HomeLayer';
+  const _name: string = 'RegisterLayer';
 
   // const {
   // } = storeToRefs(_store);
@@ -56,25 +54,20 @@
   //  {
   //      // handle event
   //  }
-  async function onRegister() {
-    console.log(`HomeLayer onRegister`);
-    // useUserStore().register();
-    await useUIStore().goRoute(ROUTE_NAMES.REGISTER, {});
-  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`HomeLayer onMounted!`);
+    console.log(`RegisterLayer onMounted!`);
     // _store.init();
   });
 
   // onUpdated(() => {
-  //   console.log(`HomeLayer onUpdated!`);
+  //   console.log(`RegisterLayer onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`HomeLayer unmounted!`);
+  //   console.log(`RegisterLayer unmounted!`);
   // })
 </script>
 

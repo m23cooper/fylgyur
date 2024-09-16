@@ -1,8 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 // import { getAnalytics } from "db/analytics";
-
-// ... other db imports
+import { getAuth } from 'firebase/auth';
 
 const {
   VITE_FIREBASE_API_KEY,
@@ -29,12 +28,13 @@ const firebaseConfig = {
 // setLogLevel("debug");
 
 const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
 // export const analytics = getAnalytics(firebaseApp);
 
 // used for the firestore refs
 const db = getFirestore(firebaseApp);
 
-export { firebaseApp, db };
+export { firebaseApp, db, auth };
 
 // here we can export reusable database references
 // export const usersCollectionRef = collection(db, 'users')

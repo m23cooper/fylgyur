@@ -5,11 +5,10 @@ import { userService } from '@/_services';
 import type { TLoginParams } from '@/types';
 import type { TUser, TUserPermissions } from '@/types';
 import { defineStore, DefineStoreOptions, StateTree } from 'pinia';
-import { kindeClient } from '@/kinde/kindeClient';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export interface IUserStoreState {
   permissions: TUserPermissions;
-  isLoggedIn: boolean;
   token: string | undefined;
   user: any;
   userProfile: any;
@@ -24,6 +23,8 @@ export interface IUserStoreState {
 // 	};
 // }
 
+const _service = userService;
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
 export const useUserStore = defineStore('_user.store', {
@@ -31,7 +32,6 @@ export const useUserStore = defineStore('_user.store', {
   //  State
   state: (): IUserStoreState => ({
     permissions: {},
-    isLoggedIn: false,
     token: undefined,
     user: null,
     userProfile: null,
@@ -50,6 +50,7 @@ export const useUserStore = defineStore('_user.store', {
   //  Getters
   getters: {
     //canUserAccess: (state) => state.canAccess,
+    isLoggedIn: (state) => state.user !== null,
     isDevUser: (state) => state.user?.uuid === '',
   },
 
@@ -64,33 +65,66 @@ export const useUserStore = defineStore('_user.store', {
       if (this.INITIALISED) return this;
       Signals.LOGOUT.add(this.onLogout);
 
-      this.isLoggedIn = await kindeClient.isAuthenticated();
+      // this.isLoggedIn = await kindeClient.isAuthenticated();
+      const auth = getAuth();
+      this.user = auth.currentUser;
       console.log(`_user.store.init: isLoggedIn=${this.isLoggedIn}`);
-      if (this.isLoggedIn) {
-        this.user = await kindeClient.getUser();
-        this.userProfile = await kindeClient.getUserProfile();
-      }
+      onAuthStateChanged(auth, (currentUser) => {
+        this.user = currentUser;
+      });
 
-      return this.isLoggedIn;
+      return;
     },
-    async login() {
-      const url = await kindeClient.login();
-      // Redirect
-      window.location.href = url.toString();
+    async loginWithEmail({ email, password }) {
+      try {
+        const something = await _service.loginWithEmail({ email, password });
+        let test = 0;
+      } catch (error) {
+        ErrorManager.onServiceError(error);
+      }
     },
-    async register() {
-      const url = await kindeClient.register();
-      // Redirect
-      window.location.href = url.toString();
+    async registerWithEmail({ email, password }) {
+      try {
+        await _service.registerWithEmail({ email, password });
+      } catch (error) {
+        ErrorManager.onServiceError(error);
+      }
     },
-    async logout() {
-      const url = await kindeClient.logout();
-      this.user = null;
-      // Redirect
-      window.location.href = url.toString();
+    async signInWithGoogle() {
+      try {
+        const userCredential = await _service.signInWithGoogle();
+        let test = 0;
+      } catch (error) {
+        ErrorManager.onServiceError(error);
+      }
     },
-    onLogout() {
-      this.isLoggedIn = false;
+    async signInWithFacebook() {
+      try {
+        await _service.signInWithFacebook();
+      } catch (error) {
+        ErrorManager.onServiceError(error);
+      }
+    },
+    async signInWithTwitter() {
+      try {
+        await _service.signInWithTwitter();
+      } catch (error) {
+        ErrorManager.onServiceError(error);
+      }
+    },
+    async signInWithGithub() {
+      try {
+        await _service.signInWithGithub();
+      } catch (error) {
+        ErrorManager.onServiceError(error);
+      }
+    },
+    async onLogout() {
+      try {
+        await _service.logout();
+      } catch (error) {
+        ErrorManager.onServiceError(error);
+      }
     },
   },
 });

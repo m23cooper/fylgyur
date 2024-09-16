@@ -54,6 +54,18 @@ export const routes: TRoute[] = [
         '@/_layers/logout/_logout.layer.vue'
       ),
   },
+  {
+    menu: -6,
+    name: ROUTE_NAMES.REGISTER,
+    path: '/register',
+    title: 'Register',
+    fontIconType: FontIconType.HOME,
+    component: () =>
+      import(
+        /* webpackChunkName: "Routes" */
+        '@/_layers/register/_register.layer.vue'
+      ),
+  },
 ];
 
 const _router = createRouter({
