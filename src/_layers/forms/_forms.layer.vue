@@ -7,7 +7,7 @@
       class="basis-3/12 border-r-2 border-fuchsia-700"
     />
     <FormView class="grow border-r-2 border-fuchsia-700 overflow-x-visible" />
-    <InsightView v-show="selectedForm" class="basis-5/12" />
+    <InsightView v-show="currentForm" class="basis-5/12" />
   </div>
 </template>
 
@@ -28,7 +28,7 @@
 
   const _store = useFormsStore();
 
-  const { formCount, selectedForm } = storeToRefs(_store);
+  const { formCount, currentForm } = storeToRefs(_store);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
