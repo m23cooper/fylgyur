@@ -147,7 +147,7 @@
   //  Hooks
   onMounted(() => {
     console.log(`FormView onMounted!`);
-    // loadFormComponent();
+    if (currentForm) loadFormComponent();
   });
 
   // onUpdated(() => {
