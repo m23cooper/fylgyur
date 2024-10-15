@@ -22,24 +22,33 @@ const mapDocIds = (doc) => {
 };
 
 const _service = {
-  getHost: async ({ hostname }: { hostname: string }): Promise<THost> => {
+  getHost: async ({ hostname }): Promise<THost | undefined> => {
     const ref = doc(db, 'hosts', hostname);
-    const snapshot = await getDoc(ref).catch((error) => {
-      ErrorManager.onServiceError('getHost failed ' + error);
-      throw new Error(error);
-    });
 
-    return snapshot.data() as THost;
+    try {
+      const snapshot = await getDoc(ref);
+
+      return snapshot.data() as THost;
+    } catch (error) {
+      // ErrorManager.onServiceError('getHost failed ' + error);
+      throw new Error(error);
+    }
+
+    return;
   },
   //
   getForms: async ({ formIds }: { formIds: string[] }) => {
     const q = query(collection(db, 'forms'), where('id', 'in', formIds));
-    const snapshot = await getDocs(q).catch((error) => {
-      ErrorManager.onServiceError('getHost failed ' + error);
-      throw new Error(error);
-    });
-    const docs = _map(snapshot.docs, mapDocIds);
-    return docs;
+
+    try {
+      const snapshot = await getDocs(q);
+      const docs = _map(snapshot.docs, mapDocIds);
+      return docs;
+    } catch (error) {
+      // ErrorManager.onServiceError('getForms failed ' + error);
+      console.error(error);
+      // throw new Error(error);
+    }
   },
 };
 

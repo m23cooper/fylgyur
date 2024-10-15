@@ -44,6 +44,7 @@
   import LoadingLayer from '@/_layers/loading/_loading.layer.vue';
   import NavLayer from '@/_layers/nav/_nav.layer.vue';
   import NotificationLayer from '@/_layers/notification/_notification.layer.vue';
+  import ErrorManager from '@/utils/ErrorManager';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
@@ -92,7 +93,16 @@
 
     // populate the Router and get startup url query
     _uiStore.init();
-    await useFormsStore().init();
+    try {
+      await useFormsStore().init();
+    } catch (error) {
+      Signals.NOTIFICATION.dispatch({
+        type: 'error',
+        duration: -1,
+        message: error,
+      });
+      // ErrorManager.onVueError(error);
+    }
   });
 
   onMounted(async () => {

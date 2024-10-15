@@ -18,7 +18,7 @@ import ErrorManager from '@/utils/ErrorManager';
  * Create the app and register plugins
  */
 const app = createApp(App);
-app.config.errorHandler = (error) => ErrorManager.onVueError(error);
+// app.config.errorHandler = (error) => ErrorManager.onVueError(error);
 app.use(plugin, defaultConfig(config));
 app.use(DecoratedPinia);
 app.use(router);
