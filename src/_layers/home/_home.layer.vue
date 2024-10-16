@@ -3,7 +3,7 @@
 <template>
   <div id="HomeLayer" class="flex flex-col">
     <HeroView class="container" />
-    <SignupForm class="container" @submit="onSignupFormSubmit" />
+    <SignupForm class="container" @register="onSignupFormSubmit" />
   </div>
 </template>
 

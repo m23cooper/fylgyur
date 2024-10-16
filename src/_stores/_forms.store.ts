@@ -55,18 +55,25 @@ export const useFormsStore = defineStore(`_forms.store`, {
     },
     async loadFormsByHost(): Promise<void> {
       const hostname = window.location.hostname.split('.')[0];
-      const host: THost = await _service.getHost({ hostname });
-      const formIds = host.forms.map((form) => form.id);
 
-      const formData = await _service.getForms({ formIds });
-      _map(formData, (form) => {
-        const hostForm = _find(
-          host.forms,
-          (hostform) => hostform.id === form.id,
-        );
-        form.order = hostForm?.order || 0;
-      });
-      this.forms = _orderBy(formData, ['order']);
+      const host: THost = await _service.getHost({ hostname });
+      if (host) {
+        const formIds = host.forms.map((form) => form.id);
+
+        const formData = await _service.getForms({ formIds });
+        if (formData) {
+          _map(formData, (form) => {
+            const hostForm = _find(
+              host.forms,
+              (hostform) => hostform.id === form.id,
+            );
+            form.order = hostForm?.order || 0;
+          });
+          this.forms = _orderBy(formData, ['order']);
+        }
+      } else {
+        console.log('NO HOST');
+      }
     },
     setCurrentFormById({ id }): void {
       // console.log(`setCurrentForm ${name}`)

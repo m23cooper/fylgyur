@@ -63,13 +63,12 @@ const _router = createRouter({
 
 _router.beforeEach(async (to, from) => {
   console.log(`Router - beforeEach ${String(from.name)} -> ${String(to.name)}`);
-  // if(String(from.name) !== String(to.name))
-  // {
-  // 	// await useUserStore().checkUserAccess();
-  // 	if (useUserStore().isLoggedIn) _router.resolve(to);
-  // } else {
-  // 	// throw new Error(`shouldn't be redirecting to the same page`)
-  // }
+  if (String(from.name) !== String(to.name)) {
+    // await useUserStore().checkUserAccess();
+    if (useUserStore().isLoggedIn) _router.resolve(to);
+  } else {
+    // throw new Error(`shouldn't be redirecting to the same page`)
+  }
 
   _router.resolve(to);
 });

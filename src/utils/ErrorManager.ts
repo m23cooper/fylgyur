@@ -13,6 +13,7 @@ export default class ErrorManager {
   constructor() {
     // this.initHandler();
   }
+
   static onError(error: any) {
     const response = error.response;
     const styles = [
@@ -132,8 +133,8 @@ export default class ErrorManager {
   static consoleDirConfigResponse(message: any) {
     console.dir({
       title: 'Error!',
-      error: message.response.data?.error,
-      url: message.config.url,
+      error: message.response?.data?.error,
+      url: message.config?.url,
       config: message.config,
       response: message.response,
       icon: 'error',

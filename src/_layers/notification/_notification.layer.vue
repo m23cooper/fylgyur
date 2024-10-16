@@ -110,7 +110,8 @@
   function onNotification(signal: any) {
     clearTimeout(timeout);
     note.value = signal;
-    timeout = setTimeout(close, signal.duration || defaultDuration);
+    if (signal.duration !== -1)
+      timeout = setTimeout(close, signal.duration || defaultDuration);
   }
 
   function close(): void {

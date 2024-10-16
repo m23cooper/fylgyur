@@ -96,23 +96,30 @@
   //  Methods
 
   const loadFormComponent = async () => {
-    formComponent.value = await loadFormVue();
-    console.log(`loadFormComponent ${currentForm.value?.id}`);
-    //  wait for the component to be populated
-    await nextTick(() => {
-      //  @ts-expect-error:  can't be arsed to hunt the type down
-      const { hello } = asyncCompRef.value;
-      if (hello !== currentForm.value?.id) {
-        throw new Error('Disjoint in form data');
-      }
+    console.log(
+      `loadFormComponent currentForm.value?.id: ${currentForm.value?.id}`,
+    );
+    if (currentForm.value?.id) {
+      formComponent.value = await loadFormVue();
 
-      _store.registerFormModel({ fM: formModel });
+      //  wait for the component to be populated
+      await nextTick(() => {
+        if (asyncCompRef.value) {
+          //  @ts-expect-error:  can't be arsed to hunt the type down
+          const { hello } = asyncCompRef.value;
+          if (hello !== currentForm.value?.id) {
+            throw new Error('Disjoint in form data');
+          }
 
-      let ctx;
-      ctx = useFormKitContextById(currentForm.value.id, () => {
-        _store.registerFormContext({ ctx });
+          _store.registerFormModel({ fM: formModel });
+
+          let ctx;
+          ctx = useFormKitContextById(currentForm.value.id, () => {
+            _store.registerFormContext({ ctx });
+          });
+        }
       });
-    });
+    }
   };
 
   const loadFormVue = async () => {
@@ -147,7 +154,7 @@
   //  Hooks
   onMounted(() => {
     console.log(`FormView onMounted!`);
-    // loadFormComponent();
+    if (currentForm) loadFormComponent();
   });
 
   // onUpdated(() => {
