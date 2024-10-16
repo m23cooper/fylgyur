@@ -65,6 +65,7 @@ export const useUserStore = defineStore('_user.store', {
       Signals.LOGOUT.add(this.onLogout);
 
       this.isLoggedIn = await kindeClient.isAuthenticated();
+
       console.log(`_user.store.init: isLoggedIn=${this.isLoggedIn}`);
       if (this.isLoggedIn) {
         this.user = await kindeClient.getUser();
@@ -74,9 +75,17 @@ export const useUserStore = defineStore('_user.store', {
       return this.isLoggedIn;
     },
     async login() {
-      const url = await kindeClient.login();
-      // Redirect
-      window.location.href = url.toString();
+      try {
+        const url = await kindeClient.login();
+        // Redirect
+        window.location.href = url.toString();
+      } catch (error) {
+        Signals.NOTIFICATION.dispatch({
+          type: 'error',
+          duration: -1,
+          message: error,
+        });
+      }
     },
     async register() {
       const url = await kindeClient.register();
@@ -85,11 +94,12 @@ export const useUserStore = defineStore('_user.store', {
     },
     async logout() {
       const url = await kindeClient.logout();
-      this.user = null;
+      this.onLogout();
       // Redirect
       window.location.href = url.toString();
     },
     onLogout() {
+      this.user = null;
       this.isLoggedIn = false;
     },
   },

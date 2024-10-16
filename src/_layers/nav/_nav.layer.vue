@@ -15,7 +15,7 @@
       </h3>
     </div>
     <div class="navbar-end">
-      <div v-if="_userStore.isLoggedIn" class="pr-4">
+      <div v-if="isLoggedIn" class="pr-4">
         <button
           class="btn btn-sm btn-primary shadow hover:shadow-lg"
           @click.prevent="onLogoutClick"
