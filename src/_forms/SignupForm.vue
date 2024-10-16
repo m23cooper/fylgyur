@@ -1,7 +1,7 @@
 <!--  Generated from AsynchForm plop template -->
 
 <template>
-  <div id="GoldForm" class="container h-fill">
+  <div id="SignupForm" class="container h-fill">
     <FormKit
       type="form"
       :id="_name"
@@ -13,14 +13,16 @@
     >
       <h2 class="prose font-bold text-xl mb-2">{{ _name }}</h2>
       <div class="grid grid-cols-12 gap-6 lg:gap-10">
-        <!-- Replace this blah code -->
-        <div class="flex flex-col col-span-6">
-          <FormKit type="text" id="blah" name="blah" label="blah" />
+        <div class="flex flex-col col-span-12">
+          <FormKit
+            type="email"
+            id="email"
+            name="email"
+            label="email"
+            validation="required"
+            validation-visibility="live"
+          />
         </div>
-        <div class="flex flex-col col-span-6">
-          <FormKit type="checkbox" id="blahbox" name="blahbox" label="Blah?" />
-        </div>
-        <!-- END Replace -->
         <!-- Do NOT remove!!! -->
         <div v-if="hasButtons" class="flex col-span-12 justify-end items-end">
           <slot name="formButtons"></slot>
@@ -37,7 +39,7 @@
 <script setup lang="ts">
   import { computed, onMounted, toRef } from 'vue';
   import { FormKit } from '@formkit/vue';
-  import type { TAsynchFormProps } from '@/types';
+  import { TAsynchFormProps } from '@/types';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -56,7 +58,7 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = 'GoldForm';
+  const _name: string = 'SignupForm';
 
   const formModel: any = defineModel();
 
@@ -96,16 +98,16 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`GoldForm onMounted!`);
+    console.log(`SignupForm onMounted!`);
     // _store.init();
   });
 
   // onUpdated(() => {
-  //   console.log(`GoldForm onUpdated!`);
+  //   console.log(`SignupForm onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`GoldForm unmounted!`);
+  //   console.log(`SignupForm unmounted!`);
   // })
 </script>
 

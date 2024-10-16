@@ -35,7 +35,7 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { computed, onMounted, toRef, ModelRef } from 'vue';
+  import { computed, onMounted, toRef } from 'vue';
   import { FormKit } from '@formkit/vue';
   import type { TAsynchFormProps } from '@/types';
 

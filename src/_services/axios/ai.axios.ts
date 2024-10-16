@@ -7,10 +7,9 @@ const _axios = axios.create({
   baseURL: `${VITE_AI_URL}`,
   timeout: 10000,
   withCredentials: false,
-  headers: {
-    // 'X-API-KEY': String(VITE_APP_DOCUMENT_SERVICE_KEY),
-    'Content-Type': 'application/json',
-  },
+  // headers: {
+  //   'Content-Type': 'application/json',
+  // },
 });
 
 // Add a request interceptor
