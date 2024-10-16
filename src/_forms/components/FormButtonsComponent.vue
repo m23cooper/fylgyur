@@ -5,7 +5,7 @@
     <div
       v-if="hasReset"
       class="btn bg-primary text-primary-content hover:bg-secondary"
-      :class="{ 'btn-disabled': !formContext?.state.dirty }"
+      :class="{ 'btn-disabled': isResetEnabled }"
       @click.prevent="emit(EMIT.RESET)"
     >
       {{ resetLabel }}
@@ -13,7 +13,7 @@
     <div
       v-if="hasAsk"
       class="btn bg-primary text-primary-content hover:bg-secondary"
-      :class="{ 'btn-disabled': !formContext?.state.dirty }"
+      :class="{ 'btn-disabled': isAskEnabled }"
       @click.prevent="emit(EMIT.ASK)"
     >
       {{ askLabel }}
@@ -21,6 +21,7 @@
     <div
       v-if="hasSubmit"
       class="btn bg-primary text-primary-content hover:bg-secondary"
+      :class="{ 'btn-disabled': isSubmitEnabled }"
       @click.prevent="emit(EMIT.SUBMIT)"
     >
       {{ submitLabel }}
@@ -69,6 +70,9 @@
   // const getContact = computed(() => {
   //   return getApplication.value.contact[0]?.number;
   // });
+  const isAskEnabled = computed(() => !formContext.value?.state.valid);
+  const isResetEnabled = computed(() => !formContext.value?.state.dirty);
+  const isSubmitEnabled = computed(() => !formContext.value?.state.valid);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
