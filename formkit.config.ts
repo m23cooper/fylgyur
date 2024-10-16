@@ -30,8 +30,8 @@ function removePrompts(obj) {
 const onBeforeSave = (data) => {
   // Remove hidden fields from the data
   const filteredData = removePrompts(data);
-  console.log('++++++++++++++++++++++++ ');
-  console.dir(filteredData);
+  // console.log('++++++++++++++++++++++++ ');
+  // console.dir(filteredData);
   return filteredData;
 };
 

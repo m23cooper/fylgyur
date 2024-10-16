@@ -1,14 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import {
-  each as _each,
-  merge as _merge,
-  orderBy as _orderBy,
-  assign as _assign,
-  map as _map,
-  find as _find,
-  map,
-} from 'lodash-es';
-import { ref, Ref, toRef, watch } from 'vue';
+import { orderBy as _orderBy, map as _map, find as _find } from 'lodash-es';
 import type { TAsynchForm, THost } from '@/types';
 import { formsService, aiService } from '@/_services';
 
@@ -99,14 +90,12 @@ export const useFormsStore = defineStore(`_forms.store`, {
       });
     },
     async ask(): Promise<void> {
-      // const question: JSON = JSON.parse(
-      //   '{"signup": {"email": "Mikeymikey@home.com"}}',
-      // );
-      // const question: JSON = JSON.parse(
-      //   '{"any_old_shit": {"blah": "just made this up"}}',
-      // );
-      const question: string =
-        '{"any_old_shit": {"blah": "just made this up"}}';
+      const id = this.currentForm?.id || '';
+      const question = JSON.stringify({
+        signup: { email: 'Mikeymikey@home.com' },
+      });
+
+      // const question = JSON.stringify({ [id]: this.formModel });
       const response = await aiService.ask({ question });
       this.answers = response.data;
     },

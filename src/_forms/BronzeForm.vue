@@ -16,7 +16,14 @@
       <div class="grid grid-cols-12 gap-6 lg:gap-10">
         <!-- Replace this blah code -->
         <div class="flex flex-col col-span-6">
-          <FormKit type="email" id="email" name="email" label="email" />
+          <FormKit
+            type="email"
+            id="email"
+            name="email"
+            label="email"
+            validation="required|"
+            validation-visibility="live"
+          />
         </div>
         <div class="flex flex-col col-span-6">
           <FormKit type="checkbox" id="blahbox" name="blahbox" label="Blah?" />
