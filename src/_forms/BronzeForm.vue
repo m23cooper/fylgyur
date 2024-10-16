@@ -8,14 +8,15 @@
       :name="_name"
       v-model="formModel"
       :actions="false"
-      #default="{ disabled, state, empty, dirty }"
+      #default="{ state: { dirty } }"
+      dirty-behaviour="compare"
       use-local-storage
     >
       <h2 class="prose font-bold text-xl mb-2">{{ _name }}</h2>
       <div class="grid grid-cols-12 gap-6 lg:gap-10">
         <!-- Replace this blah code -->
         <div class="flex flex-col col-span-6">
-          <FormKit type="text" id="blah" name="blah" label="blah" />
+          <FormKit type="email" id="email" name="email" label="email" />
         </div>
         <div class="flex flex-col col-span-6">
           <FormKit type="checkbox" id="blahbox" name="blahbox" label="Blah?" />
@@ -35,7 +36,7 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { computed, onMounted, toRef, ModelRef } from 'vue';
+  import { computed, onMounted, toRef } from 'vue';
   import { FormKit } from '@formkit/vue';
   import type { TAsynchFormProps } from '@/types';
 

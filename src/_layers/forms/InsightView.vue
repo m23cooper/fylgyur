@@ -3,7 +3,7 @@
 <template>
   <div id="InsightView" class="container h-fill">
     <h2 class="prose self-start p-2">Insight View</h2>
-    <pre class="container bg-white p-5 mx-5">:{{ formModel }}</pre>
+    <div class="container bg-white p-5 mx-5">{{ answers }}</div>
   </div>
 </template>
 
@@ -38,7 +38,7 @@
 
   const _store = useFormsStore();
 
-  const { formModel } = storeToRefs(_store);
+  const { answers } = storeToRefs(_store);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED

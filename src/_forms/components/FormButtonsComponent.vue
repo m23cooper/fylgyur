@@ -5,6 +5,7 @@
     <div
       v-if="hasReset"
       class="btn bg-primary text-primary-content hover:bg-secondary"
+      :class="{ 'btn-disabled': !formContext?.state.dirty }"
       @click.prevent="emit(EMIT.RESET)"
     >
       {{ resetLabel }}
@@ -12,6 +13,7 @@
     <div
       v-if="hasAsk"
       class="btn bg-primary text-primary-content hover:bg-secondary"
+      :class="{ 'btn-disabled': !formContext?.state.dirty }"
       @click.prevent="emit(EMIT.ASK)"
     >
       {{ askLabel }}
@@ -31,6 +33,10 @@
 <script setup lang="ts">
   import { EMIT } from '@/enum';
   import type { TAsynchFormProps } from '@/types';
+  import { useFormKitContext } from '@formkit/vue';
+  import { computed } from 'vue';
+  import { useFormsStore } from '@/_stores';
+  import { storeToRefs } from 'pinia';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -50,6 +56,9 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PRIVATE
   const _name: string = 'FormButtonsComponent';
+
+  // const { formContext } = storeToRefs(useFormsStore());
+  const formContext = useFormKitContext();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  GETTERS

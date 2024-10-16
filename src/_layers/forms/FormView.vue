@@ -67,9 +67,9 @@
   const formComponent: ShallowRef<any | null> = shallowRef(null);
   const asyncCompRef = ref(null);
 
-  const _store = useFormsStore();
+  const _formsStore = useFormsStore();
 
-  const { currentForm } = storeToRefs(_store);
+  const { currentForm } = storeToRefs(_formsStore);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -110,11 +110,11 @@
             throw new Error('Disjoint in form data');
           }
 
-          _store.registerFormModel({ fM: formModel });
+          _formsStore.registerFormModel({ fM: formModel });
 
           let ctx;
           ctx = useFormKitContextById(currentForm.value.id, () => {
-            _store.registerFormContext({ ctx });
+            _formsStore.registerFormContext({ ctx });
           });
         }
       });
@@ -137,9 +137,12 @@
     }
   };
 
-  function onAsk() {}
+  function onAsk() {
+    _formsStore.ask();
+  }
 
   function onReset() {
+    console.log('FormVue.onReset');
     resetForm(currentForm.value.id);
   }
 
