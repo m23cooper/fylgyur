@@ -105,7 +105,6 @@
       //  wait for the component to be populated
       await nextTick(() => {
         if (asyncCompRef.value) {
-          //  @ts-expect-error:  can't be arsed to hunt the type down
           const { hello } = asyncCompRef.value;
           if (hello !== currentForm.value?.id) {
             throw new Error('Disjoint in form data');

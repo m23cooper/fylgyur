@@ -28,9 +28,9 @@ const _service = {
       const snapshot = await getDoc(ref);
 
       return snapshot.data() as THost;
-    } catch (error) {
-      // ErrorManager.onServiceError('getHost failed ' + error);
-      throw new Error(error);
+    } catch (error: unknown) {
+      ErrorManager.onServiceError('getHost failed ' + error);
+      console.error(error);
     }
 
     return;
@@ -43,10 +43,10 @@ const _service = {
       const snapshot = await getDocs(q);
       const docs = _map(snapshot.docs, mapDocIds);
       return docs;
-    } catch (error) {
+    } catch (error: unknown) {
       // ErrorManager.onServiceError('getForms failed ' + error);
       console.error(error);
-      // throw new Error(error);
+      // throw new Error(error.toString());
     }
   },
 };
