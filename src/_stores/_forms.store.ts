@@ -91,11 +91,11 @@ export const useFormsStore = defineStore(`_forms.store`, {
     },
     async ask(): Promise<void> {
       const key = this.currentForm?.key || this.currentForm?.id || '';
-      const question = JSON.stringify({
-        signup: { email: 'Mikeymikey@home.com' },
-      });
+      // const question = JSON.stringify({
+      //   signup: { email: 'Mikeymikey@home.com' },
+      // });
 
-      // const question = JSON.stringify({ [key]: this.formModel });
+      const question = JSON.stringify({ [key]: this.formModel });
       const response = await aiService.ask({ question });
       this.answers = response.data;
     },

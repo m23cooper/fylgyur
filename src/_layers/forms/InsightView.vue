@@ -2,7 +2,9 @@
 
 <template>
   <div id="InsightView" class="container h-fill">
-    <div class="container rounded-md shadow-md bg-white p-5">{{ answers }}</div>
+    <div class="container rounded-md shadow-md bg-white p-5 text-black">
+      {{ answers }}
+    </div>
   </div>
 </template>
 
