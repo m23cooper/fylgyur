@@ -1,8 +1,8 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-  <div class="navbar bg-slate-900 shadow border-fuchsia-700 border-b-2">
-    <div class="navbar-start flex-row pl-1 justify-start">
+  <div class="navbar bg-slate-900 shadow border-secondary border-0 border-b-2">
+    <div class="navbar-start flex-row justify-start">
       <HOMEButton
         v-if="showHome"
         class="btn-sm btn-square btn-primary shadow hover:shadow-lg rounded hidden"

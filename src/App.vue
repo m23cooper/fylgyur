@@ -1,9 +1,9 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-  <div id="app" class="w-screen min-h-screen bg-slate-600">
-    <div v-if="!isInit">
-      <div class="flex flex-col w-screen min-h-screen">
+  <div id="app" class="w-screen h-dvh overflow-hidden">
+    <div v-if="!isInit" class="h-full">
+      <div class="flex flex-col h-full border-b-4">
         <NavLayer class="fixed h-[5rem] z-[5]"></NavLayer>
         <router-view
           key="routerView"
@@ -18,7 +18,7 @@
             @before-leave="anims.beforeNavLeave"
             @leave="anims.leaveNav"
           >
-            <component :is="Component" class="flex w-full" />
+            <component :is="Component" class="" />
           </transition>
         </router-view>
       </div>

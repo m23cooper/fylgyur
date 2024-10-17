@@ -1,13 +1,13 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-  <div id="FormsLayer" class="flex flex-row columns-12 w-screen min-h-screen">
+  <div id="FormsLayer" class="flex flex-row columns-12 h-full">
     <JourneyView
       v-show="formCount > 1"
-      class="basis-3/12 border-r-2 border-fuchsia-700"
+      class="basis-3/12 border-r-2 border-secondary p-5"
     />
-    <FormView class="grow border-r-2 border-fuchsia-700 overflow-x-visible" />
-    <InsightView v-show="currentForm" class="basis-5/12" />
+    <FormView class="grow border-r-2 border-secondary p-5" />
+    <InsightView v-show="currentForm" class="basis-6/12 p-5" />
   </div>
 </template>
 

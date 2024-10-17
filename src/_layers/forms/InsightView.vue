@@ -2,8 +2,7 @@
 
 <template>
   <div id="InsightView" class="container h-fill">
-    <h2 class="prose self-start p-2">Insight View</h2>
-    <div class="container bg-white p-5 mx-5">{{ answers }}</div>
+    <div class="container rounded-md shadow-md bg-white p-5">{{ answers }}</div>
   </div>
 </template>
 

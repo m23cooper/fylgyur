@@ -4,10 +4,10 @@
   <div
     id="FormView"
     v-if="currentForm !== null"
-    class="container flex flex-col p-6"
+    class="container flex flex-col"
   >
     <component
-      class="container rounded-xl bg-slate-200 p-5"
+      class="container rounded-md shadow-md bg-slate-200 p-5"
       :is="formComponent"
       ref="asyncCompRef"
       v-bind="currentForm.props"
