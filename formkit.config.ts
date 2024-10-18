@@ -5,6 +5,7 @@ import {
 } from '@formkit/addons';
 import { rootClasses } from './formkit.theme';
 import '@formkit/addons/css/multistep';
+import { formkitEmptyPlugin } from '@/plugins/formkitEmptyPlugin';
 
 function removePrompts(obj) {
   // Check if the current object is an array
@@ -30,8 +31,8 @@ function removePrompts(obj) {
 const onBeforeSave = (data) => {
   // Remove hidden fields from the data
   const filteredData = removePrompts(data);
-  console.log('++++++++++++++++++++++++ ');
-  console.dir(filteredData);
+  // console.log('++++++++++++++++++++++++ ');
+  // console.dir(filteredData);
   return filteredData;
 };
 
@@ -51,5 +52,6 @@ export default defaultConfig({
       beforeLoad: undefined,
     }),
     createMultiStepPlugin(),
+    formkitEmptyPlugin(),
   ],
 });

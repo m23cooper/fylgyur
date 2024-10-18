@@ -4,10 +4,10 @@
   <div
     id="FormView"
     v-if="currentForm !== null"
-    class="container flex flex-col p-6"
+    class="container flex flex-col"
   >
     <component
-      class="container rounded-xl bg-slate-200 p-5"
+      class="container rounded-md shadow-md bg-slate-200 p-5"
       :is="formComponent"
       ref="asyncCompRef"
       v-bind="currentForm.props"
@@ -16,6 +16,7 @@
       <template #formButtons>
         <FormButtonsComponent
           v-bind="currentForm.props"
+          :test="'test'"
           @[EMIT.ASK]="onAsk"
           @[EMIT.RESET]="onReset"
           @[EMIT.SUBMIT]="onSubmit"
@@ -67,9 +68,9 @@
   const formComponent: ShallowRef<any | null> = shallowRef(null);
   const asyncCompRef = ref(null);
 
-  const _store = useFormsStore();
+  const _formsStore = useFormsStore();
 
-  const { currentForm } = storeToRefs(_store);
+  const { currentForm } = storeToRefs(_formsStore);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -105,17 +106,16 @@
       //  wait for the component to be populated
       await nextTick(() => {
         if (asyncCompRef.value) {
-          //  @ts-expect-error:  can't be arsed to hunt the type down
           const { hello } = asyncCompRef.value;
           if (hello !== currentForm.value?.id) {
             throw new Error('Disjoint in form data');
           }
 
-          _store.registerFormModel({ fM: formModel });
+          _formsStore.registerFormModel({ fM: formModel });
 
           let ctx;
           ctx = useFormKitContextById(currentForm.value.id, () => {
-            _store.registerFormContext({ ctx });
+            _formsStore.registerFormContext({ ctx });
           });
         }
       });
@@ -138,9 +138,12 @@
     }
   };
 
-  function onAsk() {}
+  function onAsk() {
+    _formsStore.ask();
+  }
 
   function onReset() {
+    console.log('FormVue.onReset');
     resetForm(currentForm.value.id);
   }
 

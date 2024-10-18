@@ -3,7 +3,7 @@
 <template>
   <div
     id="JourneyCardComponent"
-    class="card rounded-lg bg-base-100 min-h-24 hover:bg-base-300"
+    class="card rounded-md bg-base-200 min-h-24 hover:bg-base-500"
   >
     <div class="card-body p-2">
       <div class="card-title">{{ form?.title }}</div>
