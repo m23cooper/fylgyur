@@ -1,34 +1,28 @@
 <!--  Generated from AsynchForm plop template -->
 
 <template>
-  <div id="BronzeForm" class="container h-fill">
+  <div id="SignupForm" class="container h-fill">
     <FormKit
       type="form"
       :id="_name"
       :name="_name"
       v-model="formModel"
       :actions="false"
-      #default="{ state: { dirty } }"
       dirty-behaviour="compare"
       use-local-storage
     >
       <h2 class="prose font-bold text-xl mb-2">{{ _name }}</h2>
       <div class="grid grid-cols-12 gap-6 lg:gap-10">
-        <!-- Replace this blah code -->
-        <div class="flex flex-col col-span-6">
+        <div class="flex flex-col col-span-12">
           <FormKit
             type="email"
             id="email"
             name="email"
             label="email"
-            validation="required|"
+            validation="required"
             validation-visibility="live"
           />
         </div>
-        <div class="flex flex-col col-span-6">
-          <FormKit type="checkbox" id="blahbox" name="blahbox" label="Blah?" />
-        </div>
-        <!-- END Replace -->
         <!-- Do NOT remove!!! -->
         <div v-if="hasButtons" class="flex col-span-12 justify-end items-end">
           <slot name="formButtons"></slot>
@@ -45,7 +39,7 @@
 <script setup lang="ts">
   import { computed, onMounted, toRef } from 'vue';
   import { FormKit } from '@formkit/vue';
-  import type { TAsynchFormProps } from '@/types';
+  import { TAsynchFormProps } from '@/types';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -64,7 +58,7 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = 'BronzeForm';
+  const _name: string = 'SignupForm';
 
   const formModel: any = defineModel();
 
@@ -104,16 +98,16 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`BronzeForm onMounted!`);
+    console.log(`SignupForm onMounted!`);
     // _store.init();
   });
 
   // onUpdated(() => {
-  //   console.log(`BronzeForm onUpdated!`);
+  //   console.log(`SignupForm onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`BronzeForm unmounted!`);
+  //   console.log(`SignupForm unmounted!`);
   // })
 </script>
 

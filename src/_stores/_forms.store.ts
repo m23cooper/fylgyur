@@ -1,24 +1,16 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import {
-  each as _each,
-  merge as _merge,
-  orderBy as _orderBy,
-  assign as _assign,
-  map as _map,
-  find as _find,
-  map,
-} from 'lodash-es';
-import { Ref, toRef, watch } from 'vue';
+import { orderBy as _orderBy, map as _map, find as _find } from 'lodash-es';
 import type { TAsynchForm, THost } from '@/types';
-import { formsService } from '@/_services';
+import { formsService, aiService } from '@/_services';
 
-const _service = formsService;
+// const _formsService = formsService;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
 
 export interface IFormsState {
   forms: TAsynchForm[];
+  answers: any | null;
   selectedForm: TAsynchForm | null;
   formContext: any;
   formModel: object | null;
@@ -29,6 +21,7 @@ export const useFormsStore = defineStore(`_forms.store`, {
   //  State
   state: (): IFormsState => ({
     forms: [],
+    answers: 'No answers yet',
     selectedForm: null,
     formContext: null,
     formModel: null,
@@ -55,18 +48,25 @@ export const useFormsStore = defineStore(`_forms.store`, {
     },
     async loadFormsByHost(): Promise<void> {
       const hostname = window.location.hostname.split('.')[0];
-      const host: THost = await _service.getHost({ hostname });
-      const formIds = host.forms.map((form) => form.id);
 
-      const formData = await _service.getForms({ formIds });
-      _map(formData, (form) => {
-        const hostForm = _find(
-          host.forms,
-          (hostform) => hostform.id === form.id,
-        );
-        form.order = hostForm?.order || 0;
-      });
-      this.forms = _orderBy(formData, ['order']);
+      const host: THost | undefined = await formsService.getHost({ hostname });
+      if (host) {
+        const formIds = host.forms.map((form) => form.id);
+
+        const formData = await formsService.getForms({ formIds });
+        if (formData) {
+          _map(formData, (form) => {
+            const hostForm = _find(
+              host.forms,
+              (hostform) => hostform.id === form.id,
+            );
+            form.order = hostForm?.order || 0;
+          });
+          this.forms = _orderBy(formData, ['order']);
+        }
+      } else {
+        console.log('NO HOST');
+      }
     },
     setCurrentFormById({ id }): void {
       // console.log(`setCurrentForm ${name}`)
@@ -88,6 +88,16 @@ export const useFormsStore = defineStore(`_forms.store`, {
       this.$patch({
         formModel: fM,
       });
+    },
+    async ask(): Promise<void> {
+      const key = this.currentForm?.key || this.currentForm?.id || '';
+      // const question = JSON.stringify({
+      //   signup: { email: 'Mikeymikey@home.com' },
+      // });
+
+      const question = JSON.stringify({ [key]: this.formModel });
+      const response = await aiService.ask({ question });
+      this.answers = response.data;
     },
   },
 });

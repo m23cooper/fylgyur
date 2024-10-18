@@ -4,10 +4,10 @@
   <div
     id="FormView"
     v-if="currentForm !== null"
-    class="container flex flex-col p-6"
+    class="container flex flex-col"
   >
     <component
-      class="container rounded-xl bg-slate-200 p-5"
+      class="container rounded-md shadow-md bg-slate-200 p-5"
       :is="formComponent"
       ref="asyncCompRef"
       v-bind="currentForm.props"
@@ -16,6 +16,7 @@
       <template #formButtons>
         <FormButtonsComponent
           v-bind="currentForm.props"
+          :test="'test'"
           @[EMIT.ASK]="onAsk"
           @[EMIT.RESET]="onReset"
           @[EMIT.SUBMIT]="onSubmit"
@@ -67,9 +68,9 @@
   const formComponent: ShallowRef<any | null> = shallowRef(null);
   const asyncCompRef = ref(null);
 
-  const _store = useFormsStore();
+  const _formsStore = useFormsStore();
 
-  const { currentForm } = storeToRefs(_store);
+  const { currentForm } = storeToRefs(_formsStore);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
@@ -96,23 +97,29 @@
   //  Methods
 
   const loadFormComponent = async () => {
-    formComponent.value = await loadFormVue();
-    console.log(`loadFormComponent ${currentForm.value?.id}`);
-    //  wait for the component to be populated
-    await nextTick(() => {
-      //  @ts-expect-error:  can't be arsed to hunt the type down
-      const { hello } = asyncCompRef.value;
-      if (hello !== currentForm.value?.id) {
-        throw new Error('Disjoint in form data');
-      }
+    console.log(
+      `loadFormComponent currentForm.value?.id: ${currentForm.value?.id}`,
+    );
+    if (currentForm.value?.id) {
+      formComponent.value = await loadFormVue();
 
-      _store.registerFormModel({ fM: formModel });
+      //  wait for the component to be populated
+      await nextTick(() => {
+        if (asyncCompRef.value) {
+          const { hello } = asyncCompRef.value;
+          if (hello !== currentForm.value?.id) {
+            throw new Error('Disjoint in form data');
+          }
 
-      let ctx;
-      ctx = useFormKitContextById(currentForm.value.id, () => {
-        _store.registerFormContext({ ctx });
+          _formsStore.registerFormModel({ fM: formModel });
+
+          let ctx;
+          ctx = useFormKitContextById(currentForm.value.id, () => {
+            _formsStore.registerFormContext({ ctx });
+          });
+        }
       });
-    });
+    }
   };
 
   const loadFormVue = async () => {
@@ -131,9 +138,12 @@
     }
   };
 
-  function onAsk() {}
+  function onAsk() {
+    _formsStore.ask();
+  }
 
   function onReset() {
+    console.log('FormVue.onReset');
     resetForm(currentForm.value.id);
   }
 
@@ -147,7 +157,7 @@
   //  Hooks
   onMounted(() => {
     console.log(`FormView onMounted!`);
-    // loadFormComponent();
+    if (currentForm) loadFormComponent();
   });
 
   // onUpdated(() => {

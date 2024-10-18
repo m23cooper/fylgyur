@@ -1,9 +1,9 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-  <div id="app" class="w-screen min-h-screen bg-slate-600">
-    <div v-if="!isInit">
-      <div class="flex flex-col w-screen min-h-screen">
+  <div id="app" class="w-screen h-dvh overflow-hidden">
+    <div v-if="!isInit" class="h-full">
+      <div class="flex flex-col h-full border-b-4">
         <NavLayer class="fixed h-[5rem] z-[5]"></NavLayer>
         <router-view
           key="routerView"
@@ -18,7 +18,7 @@
             @before-leave="anims.beforeNavLeave"
             @leave="anims.leaveNav"
           >
-            <component :is="Component" class="flex w-full" />
+            <component :is="Component" class="" />
           </transition>
         </router-view>
       </div>
@@ -44,6 +44,7 @@
   import LoadingLayer from '@/_layers/loading/_loading.layer.vue';
   import NavLayer from '@/_layers/nav/_nav.layer.vue';
   import NotificationLayer from '@/_layers/notification/_notification.layer.vue';
+  import ErrorManager from '@/utils/ErrorManager';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
@@ -92,7 +93,16 @@
 
     // populate the Router and get startup url query
     _uiStore.init();
-    await useFormsStore().init();
+    try {
+      await useFormsStore().init();
+    } catch (error) {
+      Signals.NOTIFICATION.dispatch({
+        type: 'error',
+        duration: -1,
+        message: error,
+      });
+      // ErrorManager.onVueError(error);
+    }
   });
 
   onMounted(async () => {

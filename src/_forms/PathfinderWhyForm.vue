@@ -8,7 +8,7 @@
       :name="_name"
       v-model="formModel"
       :actions="false"
-      #default="{ disabled, state, empty, dirty }"
+      dirty-behaviour="compare"
       use-local-storage
     >
       <h2 class="prose font-bold text-xl mb-2">{{ _name }}</h2>
@@ -228,7 +228,7 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { computed, onMounted, toRef, ModelRef } from 'vue';
+  import { computed, onMounted, toRef } from 'vue';
   import { FormKit } from '@formkit/vue';
   import { TAsynchFormProps } from '@/types';
 

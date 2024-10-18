@@ -2,18 +2,18 @@
 
 <template>
   <div id="JourneyView" class="container">
-    <div class="container p-5 flex flex-col gap-4 items-center" v-if="forms">
+    <div class="container flex flex-col gap-4 items-center" v-if="forms">
       <div class="w-full" v-for="form in forms" :key="form.id">
         <JourneyCardComponent
           v-if="form.id !== currentForm.id"
-          class="shadow-lg cursor-pointer"
+          class="shadow-lg cursor-pointer border-secondary border-2"
           :form
           @click="onCardClick(form.id)"
         />
         <JourneyCardComponent
           v-else
           :form
-          class="w-full border-fuchsia-700 border-4 cursor-default"
+          class="w-full border-primary border-2 cursor-default mt-1 ml-1"
         />
       </div>
     </div>

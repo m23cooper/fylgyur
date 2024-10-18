@@ -5,6 +5,7 @@
     <div
       v-if="hasReset"
       class="btn bg-primary text-primary-content hover:bg-secondary"
+      :class="{ 'btn-disabled': !isResetEnabled }"
       @click.prevent="emit(EMIT.RESET)"
     >
       {{ resetLabel }}
@@ -12,6 +13,7 @@
     <div
       v-if="hasAsk"
       class="btn bg-primary text-primary-content hover:bg-secondary"
+      :class="{ 'btn-disabled': !isAskEnabled }"
       @click.prevent="emit(EMIT.ASK)"
     >
       {{ askLabel }}
@@ -19,6 +21,7 @@
     <div
       v-if="hasSubmit"
       class="btn bg-primary text-primary-content hover:bg-secondary"
+      :class="{ 'btn-disabled': !isSubmitEnabled }"
       @click.prevent="emit(EMIT.SUBMIT)"
     >
       {{ submitLabel }}
@@ -31,9 +34,14 @@
 <script setup lang="ts">
   import { EMIT } from '@/enum';
   import type { TAsynchFormProps } from '@/types';
+  import { useFormKitContext } from '@formkit/vue';
+  import { computed } from 'vue';
+  import { useFormsStore } from '@/_stores';
+  import { storeToRefs } from 'pinia';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
+  type ExtendedProps = TAsynchFormProps & { test?: string };
   const {
     hasAsk = true,
     hasReset = true,
@@ -41,7 +49,7 @@
     askLabel = 'Ask The AI Expert!',
     resetLabel = 'Reset',
     submitLabel = 'Submit',
-  } = defineProps<TAsynchFormProps>();
+  } = defineProps<ExtendedProps>();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  EMITS
@@ -50,6 +58,9 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PRIVATE
   const _name: string = 'FormButtonsComponent';
+
+  // const { formContext } = storeToRefs(useFormsStore());
+  const formContext = useFormKitContext();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  GETTERS
@@ -60,6 +71,9 @@
   // const getContact = computed(() => {
   //   return getApplication.value.contact[0]?.number;
   // });
+  const isAskEnabled = computed(() => formContext.value?.state.valid);
+  const isResetEnabled = computed(() => !formContext.value?.state.empty);
+  const isSubmitEnabled = computed(() => formContext.value?.state.valid);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH

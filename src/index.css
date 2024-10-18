@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'CircularStd';
-  src: url('./assets/fonts/CircularStd-Book.ttf');
+    font-family: 'CircularStd';
+    src: url('./assets/fonts/CircularStd-Book.ttf');
 }
 
 @font-face {
-  font-family: 'CircularStd-Bold';
-  src: url('./assets/fonts/CircularStd-Black.ttf');
+    font-family: 'CircularStd-Bold';
+    src: url('./assets/fonts/CircularStd-Black.ttf');
 }
 
 @font-face {
-  font-family: 'CircularStd-SemiBold';
-  src: url('./assets/fonts/CircularStd-Medium.ttf');
+    font-family: 'CircularStd-SemiBold';
+    src: url('./assets/fonts/CircularStd-Medium.ttf');
 }
 
 /*@font-face {*/
@@ -23,76 +23,77 @@
 /*}*/
 
 @layer base {
-  h1 {
-    @apply prose text-xl font-bold text-lg mb-5;
-  }
+    h1 {
+        @apply prose text-xl font-bold text-lg mb-5;
+    }
 
-  h2 {
-    @apply prose text-xl font-bold text-lg;
-  }
+    h2 {
+        @apply prose text-xl font-bold text-lg;
+    }
 
-  h3 {
-    @apply prose font-bold text-base;
-  }
+    h3 {
+        @apply prose font-bold text-base;
+    }
 
-  h4 {
-    @apply prose;
-  }
+    h4 {
+        @apply prose;
+    }
 
-  h5 {
-    @apply prose text-sm font-bold text-sm;
-  }
+    h5 {
+        @apply prose text-sm font-bold text-sm;
+    }
 
-  h6 {
-    @apply prose text-sm;
-  }
+    h6 {
+        @apply prose text-sm;
+    }
 
-  th {
-    @apply text-slate-500 text-xs lowercase;
-  }
+    th {
+        @apply text-slate-500 text-xs lowercase;
+    }
 
-  p {
-    @apply prose text-sm;
-  }
+    p {
+        @apply prose text-sm;
+    }
 
-  .dev1 {
-    @apply border border-2 border-red-700;
-  }
+    .dev1 {
+        @apply border border-2 border-red-700;
+    }
 
-  .dev2 {
-    @apply border border-2 border-orange-700;
-  }
+    .dev2 {
+        @apply border border-2 border-orange-700;
+    }
 
-  .dev3 {
-    @apply border border-2 border-yellow-700;
-  }
+    .dev3 {
+        @apply border border-2 border-yellow-700;
+    }
 
-  .dev4 {
-    @apply border border-2 border-green-700;
-  }
+    .dev4 {
+        @apply border border-2 border-green-700;
+    }
 
-  .dev5 {
-    @apply border border-2 border-blue-700;
-  }
+    .dev5 {
+        @apply border border-2 border-blue-700;
+    }
 
-  .dev6 {
-    @apply border border-2 border-indigo-700;
-  }
+    .dev6 {
+        @apply border border-2 border-indigo-700;
+    }
 
-  .dev7 {
-    @apply border border-2 border-violet-700;
-  }
+    .dev7 {
+        @apply border border-2 border-violet-700;
+    }
 }
 
 @layer components {
-  .pane {
-    @apply card;
-    /*background-color: theme('colors.primary-content');*/
-  }
-  .card {
-    @apply bg-white/70 drop-shadow rounded-sm ring-red-500/20 ring-1 ring-offset-1;
-  }
-  .fab-truncate {
-    @apply text-ellipsis whitespace-nowrap;
-  }
+    .pane {
+        @apply card;
+        /*background-color: theme('colors.primary-content');*/
+    }
+
+    /*.card {*/
+    /*  @apply bg-white/70 drop-shadow rounded-sm ring-red-500/20 ring-1 ring-offset-1;*/
+    /*}*/
+    .fab-truncate {
+        @apply text-ellipsis whitespace-nowrap;
+    }
 }

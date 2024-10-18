@@ -43,7 +43,7 @@ export const useUserStore = defineStore('_user.store', {
     // 	// { key: 'fab-token', storage: localStorage, paths: ['token', ] },
     key: 'user',
     storage: localStorage,
-    paths: ['user'],
+    pick: ['user'],
   },
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

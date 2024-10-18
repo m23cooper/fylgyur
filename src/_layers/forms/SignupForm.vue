@@ -16,7 +16,7 @@
           id="formId"
           ref="formRef"
           :actions="false"
-          #default="{ disabled }"
+          #default="{ disabled, empty }"
           use-local-storage
         >
           <div class="grid grid-cols-12 gap-10 lg:gap-8">
@@ -38,7 +38,8 @@
                 id="email"
                 label="Email Address"
                 placeholder="Enter your email"
-                validation="required|email"
+                validation="email"
+                validation-visibility="live"
               />
             </div>
             <div class="flex flex-row col-span-12 justify-center">

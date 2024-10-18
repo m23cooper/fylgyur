@@ -65,7 +65,7 @@ function onAction({ store }) {
         //  just make sure...
         store.INITIALISED = false;
         ErrorManager.onActionError(error);
-        throw new Error(error);
+        throw new Error(error.toString());
       });
     },
   );
