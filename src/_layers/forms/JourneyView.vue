@@ -6,14 +6,14 @@
       <div class="w-full" v-for="form in forms" :key="form.id">
         <JourneyCardComponent
           v-if="form.id !== currentForm.id"
-          class="shadow-lg cursor-pointer border-primary border-2"
+          class="shadow-lg cursor-pointer border-secondary border-2"
           :form
           @click="onCardClick(form.id)"
         />
         <JourneyCardComponent
           v-else
           :form
-          class="w-full border-secondary border-2 cursor-default mt-1 ml-1"
+          class="w-full border-primary border-2 cursor-default mt-1 ml-1"
         />
       </div>
     </div>

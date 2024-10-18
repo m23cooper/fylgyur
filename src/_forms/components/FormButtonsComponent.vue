@@ -5,7 +5,7 @@
     <div
       v-if="hasReset"
       class="btn bg-primary text-primary-content hover:bg-secondary"
-      :class="{ 'btn-disabled': isResetEnabled }"
+      :class="{ 'btn-disabled': !isResetEnabled }"
       @click.prevent="emit(EMIT.RESET)"
     >
       {{ resetLabel }}
@@ -13,7 +13,7 @@
     <div
       v-if="hasAsk"
       class="btn bg-primary text-primary-content hover:bg-secondary"
-      :class="{ 'btn-disabled': isAskEnabled }"
+      :class="{ 'btn-disabled': !isAskEnabled }"
       @click.prevent="emit(EMIT.ASK)"
     >
       {{ askLabel }}
@@ -21,7 +21,7 @@
     <div
       v-if="hasSubmit"
       class="btn bg-primary text-primary-content hover:bg-secondary"
-      :class="{ 'btn-disabled': isSubmitEnabled }"
+      :class="{ 'btn-disabled': !isSubmitEnabled }"
       @click.prevent="emit(EMIT.SUBMIT)"
     >
       {{ submitLabel }}
@@ -41,6 +41,7 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
+  type ExtendedProps = TAsynchFormProps & { test?: string };
   const {
     hasAsk = true,
     hasReset = true,
@@ -48,7 +49,7 @@
     askLabel = 'Ask The AI Expert!',
     resetLabel = 'Reset',
     submitLabel = 'Submit',
-  } = defineProps<TAsynchFormProps>();
+  } = defineProps<ExtendedProps>();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  EMITS
@@ -70,9 +71,9 @@
   // const getContact = computed(() => {
   //   return getApplication.value.contact[0]?.number;
   // });
-  const isAskEnabled = computed(() => !formContext.value?.state.valid);
-  const isResetEnabled = computed(() => !formContext.value?.state.dirty);
-  const isSubmitEnabled = computed(() => !formContext.value?.state.valid);
+  const isAskEnabled = computed(() => formContext.value?.state.valid);
+  const isResetEnabled = computed(() => !formContext.value?.state.empty);
+  const isSubmitEnabled = computed(() => formContext.value?.state.valid);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH

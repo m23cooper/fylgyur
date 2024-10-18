@@ -16,6 +16,7 @@
       <template #formButtons>
         <FormButtonsComponent
           v-bind="currentForm.props"
+          :test="'test'"
           @[EMIT.ASK]="onAsk"
           @[EMIT.RESET]="onReset"
           @[EMIT.SUBMIT]="onSubmit"
