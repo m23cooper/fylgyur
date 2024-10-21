@@ -105,7 +105,7 @@
       });
       alert('Registered successfully!');
     } catch (error: any) {
-      alert('Error registering: ' + error.message);
+      alert('Error REGISTER: ' + error.message);
     }
   }
 

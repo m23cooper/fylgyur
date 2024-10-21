@@ -1,31 +1,38 @@
-import {
-  createUserWithEmailAndPassword,
-  FacebookAuthProvider,
-  getAuth,
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  TwitterAuthProvider,
-} from 'firebase/auth';
-import { auth } from '@/database/firebase';
+import { internalAxios as axios } from '@/_services/axios';
 
-const googleProvider = new GoogleAuthProvider();
-const facebookProvider = new FacebookAuthProvider();
-const twitterProvider = new TwitterAuthProvider();
-const githubProvider = new GithubAuthProvider();
+type TLoginParams = {
+  email: string;
+  password: string;
+};
+type TRegisterParams = {
+  name: string;
+  email: string;
+  password: string;
+  confirm: string;
+};
+type TForgotParams = {
+  email: string;
+};
+type TResetParams = {
+  current: string;
+  password: string;
+  confirm: string;
+};
 
 const _service = {
-  signInWithGoogle: () => signInWithPopup(auth, googleProvider),
-  signInWithFacebook: () => signInWithPopup(auth, facebookProvider),
-  signInWithTwitter: () => signInWithPopup(auth, twitterProvider),
-  signInWithGithub: () => signInWithPopup(auth, githubProvider),
-  registerWithEmail: ({ email, password }) =>
-    createUserWithEmailAndPassword(auth, email, password),
-  loginWithEmail: ({ email, password }) =>
-    signInWithEmailAndPassword(auth, email, password),
-  logout: () => signOut(auth),
+  login: ({ email, password }: TLoginParams) =>
+    axios.post('/login', { email, password }),
+
+  register: ({ name, email, password, confirm }: TRegisterParams) =>
+    axios.post('/register', { name, email, password, confirm }),
+
+  forgotPassword: ({ email }: TForgotParams) =>
+    axios.post('/forgot-password', { email }),
+
+  resetPassword: ({ current, password, confirm }: TResetParams) =>
+    axios.post('/forgot-password', { current, password, confirm }),
+
+  logout: ({}) => axios.post('/logout', {}),
 };
 
 export const userService = _service;

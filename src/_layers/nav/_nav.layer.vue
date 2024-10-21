@@ -97,12 +97,12 @@
   }
 
   function onLoginClick() {
-    _userStore.setAuthState(AUTH_STATE.LOGGING_IN);
+    _userStore.setAuthState(AUTH_STATE.LOGIN);
     useUIStore().goRoute(ROUTE_NAMES.AUTH, {});
   }
 
   function onRegisterClick() {
-    _userStore.setAuthState(AUTH_STATE.REGISTERING);
+    _userStore.setAuthState(AUTH_STATE.REGISTER);
     useUIStore().goRoute(ROUTE_NAMES.AUTH, {});
   }
 

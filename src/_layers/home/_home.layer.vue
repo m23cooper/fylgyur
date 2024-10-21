@@ -58,7 +58,7 @@
   //  }
   async function onRegister() {
     console.log(`HomeLayer onRegister`);
-    useUserStore().setAuthState(AUTH_STATE.REGISTERING);
+    useUserStore().setAuthState(AUTH_STATE.REGISTER);
     await useUIStore().goRoute(ROUTE_NAMES.AUTH, {});
   }
 

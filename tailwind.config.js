@@ -23,5 +23,5 @@ export default {
     },
   },
   plugins: [typography, forms, daisyui],
-  daisyui: { themes: ['night', 'halloween', 'dracula', 'cupcake'] },
+  daisyui: { themes: ['halloween', 'dracula', 'night', 'cupcake'] },
 };

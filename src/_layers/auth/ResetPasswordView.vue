@@ -1,55 +1,60 @@
 <!--  Generated from VueView plop template -->
 
 <template>
-  <div id="LoginView" class="container">
+  <div id="ResetPasswordView" class="container">
     <h3
-      class="prose text-primary text-xl border-b-[1px] border-white pb-1 mb-5"
+      class="prose text-primary-content text-xl border-b-[1px] border-white pb-1 mb-5"
     >
-      Login to an existing account
+      Reset your password
     </h3>
-    <FormKit type="form" id="loginForm" @submit="onSubmit">
+    <FormKit type="form" id="resetPasswordForm" @submit="onReset">
       <FormKit
-        type="email"
-        name="email"
-        label="Email"
-        validation="required|email"
-        validation-visibility="dirty"
-        placeholder="blah@blah.com"
+        type="password"
+        ref="current"
+        label="Current password"
+        prefix-icon="password"
+        suffix-icon="eyeClosed"
+        @suffix-icon-click="handleIconClick"
+        suffix-icon-class="hover:text-blue-500"
       />
       <FormKit
         type="password"
-        name="password"
-        label="Password"
-        placeholder="password"
-        validation="required"
-        validation-visibility="live"
+        ref="new"
+        label="New password"
+        prefix-icon="password"
+        suffix-icon="eyeClosed"
+        @suffix-icon-click="handleIconClick"
+        suffix-icon-class="hover:text-blue-500"
+      />
+      <FormKit
+        type="password"
+        ref="confirm"
+        label="Confirm new password"
         prefix-icon="password"
         suffix-icon="eyeClosed"
         @suffix-icon-click="handleIconClick"
         suffix-icon-class="hover:text-blue-500"
       />
     </FormKit>
-
-    <!--      <div class="divider">OR</div>-->
-    <!--      <SocialLoginView />-->
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
+  import { storeToRefs } from 'pinia';
   import { useUIStore, useUserStore } from '@/_stores';
   import { ROUTE_NAMES } from '@/enum';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
-  // interface ILoginViewProps
+  // interface IResetPasswordViewProps
   // {
   //   blah: string;
   // }
   //
-  // const props: Readonly<ILoginViewProps> = withDefaults(defineProps<ILoginViewProps>(), {
+  // const props: Readonly<IResetPasswordViewProps> = withDefaults(defineProps<IResetPasswordViewProps>(), {
   //   blah: "",
   // });
 
@@ -59,11 +64,7 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = 'LoginView';
-
-  // const email = ref('');
-  // const password = ref('');
-  // const loginForm = defineModel();
+  const _name: string = 'ResetPasswordView';
 
   const _userStore = useUserStore();
 
@@ -98,7 +99,7 @@
     node.props.type = node.props.type === 'password' ? 'text' : 'password';
   }
 
-  async function onSubmit(formData, node) {
+  async function onReset(formData, node) {
     console.log(`${formData.email} ${formData.password}`);
     try {
       const test = await _userStore.loginWithEmail({
@@ -125,16 +126,16 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`LoginView onMounted!`);
+    console.log(`ResetPasswordView onMounted!`);
     // _store.init();
   });
 
   // onUpdated(() => {
-  //   console.log(`LoginView onUpdated!`);
+  //   console.log(`ResetPasswordView onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`LoginView unmounted!`);
+  //   console.log(`ResetPasswordView unmounted!`);
   // })
 </script>
 

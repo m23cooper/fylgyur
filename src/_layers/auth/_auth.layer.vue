@@ -3,14 +3,15 @@
 <template>
   <div id="AuthLayer" class="container h-fill">
     <div
-      class="container w-fit bg-base-content text-primary pt-5 pb-3 px-8 shadow-xl rounded-md mt-10 transition-transform"
+      class="container w-fit bg-stone-200 text-primary pt-5 pb-3 px-8 shadow-xl rounded-md mt-10 transition-transform"
     >
       <LoggedOutView v-show="showLoggedOut" />
       <LoginView v-show="showLogin" />
       <RegisterView v-show="showRegister" />
       <ForgotPasswordView v-show="showForgot" />
+      <ResetPasswordView v-show="showReset" />
     </div>
-    <AuthButtonsView />
+    <AuthButtonsView v-if="showButtons" />
     <LoginErrorComponent
       class="absolute bottom-0"
       v-show="showError"
@@ -33,6 +34,7 @@
   import ForgotPasswordView from '@/_layers/auth/ForgotPasswordView.vue';
   import AuthButtonsView from '@/_layers/auth/AuthButtonsView.vue';
   import LoggedOutView from '@/_layers/auth/LoggedOutView.vue';
+  import ResetPasswordView from '@/_layers/auth/ResetPasswordView.vue';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
@@ -46,18 +48,21 @@
   //  COMPUTED
   const showLogin = computed(
     () =>
-      authState.value === AUTH_STATE.UNKNOWN ||
-      authState.value === AUTH_STATE.LOGGING_IN ||
+      authState.value === AUTH_STATE.LOGIN ||
       authState.value === AUTH_STATE.LOGGED_OUT,
   );
-  const showRegister = computed(
-    () => authState.value === AUTH_STATE.REGISTERING,
+  const showRegister = computed(() => authState.value === AUTH_STATE.REGISTER);
+  const showReset = computed(
+    () => authState.value === AUTH_STATE.RESET_PASSWORD,
   );
   const showForgot = computed(
     () => authState.value === AUTH_STATE.FORGOT_PASSWORD,
   );
   const showLoggedOut = computed(
     () => authState.value === AUTH_STATE.LOGGED_OUT,
+  );
+  const showButtons = computed(
+    () => authState.value !== AUTH_STATE.RESET_PASSWORD,
   );
   const showError = computed(() => errorMsg.value != null);
 

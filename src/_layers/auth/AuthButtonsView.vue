@@ -51,13 +51,11 @@
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
-  const showRegister = computed(
-    () => authState.value !== AUTH_STATE.REGISTERING,
-  );
+  const showRegister = computed(() => authState.value !== AUTH_STATE.REGISTER);
   const showForgot = computed(
     () => authState.value !== AUTH_STATE.FORGOT_PASSWORD,
   );
-  const showLogin = computed(() => authState.value !== AUTH_STATE.LOGGING_IN);
+  const showLogin = computed(() => authState.value !== AUTH_STATE.LOGIN);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public
@@ -76,11 +74,11 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
   function onRegisterClick() {
-    _userStore.setAuthState(AUTH_STATE.REGISTERING);
+    _userStore.setAuthState(AUTH_STATE.REGISTER);
   }
 
   function onLoginClick() {
-    _userStore.setAuthState(AUTH_STATE.LOGGING_IN);
+    _userStore.setAuthState(AUTH_STATE.LOGIN);
   }
 
   function onForgotClick() {

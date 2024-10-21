@@ -33,7 +33,7 @@ export const useUserStore = defineStore('_user.store', {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  State
   state: (): IUserStoreState => ({
-    authState: AUTH_STATE.UNKNOWN,
+    authState: AUTH_STATE.RESET_PASSWORD,
     permissions: {},
     token: undefined,
     user: null,
