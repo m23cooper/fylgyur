@@ -1,31 +1,33 @@
 <!--  Generated from VueView plop template -->
 
 <template>
-  <div id="RegisterView" class="container h-fill justify-center">
-    <h3 class="prose text-2xl mb-6">Register for an account</h3>
-    <div class="border-2 border-slate-500:10 p-4">
-      <FormKit type="form" id="registerForm" @submit="onRegister">
-        <FormKit
-          type="email"
-          ref="email"
-          label="Email address"
-          help="Please enter your email address."
-          validation="required|email"
-          validation-visibility="live"
-          placeholder="Email"
-        />
-        <FormKit
-          type="password"
-          ref="password"
-          label="A fancy password input"
-          value="mySecretPassword!"
-          prefix-icon="password"
-          suffix-icon="eyeClosed"
-          @suffix-icon-click="handleIconClick"
-          suffix-icon-class="hover:text-blue-500"
-        />
-      </FormKit>
-    </div>
+  <div id="RegisterView" class="container">
+    <h3
+      class="prose text-primary-content text-xl border-b-[1px] border-white pb-1 mb-5"
+    >
+      Register for an account
+    </h3>
+    <FormKit type="form" id="registerForm" @submit="onRegister">
+      <FormKit
+        type="email"
+        ref="email"
+        label="Email address"
+        help="Please enter your email address."
+        validation="required|email"
+        validation-visibility="live"
+        placeholder="Email"
+      />
+      <FormKit
+        type="password"
+        ref="password"
+        label="A fancy password input"
+        value="mySecretPassword!"
+        prefix-icon="password"
+        suffix-icon="eyeClosed"
+        @suffix-icon-click="handleIconClick"
+        suffix-icon-class="hover:text-blue-500"
+      />
+    </FormKit>
   </div>
 </template>
 
@@ -37,6 +39,7 @@
   import { useUserStore } from '@/_stores';
   import { Signals } from '@/signals';
   import { ROUTE_NAMES } from '@/enum';
+  import { AUTH_STATE } from '@/enum/AUTH_STATE';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
@@ -87,13 +90,13 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
-  const handleIconClick = (node, e) => {
+  function handleIconClick(node, e) {
     node.props.suffixIcon =
       node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye';
     node.props.type = node.props.type === 'password' ? 'text' : 'password';
-  };
+  }
 
-  const onRegister = async () => {
+  async function onRegister() {
     console.log(`${email.value} ${password.value}`);
     try {
       await _userStore.registerWithEmail({
@@ -104,7 +107,7 @@
     } catch (error: any) {
       alert('Error registering: ' + error.message);
     }
-  };
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH

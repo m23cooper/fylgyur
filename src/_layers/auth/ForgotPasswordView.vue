@@ -1,29 +1,24 @@
 <!--  Generated from VueView plop template -->
 
 <template>
-  <div id="LoginView" class="container h-fill justify-center">
-    <h3 class="prose text-2xl mb-6">Login to an existing account</h3>
-    <div class="border-2 border-slate-500:10 p-4">
-      <FormKit type="form" id="loginForm" @submit="onSubmit">
-        <FormKit
-          type="email"
-          name="email"
-          help="Please enter your email address."
-          validation="required|email"
-          validation-visibility="live"
-          placeholder="Email"
-        />
-        <FormKit
-          type="password"
-          name="password"
-          label="A fancy password input"
-          value="mySecretPassword!"
-          prefix-icon="password"
-          suffix-icon="eyeClosed"
-          @suffix-icon-click="handleIconClick"
-          suffix-icon-class="hover:text-blue-500"
-        />
-      </FormKit>
+  <div id="ForgotPasswordView" class="container">
+    <h3
+      class="prose text-primary-content text-xl border-b-[1px] border-white pb-1 mb-5"
+    >
+      Forgot Password
+    </h3>
+
+    <FormKit type="form" name="forgot_password">
+      <FormKit
+        type="email"
+        name="email"
+        validation="required|email"
+        placeholder="the email you signed up with"
+      />
+    </FormKit>
+    <div class="prose w-full text-primary-content text-center mb-2">
+      If we have your email on record we will send a reminder. Remember to check
+      your spam if it doesn't arrive
     </div>
   </div>
 </template>
@@ -31,18 +26,22 @@
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
+  import { storeToRefs } from 'pinia';
   import { useUIStore, useUserStore } from '@/_stores';
-  import { ROUTE_NAMES } from '@/enum';
+  import { Signals } from '@/signals';
+  import * as utils from '@/utils/utils';
+  import ModalComponent from '@/_components/modal/ModalComponent.vue';
+  import { AUTH_STATE } from '@/enum/AUTH_STATE';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
-  // interface ILoginViewProps
+  // interface IForgotPasswordViewProps
   // {
   //   blah: string;
   // }
   //
-  // const props: Readonly<ILoginViewProps> = withDefaults(defineProps<ILoginViewProps>(), {
+  // const props: Readonly<IForgotPasswordViewProps> = withDefaults(defineProps<IForgotPasswordViewProps>(), {
   //   blah: "",
   // });
 
@@ -52,13 +51,7 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = 'LoginView';
-
-  // const email = ref('');
-  // const password = ref('');
-  // const loginForm = defineModel();
-
-  const _userStore = useUserStore();
+  const _name: string = 'ForgotPasswordView';
 
   // const {
   // } = storeToRefs(_store);
@@ -85,27 +78,6 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
-  const handleIconClick = (node, e) => {
-    node.props.suffixIcon =
-      node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye';
-    node.props.type = node.props.type === 'password' ? 'text' : 'password';
-  };
-
-  const onSubmit = async (formData, node) => {
-    console.log(`${formData.email} ${formData.password}`);
-    try {
-      const test = await _userStore.loginWithEmail({
-        email: formData.email,
-        password: formData.password,
-      });
-      if (_userStore.isLoggedIn) {
-        alert('Logged in successfully!');
-        await useUIStore().goRoute(ROUTE_NAMES.FORMS, {});
-      }
-    } catch (error: any) {
-      alert('Error logging in: ' + error.message);
-    }
-  };
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
@@ -118,16 +90,16 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`LoginView onMounted!`);
+    console.log(`ForgotPasswordView onMounted!`);
     // _store.init();
   });
 
   // onUpdated(() => {
-  //   console.log(`LoginView onUpdated!`);
+  //   console.log(`ForgotPasswordView onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`LoginView unmounted!`);
+  //   console.log(`ForgotPasswordView unmounted!`);
   // })
 </script>
 

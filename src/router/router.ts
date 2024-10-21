@@ -1,7 +1,7 @@
 import { ROUTE_NAMES } from '@/enum';
 import { FontIconType } from '@/icons/FontIconConstants';
 import { createRouter, createWebHistory } from 'vue-router';
-import { useUIStore, useUserStore } from '@/_stores';
+import { useUserStore } from '@/_stores';
 import { filter as _filter, find as _find } from 'lodash-es';
 import type { TRoute } from '@/types';
 
@@ -32,38 +32,14 @@ export const routes: TRoute[] = [
   },
   {
     menu: -8,
-    name: ROUTE_NAMES.LOGIN,
-    path: '/login',
-    title: 'Login',
+    name: ROUTE_NAMES.AUTH,
+    path: '/auth',
+    title: 'Authorisation',
     fontIconType: FontIconType.HOME,
     component: () =>
       import(
         /* webpackChunkName: "Routes" */
-        '@/_layers/login/_login.layer.vue'
-      ),
-  },
-  {
-    menu: -7,
-    name: ROUTE_NAMES.LOGOUT,
-    path: '/logout',
-    title: 'Logout',
-    fontIconType: FontIconType.HOME,
-    component: () =>
-      import(
-        /* webpackChunkName: "Routes" */
-        '@/_layers/logout/_logout.layer.vue'
-      ),
-  },
-  {
-    menu: -6,
-    name: ROUTE_NAMES.REGISTER,
-    path: '/register',
-    title: 'Register',
-    fontIconType: FontIconType.HOME,
-    component: () =>
-      import(
-        /* webpackChunkName: "Routes" */
-        '@/_layers/register/_register.layer.vue'
+        '@/_layers/auth/_auth.layer.vue'
       ),
   },
 ];

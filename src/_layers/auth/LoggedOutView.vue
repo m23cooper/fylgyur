@@ -1,7 +1,14 @@
-<!--  Generated from VueLayer plop template -->
+<!--  Generated from VueView plop template -->
 
 <template>
-  <div id="LogoutLayer" class="container h-fill">LOGOUT_LAYER</div>
+  <div id="LoggedOutView" class="container">
+    <h3
+      class="prose text-primary-content text-xl border-b-[1px] border-white pb-1 mb-5"
+    >
+      Logged out
+    </h3>
+    You have been logged out
+  </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
@@ -9,12 +16,31 @@
 <script setup lang="ts">
   import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { useUIStore } from '@/_stores';
+  import { useUIStore, useUserStore } from '@/_stores';
   import { Signals } from '@/signals';
+  import * as utils from '@/utils/utils';
+  import ModalComponent from '@/_components/modal/ModalComponent.vue';
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  PROPS
+  // interface ILoggedOutViewProps
+  // {
+  //   blah: string;
+  // }
+  //
+  // const props: Readonly<ILoggedOutViewProps> = withDefaults(defineProps<ILoggedOutViewProps>(), {
+  //   blah: "",
+  // });
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  EMITS
+  // const emit = defineEmits([ EMIT.SELECTED, ]);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = 'LogoutLayer';
+  const _name: string = 'LoggedOutView';
+
+  const _userStore = useUserStore();
 
   // const {
   // } = storeToRefs(_store);
@@ -36,12 +62,6 @@
   //  eg - provide("key", "value");
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //  WATCH
-  // const watch = {
-  //
-  // }
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
   //  SIGNALS
   // Signals.PUSHER_NOTIFICATION.add(onPusherNotification, () => {})
 
@@ -53,18 +73,26 @@
   //  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  WATCH
+
+  // watch works directly on a ref
+  // watch(ref, async () => {
+  //
+  // })
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    console.log(`LogoutLayer onMounted!`);
+    console.log(`LoggedOutView onMounted!`);
     // _store.init();
   });
 
   // onUpdated(() => {
-  //   console.log(`LogoutLayer onUpdated!`);
+  //   console.log(`LoggedOutView onUpdated!`);
   // })
 
   // onUnmounted(() => {
-  //   console.log(`LogoutLayer unmounted!`);
+  //   console.log(`LoggedOutView unmounted!`);
   // })
 </script>
 

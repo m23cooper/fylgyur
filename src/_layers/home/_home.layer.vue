@@ -3,19 +3,19 @@
 <template>
   <div id="HomeLayer" class="flex flex-col">
     <HeroView class="container" />
-    <SignupForm class="container" @register="onSignupFormSubmit" />
+    <SignupForm class="container" @register="onRegister" />
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
+  import { onMounted } from 'vue';
   import { useUIStore, useUserStore } from '@/_stores';
-  import { Signals } from '@/signals';
   import HeroView from './HeroView.vue';
   import SignupForm from '@/_layers/forms/SignupForm.vue';
-  import { EMIT, ROUTE_NAMES } from '@/enum';
+  import { ROUTE_NAMES } from '@/enum';
+  import { AUTH_STATE } from '@/enum/AUTH_STATE';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
@@ -58,8 +58,8 @@
   //  }
   async function onRegister() {
     console.log(`HomeLayer onRegister`);
-    // useUserStore().register();
-    await useUIStore().goRoute(ROUTE_NAMES.REGISTER, {});
+    useUserStore().setAuthState(AUTH_STATE.REGISTERING);
+    await useUIStore().goRoute(ROUTE_NAMES.AUTH, {});
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -6,8 +6,10 @@ import type { TLoginParams } from '@/types';
 import type { TUser, TUserPermissions } from '@/types';
 import { defineStore, DefineStoreOptions, StateTree } from 'pinia';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { AUTH_STATE } from '@/enum/AUTH_STATE';
 
 export interface IUserStoreState {
+  authState: AUTH_STATE;
   permissions: TUserPermissions;
   token: string | undefined;
   user: any;
@@ -31,6 +33,7 @@ export const useUserStore = defineStore('_user.store', {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  State
   state: (): IUserStoreState => ({
+    authState: AUTH_STATE.UNKNOWN,
     permissions: {},
     token: undefined,
     user: null,
@@ -63,7 +66,7 @@ export const useUserStore = defineStore('_user.store', {
     async init() {
       //  @ts-ignore
       if (this.INITIALISED) return this;
-      Signals.LOGOUT.add(this.onLogout);
+      Signals.LOGOUT.add(this.logout);
 
       // this.isLoggedIn = await kindeClient.isAuthenticated();
       const auth = getAuth();
@@ -74,6 +77,9 @@ export const useUserStore = defineStore('_user.store', {
       });
 
       return;
+    },
+    setAuthState(state: AUTH_STATE) {
+      this.authState = state;
     },
     async loginWithEmail({ email, password }) {
       try {
@@ -119,12 +125,13 @@ export const useUserStore = defineStore('_user.store', {
         ErrorManager.onServiceError(error);
       }
     },
-    async onLogout() {
+    async logout() {
       try {
         await _service.logout();
       } catch (error) {
         ErrorManager.onServiceError(error);
       }
+      this.setAuthState(AUTH_STATE.LOGGED_OUT);
     },
   },
 });
