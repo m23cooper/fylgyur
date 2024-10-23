@@ -3,7 +3,7 @@
 <template>
   <div id="AuthLayer" class="container h-fill">
     <div
-      class="container w-fit bg-stone-200 text-primary pt-5 pb-3 px-8 shadow-xl rounded-md mt-10 transition-transform"
+      class="container w-fit bg-stone-200 text-primary pt-5 pb-3 px-8 shadow-xl rounded-md mt-10 transition-all duration-500 ease-in-out"
     >
       <LoggedOutView v-show="showLoggedOut" />
       <LoginView v-show="showLogin" />
@@ -48,8 +48,8 @@
   //  COMPUTED
   const showLogin = computed(
     () =>
-      authState.value === AUTH_STATE.LOGIN ||
-      authState.value === AUTH_STATE.LOGGED_OUT,
+      authState.value === AUTH_STATE.UNKNOWN ||
+      authState.value === AUTH_STATE.LOGIN,
   );
   const showRegister = computed(() => authState.value === AUTH_STATE.REGISTER);
   const showReset = computed(

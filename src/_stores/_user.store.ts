@@ -1,12 +1,12 @@
 import ErrorManager from '@/utils/ErrorManager';
 import { Signals } from '@/signals';
-import { useUIStore } from '@/_stores';
 import { userService } from '@/_services';
 import type { TLoginParams } from '@/types';
 import type { TUser, TUserPermissions } from '@/types';
 import { defineStore, DefineStoreOptions, StateTree } from 'pinia';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { AUTH_STATE } from '@/enum/AUTH_STATE';
+import { TForgotPasswordParams, TRegisterParams, TResetParams } from '@/types';
+import { internalAxios as axios } from '@/_services/axios';
 
 export interface IUserStoreState {
   authState: AUTH_STATE;
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('_user.store', {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  State
   state: (): IUserStoreState => ({
-    authState: AUTH_STATE.RESET_PASSWORD,
+    authState: AUTH_STATE.LOGGED_OUT,
     permissions: {},
     token: undefined,
     user: null,
@@ -68,63 +68,37 @@ export const useUserStore = defineStore('_user.store', {
       if (this.INITIALISED) return this;
       Signals.LOGOUT.add(this.logout);
 
-      // this.isLoggedIn = await kindeClient.isAuthenticated();
-      const auth = getAuth();
-      this.user = auth.currentUser;
-      console.log(`_user.store.init: isLoggedIn=${this.isLoggedIn}`);
-      onAuthStateChanged(auth, (currentUser) => {
-        this.user = currentUser;
-      });
+      //  TODO: is the user returning to a session?
 
       return;
     },
     setAuthState(state: AUTH_STATE) {
       this.authState = state;
     },
-    async loginWithEmail({ email, password }) {
-      try {
-        const something = await _service.loginWithEmail({ email, password });
-        let test = 0;
-      } catch (error) {
-        ErrorManager.onServiceError(error);
-      }
+    async login({ email, password }: TLoginParams) {
+      const result = await _service.login({ email, password });
     },
-    async registerWithEmail({ email, password }) {
-      try {
-        await _service.registerWithEmail({ email, password });
-      } catch (error) {
-        ErrorManager.onServiceError(error);
-      }
+    async register({ name, email, password, confirm }: TRegisterParams) {
+      const result = await _service.register({
+        name,
+        email,
+        password,
+        confirm,
+      });
     },
-    async signInWithGoogle() {
-      try {
-        const userCredential = await _service.signInWithGoogle();
-        let test = 0;
-      } catch (error) {
-        ErrorManager.onServiceError(error);
-      }
+
+    async forgotPassword({ email }: TForgotPasswordParams) {
+      const result = await _service.forgotPassword({ email });
     },
-    async signInWithFacebook() {
-      try {
-        await _service.signInWithFacebook();
-      } catch (error) {
-        ErrorManager.onServiceError(error);
-      }
+
+    async resetPassword({ current, password, confirm }: TResetParams) {
+      const result = await _service.resetPassword({
+        current,
+        password,
+        confirm,
+      });
     },
-    async signInWithTwitter() {
-      try {
-        await _service.signInWithTwitter();
-      } catch (error) {
-        ErrorManager.onServiceError(error);
-      }
-    },
-    async signInWithGithub() {
-      try {
-        await _service.signInWithGithub();
-      } catch (error) {
-        ErrorManager.onServiceError(error);
-      }
-    },
+
     async logout() {
       try {
         await _service.logout();

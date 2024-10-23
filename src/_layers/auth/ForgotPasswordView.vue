@@ -1,9 +1,9 @@
 <!--  Generated from VueView plop template -->
 
 <template>
-  <div id="ForgotPasswordView" class="container">
+  <div id="ForgotPasswordView" class="container w-100">
     <h3
-      class="prose text-primary-content text-xl border-b-[1px] border-white pb-1 mb-5"
+      class="prose text-primary text-xl border-b-[1px] border-accent pb-1 mb-5"
     >
       Forgot Password
     </h3>
@@ -16,7 +16,7 @@
         placeholder="the email you signed up with"
       />
     </FormKit>
-    <div class="prose w-full text-primary-content text-center mb-2">
+    <div class="prose text-primary-content text-center mb-2 w-fit">
       If we have your email on record we will send a reminder. Remember to check
       your spam if it doesn't arrive
     </div>

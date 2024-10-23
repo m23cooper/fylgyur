@@ -1,4 +1,5 @@
 export enum AUTH_STATE {
+  UNKNOWN,
   LOGIN,
   REGISTER,
   FORGOT_PASSWORD,

@@ -20,3 +20,9 @@ export * from './TMyType';
 export * from './THost';
 
 export * from './THostForm';
+
+export * from './TRegisterParams';
+
+export * from './TForgotPasswordParams';
+
+export * from './TResetPasswordParams';

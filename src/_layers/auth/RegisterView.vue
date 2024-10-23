@@ -3,7 +3,7 @@
 <template>
   <div id="RegisterView" class="container">
     <h3
-      class="prose text-primary-content text-xl border-b-[1px] border-white pb-1 mb-5"
+      class="prose text-primary text-xl border-b-[1px] border-accent pb-1 mb-5"
     >
       Register for an account
     </h3>

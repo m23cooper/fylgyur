@@ -67,7 +67,11 @@
       authState.value === AUTH_STATE.UNKNOWN ||
       authState.value === AUTH_STATE.LOGGED_OUT,
   );
-  const showLogout = computed(() => authState.value === AUTH_STATE.LOGGED_IN);
+  const showLogout = computed(
+    () =>
+      authState.value === AUTH_STATE.LOGGED_IN ||
+      authState.value === AUTH_STATE.RESET_PASSWORD,
+  );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public

@@ -3,7 +3,7 @@
 <template>
   <div id="LoginView" class="container">
     <h3
-      class="prose text-primary text-xl border-b-[1px] border-white pb-1 mb-5"
+      class="prose text-primary text-xl border-b-[1px] border-accent pb-1 mb-5"
     >
       Login to an existing account
     </h3>
