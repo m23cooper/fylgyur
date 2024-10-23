@@ -4,13 +4,16 @@
   <div id="HomeLayer" class="flex flex-col">
     <HeroView class="container" />
     <SignupForm class="container" @register="onRegister" />
+    <div v-for="film in films" :key="film.episode_id" class="col">
+      {{ film.title }}
+    </div>
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useUIStore, useUserStore } from '@/_stores';
   import HeroView from './HeroView.vue';
   import SignupForm from '@/_layers/forms/SignupForm.vue';
@@ -20,6 +23,9 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
   const _name: string = 'HomeLayer';
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const films = ref([{ episode_id: 0, title: 'No films yet' }]);
 
   // const {
   // } = storeToRefs(_store);
@@ -64,9 +70,10 @@
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
-  onMounted(() => {
+  onMounted(async () => {
     console.log(`HomeLayer onMounted!`);
     // _store.init();
+    films.value = await useUserStore().loadFilms();
   });
 
   // onUpdated(() => {

@@ -1,6 +1,6 @@
 import ErrorManager from '@/utils/ErrorManager';
 import { Signals } from '@/signals';
-import { userService } from '@/_services';
+import { swapiService, userService } from '@/_services';
 import type { TLoginParams } from '@/types';
 import type { TUser, TUserPermissions } from '@/types';
 import { defineStore, DefineStoreOptions, StateTree } from 'pinia';
@@ -24,8 +24,6 @@ export interface IUserStoreState {
 // 			paths: [];
 // 	};
 // }
-
-const _service = userService;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  useStore
@@ -72,14 +70,17 @@ export const useUserStore = defineStore('_user.store', {
 
       return;
     },
+
     setAuthState(state: AUTH_STATE) {
       this.authState = state;
     },
+
     async login({ email, password }: TLoginParams) {
-      const result = await _service.login({ email, password });
+      const result = await userService.login({ email, password });
     },
+
     async register({ name, email, password, confirm }: TRegisterParams) {
-      const result = await _service.register({
+      const result = await userService.register({
         name,
         email,
         password,
@@ -88,11 +89,11 @@ export const useUserStore = defineStore('_user.store', {
     },
 
     async forgotPassword({ email }: TForgotPasswordParams) {
-      const result = await _service.forgotPassword({ email });
+      const result = await userService.forgotPassword({ email });
     },
 
     async resetPassword({ current, password, confirm }: TResetParams) {
-      const result = await _service.resetPassword({
+      const result = await userService.resetPassword({
         current,
         password,
         confirm,
@@ -101,11 +102,18 @@ export const useUserStore = defineStore('_user.store', {
 
     async logout() {
       try {
-        await _service.logout();
+        await userService.logout();
       } catch (error) {
         ErrorManager.onServiceError(error);
       }
       this.setAuthState(AUTH_STATE.LOGGED_OUT);
+    },
+
+    async loadFilms() {
+      return await swapiService.getFilms({}).then((res) => {
+        console.log(`_user.store.loadFilms ${res.data.results}`);
+        return res.data.results;
+      });
     },
   },
 });

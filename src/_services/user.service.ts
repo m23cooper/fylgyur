@@ -1,4 +1,4 @@
-import { internalAxios as axios, swapiAxios as swapi } from '@/_services/axios';
+import { internalAxios as axios } from '@/_services/axios';
 
 import {
   TForgotPasswordParams,
@@ -6,21 +6,29 @@ import {
   TRegisterParams,
   TResetParams,
 } from '@/types';
+import { AxiosResponse } from 'axios';
 
-const _service = {
-  login: ({ email, password }: TLoginParams) =>
+export const userService = {
+  login: ({ email, password }: TLoginParams): Promise<AxiosResponse> =>
     axios.post('/login', { email, password }),
 
-  register: ({ name, email, password, confirm }: TRegisterParams) =>
+  register: ({
+    name,
+    email,
+    password,
+    confirm,
+  }: TRegisterParams): Promise<AxiosResponse> =>
     axios.post('/register', { name, email, password, confirm }),
 
-  forgotPassword: ({ email }: TForgotPasswordParams) =>
+  forgotPassword: ({ email }: TForgotPasswordParams): Promise<AxiosResponse> =>
     axios.post('/forgot-password', { email }),
 
-  resetPassword: ({ current, password, confirm }: TResetParams) =>
+  resetPassword: ({
+    current,
+    password,
+    confirm,
+  }: TResetParams): Promise<AxiosResponse> =>
     axios.post('/reset-password', { current, password, confirm }),
 
-  logout: () => axios.post('/logout', {}),
+  logout: (): Promise<AxiosResponse> => axios.post('/logout', {}),
 };
-
-export const userService = _service;

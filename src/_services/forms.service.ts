@@ -20,7 +20,7 @@ const mapDocIds = (doc) => {
   return { id: doc.id, ...doc.data() };
 };
 
-const _service = {
+export const formsService = {
   getHost: async ({ hostname }): Promise<THost | undefined> => {
     const ref = doc(db, 'hosts', hostname);
 
@@ -50,5 +50,3 @@ const _service = {
     }
   },
 };
-
-export const formsService = _service;

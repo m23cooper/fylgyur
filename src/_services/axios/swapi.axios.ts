@@ -1,8 +1,9 @@
 import ErrorManager from '@/utils/ErrorManager';
 import { setup } from 'axios-cache-adapter';
+import axios from 'axios';
 
 // Create `axios-cache-adapter` instance
-const _axios = setup({
+const _axios = axios.create({
   baseURL: `https://swapi.dev/api/`,
   timeout: 10000,
   withCredentials: false,
