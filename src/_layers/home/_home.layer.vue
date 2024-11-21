@@ -1,86 +1,90 @@
 <!--  Generated from VueLayer plop template -->
 
 <template>
-    <div id="HomeLayer" class="container h-fill">
-      <div class="dev1">HomeLayer</div>
+  <div id="HomeLayer" class="flex flex-col">
+    <HeroView class="container" />
+    <SignupForm class="container" @register="onRegister" />
+    <div v-for="film in films" :key="film.episode_id" class="col">
+      {{ film.title }}
     </div>
+  </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-    import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
-    import { storeToRefs } from 'pinia'
-    import { useUIStore } from "@/_stores";
-    import { Signals } from "@/signals";
+  import { onMounted, ref } from 'vue';
+  import { useUIStore, useUserStore } from '@/_stores';
+  import HeroView from './HeroView.vue';
+  import SignupForm from '@/_layers/forms/SignupForm.vue';
+  import { ROUTE_NAMES } from '@/enum';
+  import { AUTH_STATE } from '@/enum/AUTH_STATE';
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Private
+  const _name: string = 'HomeLayer';
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Private
-    const _name: string = "HomeLayer";
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const films = ref([{ episode_id: 0, title: 'No films yet' }]);
 
+  // const {
+  // } = storeToRefs(_store);
 
-    // const {
-    // } = storeToRefs(_store);
+  // ////////////////////////////////////////////////////////////////////////////////////////////
+  //  COMPUTED
+  // const getContact = computed(() => {
+  //   return getApplication.value.contact[0]?.number;
+  // });
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Public
+  defineExpose({
+    name: _name,
+  });
 
-    // ////////////////////////////////////////////////////////////////////////////////////////////
-    //  COMPUTED
-    // const getContact = computed(() => {
-    //   return getApplication.value.contact[0]?.number;
-    // });
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Provides - props for all children
+  //  eg - provide("key", "value");
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  WATCH
+  // const watch = {
+  //
+  // }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Public
-    defineExpose({
-      name: _name,
-    });
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  SIGNALS
+  // Signals.PUSHER_NOTIFICATION.add(onPusherNotification, () => {})
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Methods
+  //  function onPusherNotification(evt)
+  //  {
+  //      // handle event
+  //  }
+  async function onRegister() {
+    console.log(`HomeLayer onRegister`);
+    useUserStore().setAuthState(AUTH_STATE.REGISTER);
+    await useUIStore().goRoute(ROUTE_NAMES.AUTH, {});
+  }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Provides - props for all children
-    //  eg - provide("key", "value");
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Hooks
+  onMounted(async () => {
+    console.log(`HomeLayer onMounted!`);
+    // _store.init();
+    films.value = await useUserStore().loadFilms();
+  });
 
+  // onUpdated(() => {
+  //   console.log(`HomeLayer onUpdated!`);
+  // })
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //  WATCH
-    // const watch = {
-    //
-    // }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //  SIGNALS
-    // Signals.PUSHER_NOTIFICATION.add(onPusherNotification, () => {})
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Methods
-    //  function onPusherNotification(evt)
-    //  {
-    //      // handle event
-    //  }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Hooks
-    onMounted(() => {
-      console.log(`HomeLayer onMounted!`);
-      // _store.init();
-    })
-
-    // onUpdated(() => {
-    //   console.log(`HomeLayer onUpdated!`);
-    // })
-
-    // onUnmounted(() => {
-    //   console.log(`HomeLayer unmounted!`);
-    // })
-
+  // onUnmounted(() => {
+  //   console.log(`HomeLayer unmounted!`);
+  // })
 </script>
 
 <!------------------------------------------------------------------------------------------------->
 
-<style scoped>
-
-</style>
+<style scoped></style>

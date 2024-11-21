@@ -2,55 +2,58 @@
 
 <template>
   <div
-      class="btn btn-xs btn-square bg-slate-700/75 shadow-lg"
-      role="button"
-      @click="onBack"
+    class="btn btn-xs btn-square bg-slate-700/75 shadow-lg"
+    role="button"
+    @click="onBack"
   >
     <FontIconComponent
-        :icon-type="FontIconType.LOGOUT"
-        :size="FontIconSize.LG"
-        :rotate="FontIconRotate.ONE_EIGHTY"
-        :flip="FontIconFlip.NONE"
-        :anim="FontIconAnimate.NONE"
-        :clickable="false"
+      :icon-type="FontIconType.LOGOUT"
+      :size="FontIconSize.LG"
+      :rotate="FontIconRotate.ONE_EIGHTY"
+      :flip="FontIconFlip.NONE"
+      :anim="FontIconAnimate.NONE"
+      :clickable="false"
     ></FontIconComponent>
-
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { router } from "@/router";
+  import { router } from '@/router/router';
 
-  import { computed, onMounted } from "vue";
+  import { computed, onMounted } from 'vue';
   import FontIconComponent from '@/icons/FontIconComponent.vue';
-  import { FontIconType, FontIconSize, FontIconRotate, FontIconFlip, FontIconAnimate } from "@/icons/FontIconConstants";
+  import {
+    FontIconType,
+    FontIconSize,
+    FontIconRotate,
+    FontIconFlip,
+    FontIconAnimate,
+  } from '@/icons/FontIconConstants';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PROPS
-  interface IBackButtonComponentProps
-  {
+  interface IBackButtonComponentProps {
     to?: string | null;
     parentNav?: boolean;
   }
 
-  const props: Readonly<IBackButtonComponentProps> = withDefaults(defineProps<IBackButtonComponentProps>(), {
-    to: null,
-    parentNav: false,
-  });
+  const props: Readonly<IBackButtonComponentProps> = withDefaults(
+    defineProps<IBackButtonComponentProps>(),
+    {
+      to: null,
+      parentNav: false,
+    }
+  );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  EMITS
-  const emit = defineEmits(['call-nav', ]);
-
+  const emit = defineEmits(['call-nav']);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  PRIVATE
-  const _name: string = "BackButtonComponent";
-
-
-
+  const _name: string = 'BackButtonComponent';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  GETTERS
@@ -58,13 +61,11 @@
 
   // const getApplicationUuid = computed(() => _getters.getApplicationUuid);
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
   // const getContact = computed(() => {
   //   return getApplication.value.contact[0]?.number;
   // });
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  WATCH
@@ -72,12 +73,11 @@
   //
   // }
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  METHODS
   function onBack() {
     if (props.parentNav) {
-      emit("call-nav");
+      emit('call-nav');
     } else if (props.to) {
       router.push({ name: props.to });
     } else {
@@ -85,18 +85,13 @@
     }
   }
 
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  HOOKS
-  onMounted( () => {
+  onMounted(() => {
     //useStore().dispatch("startTrace", getApplicationUuid);
-  })
-
+  });
 </script>
 
 <!------------------------------------------------------------------------------------------------->
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,11 +1,34 @@
-import { internalAxios, } from "@/_services/axios/internal.axios";
-import { useUserStore, } from "@/_stores";
+import { internalAxios as axios } from '@/_services/axios';
 
-const _service = {
-	//  @ts-ignore
-	fetchUserPermissions: async () => await internalAxios.get(`/get-user-permissions`, useUserStore().token, { cache: { maxAge: 0 }, }),
-	fetchUserAccess: async () => await internalAxios.post(`/me`, null,{ cache: { maxAge: 0 }, }),
-	fetchLoggedInUser: async () => await internalAxios.get(`/get-logged-in-user`,{ cache: { maxAge: 0 }, }),
-}
+import {
+  TForgotPasswordParams,
+  TLoginParams,
+  TRegisterParams,
+  TResetParams,
+} from '@/types';
+import { AxiosResponse } from 'axios';
 
-export const userService = _service
+export const userService = {
+  login: ({ email, password }: TLoginParams): Promise<AxiosResponse> =>
+    axios.post('/login', { email, password }),
+
+  register: ({
+    name,
+    email,
+    password,
+    confirm,
+  }: TRegisterParams): Promise<AxiosResponse> =>
+    axios.post('/register', { name, email, password, confirm }),
+
+  forgotPassword: ({ email }: TForgotPasswordParams): Promise<AxiosResponse> =>
+    axios.post('/forgot-password', { email }),
+
+  resetPassword: ({
+    current,
+    password,
+    confirm,
+  }: TResetParams): Promise<AxiosResponse> =>
+    axios.post('/reset-password', { current, password, confirm }),
+
+  logout: (): Promise<AxiosResponse> => axios.post('/logout', {}),
+};

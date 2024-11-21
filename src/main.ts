@@ -1,37 +1,34 @@
-import './index.css'
+import './index.css';
+//  vue
+import { createApp, nextTick } from 'vue';
+import { router } from './router/router';
+import { DecoratedPinia } from '@/_stores';
+//  third-party plugins
+import { plugin, defaultConfig } from '@formkit/vue';
+//  @ts-ignore: importing a .ts file
+import config from '../formkit.config';
+//  setup icons
+import { dom } from '@fortawesome/fontawesome-svg-core';
+import { fontIconLibrary } from '@/icons/FontIconConstants';
+//  internal
+import App from './App.vue';
+import ErrorManager from '@/utils/ErrorManager';
+import { db } from '@/database/firebase';
 
-import {createApp, nextTick} from 'vue'
-import { DecoratedPinia, useUIStore, useUserStore, useDeviceStore } from "@/_stores";
-
-import Vueform from '@vueform/vueform'
-import vueformConfig from "../vueform.config";
-
-import ErrorManager from "@/utils/ErrorManager";
-import App from './App.vue'
-import { router } from './router'
-
-import { dom } from "@fortawesome/fontawesome-svg-core";
-import { fontIconLibrary } from "@/icons/FontIconLibrary";
+const firestore = db;
+/**
+ * Create the app and register plugins
+ */
+const app = createApp(App);
+// app.config.errorHandler = (error) => ErrorManager.onVueError(error);
+app.use(plugin, defaultConfig(config));
+app.use(DecoratedPinia);
+app.use(router);
 
 //  setup font icon library
 const _fontIconLibrary = fontIconLibrary;
 dom.watch();
 
-const app = createApp(App)
-app.config.errorHandler = ( error ) => ErrorManager.onVueError(error);
-app.use(Vueform, vueformConfig)
-app.use(DecoratedPinia)
-app.use(router)
-
-await nextTick(() => {
-//  get all data from local storage
-    useUserStore().init();
-
-//  set up all the breakpoints, determine browser/device
-    useDeviceStore().init();
-
-// populate the Router and get startup url query
-    useUIStore().init();
-})
-
-app.mount('#app')
+await nextTick(async () => {
+  app.mount('#app');
+});
