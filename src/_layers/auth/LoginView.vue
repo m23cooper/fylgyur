@@ -101,7 +101,7 @@
   async function onSubmit(formData, node) {
     console.log(`${formData.email} ${formData.password}`);
     try {
-      const test = await _userStore.loginWithEmail({
+      const test = await _userStore.login({
         email: formData.email,
         password: formData.password,
       });

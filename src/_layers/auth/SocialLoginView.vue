@@ -61,27 +61,27 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Methods
   const signInWithGoogle = async () => {
-    try {
-      await _userStore.signInWithGoogle();
-    } catch {}
+    // try {
+    //   await _userStore.signInWithGoogle();
+    // } catch {}
   };
   const signInWithFacebook = async () => {
-    try {
-      await _userStore.signInWithFacebook();
-    } catch {}
+    // try {
+    //   await _userStore.signInWithFacebook();
+    // } catch {}
   };
   const signInWithTwitter = async () => {
-    try {
-      await _userStore.signInWithTwitter();
-      alert('WTF!');
-    } catch (error) {
-      alert(error);
-    }
+    // try {
+    //   await _userStore.signInWithTwitter();
+    //   alert('WTF!');
+    // } catch (error) {
+    //   alert(error);
+    // }
   };
   const signInWithGithub = async () => {
-    try {
-      await _userStore.signInWithGithub();
-    } catch {}
+    // try {
+    //   await _userStore.signInWithGithub();
+    // } catch {}
   };
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

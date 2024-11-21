@@ -1,6 +1,6 @@
 export type TRegisterParams = {
-  name: string;
+  name?: string;
   email: string;
   password: string;
-  confirm: string;
+  confirm?: string;
 };

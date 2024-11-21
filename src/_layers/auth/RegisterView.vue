@@ -99,7 +99,7 @@
   async function onRegister() {
     console.log(`${email.value} ${password.value}`);
     try {
-      await _userStore.registerWithEmail({
+      await _userStore.register({
         email: email.value,
         password: password.value,
       });
