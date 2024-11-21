@@ -3,26 +3,29 @@
 <template>
   <div id="HomeLayer" class="flex flex-col">
     <HeroView class="container" />
-    <SignupForm class="container" @register="onSignupFormSubmit" />
+    <SignupForm class="container" @register="onRegister" />
+    <div v-for="film in films" :key="film.episode_id" class="col">
+      {{ film.title }}
+    </div>
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import { onMounted, onUpdated, onUnmounted, Ref, ref, computed } from 'vue';
-  import { storeToRefs } from 'pinia';
+  import { onMounted, ref } from 'vue';
   import { useUIStore, useUserStore } from '@/_stores';
-  import { Signals } from '@/signals';
   import HeroView from './HeroView.vue';
-  import { kindeClient } from '@/kinde/kindeClient';
   import SignupForm from '@/_layers/forms/SignupForm.vue';
-  import { EMIT } from '@/enum';
-  import PathfinderWhyForm from '@/_forms/PathfinderWhyForm.vue';
+  import { ROUTE_NAMES } from '@/enum';
+  import { AUTH_STATE } from '@/enum/AUTH_STATE';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
   const _name: string = 'HomeLayer';
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const films = ref([{ episode_id: 0, title: 'No films yet' }]);
 
   // const {
   // } = storeToRefs(_store);
@@ -59,16 +62,18 @@
   //  {
   //      // handle event
   //  }
-  function onSignupFormSubmit() {
-    console.log(`HomeLayer onSignupFormSubmit`);
-    useUserStore().register();
+  async function onRegister() {
+    console.log(`HomeLayer onRegister`);
+    useUserStore().setAuthState(AUTH_STATE.REGISTER);
+    await useUIStore().goRoute(ROUTE_NAMES.AUTH, {});
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
-  onMounted(() => {
+  onMounted(async () => {
     console.log(`HomeLayer onMounted!`);
     // _store.init();
+    films.value = await useUserStore().loadFilms();
   });
 
   // onUpdated(() => {

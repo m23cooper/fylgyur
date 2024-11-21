@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "npx kill-port 8080 && vite --port 8080",
+    "dev": "npx kill-port 8080 && vite --port 8080 --force",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",

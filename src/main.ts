@@ -13,7 +13,9 @@ import { fontIconLibrary } from '@/icons/FontIconConstants';
 //  internal
 import App from './App.vue';
 import ErrorManager from '@/utils/ErrorManager';
+import { db } from '@/database/firebase';
 
+const firestore = db;
 /**
  * Create the app and register plugins
  */

@@ -15,7 +15,7 @@
       </h3>
     </div>
     <div class="navbar-end">
-      <div v-if="isLoggedIn" class="pr-4">
+      <div v-if="showLogout" class="pr-4">
         <button
           class="btn btn-sm btn-primary shadow hover:shadow-lg"
           @click.prevent="onLogoutClick"
@@ -23,7 +23,7 @@
           Logout
         </button>
       </div>
-      <div v-else class="mr-5 space-x-4">
+      <div v-if="showLogin" class="mr-5 space-x-4">
         <span class="font-bold text-slate-50">Already a member?</span>
         <button
           class="btn btn-sm btn-primary shadow hover:shadow-lg"
@@ -46,6 +46,7 @@
   import { Signals } from '@/signals';
   import { computed, onMounted, ref } from 'vue';
   import HOMEButton from '@/buttons/HOMEButton.vue';
+  import { AUTH_STATE } from '@/enum/AUTH_STATE';
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
@@ -54,13 +55,23 @@
   const _uiStore = useUIStore();
   const _userStore = useUserStore();
 
-  const { isLoggedIn, userProfile } = storeToRefs(_userStore);
+  const { authState, userProfile } = storeToRefs(_userStore);
 
   // ////////////////////////////////////////////////////////////////////////////////////////////
   //  COMPUTED
   const showHome = computed(() => {
     return _uiStore.selectedRoute.name !== ROUTE_NAMES.HOME;
   });
+  const showLogin = computed(
+    () =>
+      authState.value === AUTH_STATE.UNKNOWN ||
+      authState.value === AUTH_STATE.LOGGED_OUT,
+  );
+  const showLogout = computed(
+    () =>
+      authState.value === AUTH_STATE.LOGGED_IN ||
+      authState.value === AUTH_STATE.RESET_PASSWORD,
+  );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Public
@@ -90,12 +101,14 @@
   }
 
   function onLoginClick() {
-    _userStore.login();
+    _userStore.setAuthState(AUTH_STATE.LOGIN);
+    useUIStore().goRoute(ROUTE_NAMES.AUTH, {});
   }
 
-  // function onRegisterClick() {
-  //   _userStore.register()
-  // }
+  function onRegisterClick() {
+    _userStore.setAuthState(AUTH_STATE.REGISTER);
+    useUIStore().goRoute(ROUTE_NAMES.AUTH, {});
+  }
 
   function onLogoutClick() {
     _userStore.logout();

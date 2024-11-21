@@ -1,15 +1,16 @@
 import ErrorManager from '@/utils/ErrorManager';
 import { Signals } from '@/signals';
-import { useUIStore } from '@/_stores';
-import { userService } from '@/_services';
+import { swapiService, userService } from '@/_services';
 import type { TLoginParams } from '@/types';
 import type { TUser, TUserPermissions } from '@/types';
 import { defineStore, DefineStoreOptions, StateTree } from 'pinia';
-import { kindeClient } from '@/kinde/kindeClient';
+import { AUTH_STATE } from '@/enum/AUTH_STATE';
+import { TForgotPasswordParams, TRegisterParams, TResetParams } from '@/types';
+import { internalAxios as axios } from '@/_services/axios';
 
 export interface IUserStoreState {
+  authState: AUTH_STATE;
   permissions: TUserPermissions;
-  isLoggedIn: boolean;
   token: string | undefined;
   user: any;
   userProfile: any;
@@ -30,8 +31,8 @@ export const useUserStore = defineStore('_user.store', {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  State
   state: (): IUserStoreState => ({
+    authState: AUTH_STATE.LOGGED_OUT,
     permissions: {},
-    isLoggedIn: false,
     token: undefined,
     user: null,
     userProfile: null,
@@ -50,6 +51,7 @@ export const useUserStore = defineStore('_user.store', {
   //  Getters
   getters: {
     //canUserAccess: (state) => state.canAccess,
+    isLoggedIn: (state) => state.user !== null,
     isDevUser: (state) => state.user?.uuid === '',
   },
 
@@ -62,45 +64,56 @@ export const useUserStore = defineStore('_user.store', {
     async init() {
       //  @ts-ignore
       if (this.INITIALISED) return this;
-      Signals.LOGOUT.add(this.onLogout);
+      Signals.LOGOUT.add(this.logout);
 
-      this.isLoggedIn = await kindeClient.isAuthenticated();
+      //  TODO: is the user returning to a session?
 
-      console.log(`_user.store.init: isLoggedIn=${this.isLoggedIn}`);
-      if (this.isLoggedIn) {
-        this.user = await kindeClient.getUser();
-        this.userProfile = await kindeClient.getUserProfile();
-      }
+      return;
+    },
 
-      return this.isLoggedIn;
+    setAuthState(state: AUTH_STATE) {
+      this.authState = state;
     },
-    async login() {
-      try {
-        const url = await kindeClient.login();
-        // Redirect
-        window.location.href = url.toString();
-      } catch (error) {
-        Signals.NOTIFICATION.dispatch({
-          type: 'error',
-          duration: -1,
-          message: error,
-        });
-      }
+
+    async login({ email, password }: TLoginParams) {
+      const result = await userService.login({ email, password });
     },
-    async register() {
-      const url = await kindeClient.register();
-      // Redirect
-      window.location.href = url.toString();
+
+    async register({ name, email, password, confirm }: TRegisterParams) {
+      const result = await userService.register({
+        name,
+        email,
+        password,
+        confirm,
+      });
     },
+
+    async forgotPassword({ email }: TForgotPasswordParams) {
+      const result = await userService.forgotPassword({ email });
+    },
+
+    async resetPassword({ current, password, confirm }: TResetParams) {
+      const result = await userService.resetPassword({
+        current,
+        password,
+        confirm,
+      });
+    },
+
     async logout() {
-      const url = await kindeClient.logout();
-      this.onLogout();
-      // Redirect
-      window.location.href = url.toString();
+      try {
+        await userService.logout();
+      } catch (error) {
+        ErrorManager.onServiceError(error);
+      }
+      this.setAuthState(AUTH_STATE.LOGGED_OUT);
     },
-    onLogout() {
-      this.user = null;
-      this.isLoggedIn = false;
+
+    async loadFilms() {
+      return await swapiService.getFilms({}).then((res) => {
+        console.log(`_user.store.loadFilms ${res.data.results}`);
+        return res.data.results;
+      });
     },
   },
 });
